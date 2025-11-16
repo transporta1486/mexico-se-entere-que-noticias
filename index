@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>México Se Enteré Qué | Noticias de Atizapán, Naucalpan, Izcalli y más</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Q3ZL4VNDPW');
+  </script>
+  </head>
+<body>
+  <header>
+    <div class="logo"><h1>México Se Enteré Qué</h1></div>
+    <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="nav-menu">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="atizapan.html">Atizapán</a></li>
+        <li><a href="tlalnepantla.html">Tlalnepantla</a></li>
+        <li><a href="naucalpan.html">Naucalpan</a></li>
+        <li><a href="nicolas-romero.html">N. Romero</a></li>
+        <li><a href="cuatitlan-izcalli.html">Izcalli</a></li>
+      </ul>
+    </nav>
+    <div class="search-bar">
+      <button class="search-toggle" aria-label="Mostrar búsqueda" onclick="toggleSearch()">🔍</button>
+      <div class="search-input" id="search-input">
+        <input type="text" id="search" placeholder="Buscar noticias..." />
+        <button onclick="searchNews()">🔍</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Noticias Destacadas</h2>
+      <div class="carousel">
+        <div class="carousel-inner">
+                  </div>
+        <button class="carousel-prev" onclick="moveCarousel(-1)">❮</button>
+        <button class="carousel-next" onclick="moveCarousel(1)">❯</button>
+      </div>
+    </section>
+
+        <section class="ad-section">
+            <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1234567890"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        // Se usa para poner en cola los anuncios si las cookies son aceptadas más tarde
+        window.queueAds = window.queueAds || [];
+        window.queueAds.push({});
+      </script>
+    </section>
+
+    <section class="categories">
+      <h2>Categorías de Cobertura</h2>
+      <div class="category-grid">
+        <a href="atizapan.html" class="category">Atizapán</a>
+        <a href="naucalpan.html" class="category">Naucalpan</a>
+        <a href="tlalnepantla.html" class="category">Tlalnepantla</a>
+        <a href="nicolas-romero.html" class="category">N. Romero</a>
+        <a href="cuatitlan-izcalli.html" class="category">Izcalli</a>
+        <a href="#" class="category">Política</a>
+        <a href="#" class="category">Seguridad</a>
+        <a href="#" class="category">Sociedad</a>
+      </div>
+    </section>
+
+    <section class="latest-news">
+      <h2>Últimas Noticias</h2>
+      <div class="news-grid" id="news-container">
+              </div>
+    </section>
+
+        <section class="ad-section">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="9876543210"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+        window.queueAds = window.queueAds || [];
+        window.queueAds.push({});
+      </script>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 México Se Enteré Qué. Todos los derechos reservados.</p>
+    <div class="social-links">
+      <a href="#">Facebook</a>
+      <a href="#">Twitter</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="legal-links">
+      <a href="privacidad.html">Política de Privacidad</a> ·
+      <a href="terminos.html">Aviso Legal y Términos</a> ·
+      <a href="cookies.html">Política de Cookies</a> ·
+      <button class="cookie-config-btn" onclick="openCookieBanner()">Configurar cookies</button>
+    </div>
+  </footer>
+
+    <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-content">
+      <p>
+        Usamos cookies para mejorar tu experiencia y, con tu consentimiento, mostrar anuncios (AdSense). 
+        Puedes aceptar o rechazar. <a href="cookies.html">Más info</a>.
+      </p>
+      <div class="cookie-actions">
+        <button id="accept-cookies" class="btn-accept">Aceptar</button>
+        <button id="reject-cookies" class="btn-reject">Rechazar</button>
+      </div>
+    </div>
+  </div>
+
+    <div id="app-modal" class="app-modal" style="display:none;">
+    <div class="app-modal-content">
+      <button class="close-btn" onclick="hideAppModal()">×</button>
+      <h3>📰 ¡Lleva las noticias contigo!</h3>
+      <p>Descarga la aplicación oficial de **México Se Enteré Qué** para recibir las últimas noticias de Atizapán, Naucalpan e Izcalli directamente en tu celular.</p>
+      <a href="#" class="btn-download btn-accept" target="_blank">Descargar App (Android / iOS)</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
