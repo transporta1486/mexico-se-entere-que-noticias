@@ -527,3 +527,39 @@ footer a:hover {
     background-color: #e55c50;
     color: var(--color-white);
 }
+
+/* Sección 4: Estilo para las tarjetas de noticias (news-card) */
+
+.news-card {
+    background: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    /* Aseguramos que la tarjeta sea vertical en móvil */
+    display: block; 
+}
+
+.news-image {
+    width: 100%;
+    height: 180px; /* Ajuste para que la imagen no sea demasiado grande en móvil */
+    object-fit: cover;
+    display: block;
+}
+
+
+/* Sección 4: Carrusel (Hero) - Nuevo ítem para control de flex */
+.carousel-item {
+    /* Fuerza a que cada ítem tome el 100% en el carrusel horizontal */
+    flex: 0 0 100%;
+    width: 100%;
+    position: relative;
+}
+
+/* Control de la imagen del carrusel en móvil */
+.carousel-item img {
+    width: 100%;
+    height: 250px; /* Altura fija para que no se vea deforme */
+    object-fit: cover;
+    border-radius: 8px;
+}
