@@ -1,13 +1,4 @@
-
-[  
-
-
-
-
-
-
-
-    
+[
   {
     "id": "noticia1694780000014",
     "titulo": "Asesinan a Camilo Ochoa, 'El Alucín', en su domicilio en Temixco",
@@ -47,46 +38,35 @@
     "logo_horizontal": "https://i.postimg.cc/jSpCFk3b/FB-IMG-1755480562829.jpg",
     "destacada": true
   },
-
-    
-    
-    
-    
-    {
-    "id":"noticia1694466160011",
+  {
+    "id": "noticia1694466160011",
     "titulo": "🚨 México se entere qué: Rescatan a 15 personas atrapadas en Teleférico de Torreón",
     "resumen": "Momentos de tensión se vivieron en Torreón, Coahuila, cuando una falla mecánica dejó varadas a 15 personas en las góndolas del teleférico de la ciudad. Elementos de Protección Civil y bomberos realizaron un impresionante operativo de rescate que duró varias horas. Todos los tripulantes fueron puestos a salvo sin lesiones graves, aunque algunos presentaron crisis nerviosa. El incidente ha desatado debate en redes sociales sobre la seguridad de este tipo de transportes turísticos en México.",
     "imagen": "https://i.postimg.cc/d08j8525/telefericotorreonsl-312b03dd-focus-0-0-1200-600.webp",
     "categoria": "sucesos",
     "fecha": "2025-08-17",
-    "ciudad":"Nacional"
+    "ciudad": "Nacional"
   },
-
   {
-    "id":"noticia1694466160012",
+    "id": "noticia1694466160012",
     "titulo": "🔥 México se entere qué: Incendio arrasa mercado en Monterrey",
     "resumen": "Un fuerte incendio consumió gran parte de un mercado popular en Monterrey durante la madrugada. Testigos relataron que las llamas se propagaron con rapidez debido a materiales inflamables en los locales. Bomberos de varios municipios llegaron para sofocar el siniestro, que dejó pérdidas millonarias y al menos 40 locales afectados. Aunque no se reportaron víctimas mortales, el hecho ha encendido la indignación ciudadana ante la falta de medidas de prevención y control en mercados municipales.",
     "categoria": "sociedad",
-        "imagen": "https://i.postimg.cc/J4nx9c8h/incendio-consume-nueve-locales-en-un-mercado-de-monterrey-2496html-incendio-nljpg-8123html-f0dbfbc7.webp",
+    "imagen": "https://i.postimg.cc/J4nx9c8h/incendio-consume-nueve-locales-en-un-mercado-de-monterrey-2496html-incendio-nljpg-8123html-f0dbfbc7.webp",
     "fecha": "2025-08-17",
-    "ciudad":"Nacional"
+    "ciudad": "Nacional"
   },
-  
   {
-    "id":"noticia1694466160013",
+    "id": "noticia1694466160013",
     "titulo": "🐊 México se entere qué: Avistan cocodrilo en playa de Acapulco",
     "resumen": "Turistas y locales quedaron impactados al ver un cocodrilo nadando cerca de la orilla en la playa de Puerto Marqués, en Acapulco. Autoridades ambientales acudieron al lugar para intentar capturar al animal y reubicarlo en un área protegida. El hecho generó alarma, pero también memes y comentarios virales en redes sociales, donde muchos recordaron que este no es el primer avistamiento de cocodrilos en zonas turísticas de Guerrero. La recomendación oficial fue evitar nadar en esa área hasta nuevo aviso.",
-        "imagen": "",
+    "imagen": "",
     "categoria": "naturaleza",
     "fecha": "2025-08-17",
-    "ciudad":"Nacional",
-    "destacada":true
+    "ciudad": "Nacional",
+    "destacada": true
   },
-
-
-  
-  
-    {
+  {
     "id": "noticia1694466160006",
     "titulo": "NOTICIA DE ULTIMA HORA Evacuación y caos en la Línea 2 del Metro de la Ciudad de México tras incidente en estación Pino Suárez ",
     "resumen": "Las autoridades del Metro trabajan para restablecer el servicio a la normalidad lo antes posible. Mientras tanto, se recomienda a los usuarios de la Línea 2 tomar precauciones y buscar vías alternas para sus traslados",
