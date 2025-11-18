@@ -1,14 +1,34 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Administrador de Contenido</title>
-    <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3.0.0/dist/cms.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administrador de Contenido</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3/dist/cms.css" />
+  
+  <link rel="icon" href="/favicon.ico">
 </head>
 <body>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  
+  <script src="https://unpkg.com/decap-cms@^3/dist/cms.js"></script>
+
+  <script>
+    // Inicializa el CMS manualmente. 
+    // Esto debe ejecutarse después de que el archivo 'cms.js' haya cargado.
+    CMS.init();
     
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    // Opcional: Esto ayuda si tienes problemas con la identidad de Netlify
+    if (typeof netlifyIdentity !== 'undefined') {
+      netlifyIdentity.on('init', user => {
+        if (!user) {
+          netlifyIdentity.on('login', () => {
+            document.location.reload();
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>
