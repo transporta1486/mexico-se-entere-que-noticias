@@ -1,7 +1,7 @@
 // Funciones para escapar caracteres especiales de una cadena HTML
 function escapeHtml(text) {
   if (!text) return '';
-  // Esta es una expresión regular correcta: /.../g
+  // Expresión regular correcta
   return text.replace(/[&<>"']/g, function(match) {
     switch (match) {
       case '&': return '&amp;';
@@ -167,23 +167,28 @@ function toggleSearch() {
 
 // --- Cookies y AdSense condicional ---
 function openCookieBanner() {
-  document.getElementById('cookie-banner').style.display = 'block';
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.style.display = 'block';
 }
 
 function hideCookieBanner() {
-  document.getElementById('cookie-banner').style.display = 'none';
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.style.display = 'none';
 }
 
+// Función corregida para evitar el error .forEach is not a function
 function loadAdSense() {
   if (document.getElementById('adsbygoogle-js')) return; 
   const s = document.createElement('script');
   s.id = 'adsbygoogle-js';
   s.async = true;
-  s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX';
+  // **RECUERDA CAMBIAR ESTO POR TU ID DE ADSENSE REAL**
+  s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX'; 
   s.crossOrigin = 'anonymous';
   s.onload = () => {
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).forEach(cfg => (window.adsbygoogle = window.adsbygoogle || []).push(cfg));
+      // Inicia la cola de AdSense de forma segura
+      (window.adsbygoogle = window.adsbygoogle || []).push({}); 
     } catch (e) { console.warn('No se pudo inicializar anuncios:', e); }
   };
   document.head.appendChild(s);
@@ -191,16 +196,18 @@ function loadAdSense() {
 
 // --- Modal de la App ---
 function showAppModal() {
-  if (localStorage.getItem('app-modal-seen')) return;
-
-  setTimeout(() => {
-    document.getElementById('app-modal').style.display = 'flex';
-    localStorage.setItem('app-modal-seen', 'true');
-  }, 2000);
+  const appModal = document.getElementById('app-modal');
+  if (appModal && !localStorage.getItem('app-modal-seen')) {
+    setTimeout(() => {
+      appModal.style.display = 'flex';
+      localStorage.setItem('app-modal-seen', 'true');
+    }, 2000);
+  }
 }
 
 function hideAppModal() {
-  document.getElementById('app-modal').style.display = 'none';
+  const appModal = document.getElementById('app-modal');
+  if (appModal) appModal.style.display = 'none';
 }
 
 // --- Evento Principal (Unificado) ---
@@ -209,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCarousel();
 
   const consent = localStorage.getItem('cookies-consent');
+  
   if (!consent) {
     openCookieBanner();
   } else {
