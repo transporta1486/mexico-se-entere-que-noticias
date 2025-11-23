@@ -1,141 +1,258 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>México Se Enteré Qué - Noticias de última hora</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Iconos de Font Awesome para una mejor UI -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>México Se Enteré Qué | Noticias de Atizapán, Naucalpan, Izcalli y más</title>
+    
+    <link rel="stylesheet" href="styles.css" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Q3ZL4VNDPW');
+    </script>
+    
+    <style>
+      /* Estilos básicos para el banner de la app y los anuncios. Idealmente, irían en styles.css */
+      .app-download-bar {
+        background-color: #333; /* Color de fondo oscuro */
+        color: white;
+        padding: 10px 0;
+        text-align: center;
+        position: sticky; /* Fijo en la parte superior */
+        top: 0;
+        z-index: 1000; /* Asegura que esté por encima de otros elementos */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      .app-download-bar p {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.1em;
+      }
+      .app-download-bar a {
+        background-color: #f44336; /* Color de botón llamativo */
+        color: white;
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+      .app-download-bar a:hover {
+        background-color: #d32f2f;
+      }
+      .sponsored-ads {
+        padding: 20px 0;
+        text-align: center;
+      }
+      .ad-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .ad-card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      .ad-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+      }
+      .ad-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+        aspect-ratio: 16 / 9; /* Para mantener proporción en todos los anuncios */
+        object-fit: cover;
+      }
+      .ad-card h4 {
+        margin: 10px 0 5px;
+        color: #f44336;
+        font-size: 1.2em;
+      }
+      .ad-card p {
+        padding: 0 10px 10px;
+        margin: 0;
+        font-size: 0.9em;
+      }
+    </style>
 </head>
 <body>
-
-    <!-- Barrita de Notificación o Banner de Última Hora -->
-    <div class="breaking-news-bar">
-        <span>Última Hora:</span> Confirman el impacto del nuevo paquete económico en las PyMEs. <a href="#">Leer más...</a>
+    
+    <div class="app-download-bar">
+        <p>¡Descarga nuestra App de Noticias y lleva **México Se Enteré Qué** en tu bolsillo!</p>
+        <a href="#" target="_blank" rel="noopener noreferrer">📲 Descargar Ahora</a>
     </div>
 
-    <!-- Encabezado y Navegación Principal -->
     <header>
-        <div class="logo-container">
-            <h1>México Se Enteré Qué</h1>
-            <p>Tu fuente confiable de noticias locales.</p>
+      <div class="logo"><h1>México Se Enteré Qué</h1></div>
+      <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="nav-menu">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="atizapan.html">Atizapán</a></li>
+          <li><a href="tlalnepantla.html">Tlalnepantla</a></li>
+          <li><a href="naucalpan.html">Naucalpan</a></li>
+          <li><a href="nicolas-romero.html">N. Romero</a></li>
+          <li><a href="cuatitlan-izcalli.html">Izcalli</a></li>
+        </ul>
+      </nav>
+      <div class="search-bar">
+        <button class="search-toggle" aria-label="Mostrar búsqueda" onclick="toggleSearch()">🔍</button>
+        <div class="search-input" id="search-input">
+          <input type="text" id="search" placeholder="Buscar noticias..." />
+          <button onclick="searchNews()">🔍</button>
         </div>
-        <nav class="main-nav" id="nav-menu">
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#politica">Política</a></li>
-                <li><a href="#economia">Economía</a></li>
-                <li><a href="#deportes">Deportes</a></li>
-                <li><a href="#cultura">Cultura</a></li>
-            </ul>
-        </nav>
-        <div class="nav-controls">
-            <div class="search-box" id="search-input">
-                <input type="text" id="search" placeholder="Buscar noticias..." onkeyup="searchNews()">
-            </div>
-            <button class="icon-btn" onclick="toggleSearch()" aria-label="Abrir Búsqueda"><i class="fas fa-search"></i></button>
-            <button class="menu-toggle icon-btn" onclick="toggleMenu()" aria-label="Abrir Menú"><i class="fas fa-bars"></i></button>
-        </div>
+      </div>
     </header>
 
-    <main class="container">
-
-        <!-- Carrusel de Noticias Destacadas -->
-        <section class="carousel-section">
-            <div class="carousel-inner">
-                <!-- Los elementos del carrusel se cargarán aquí por script.js -->
+    <main>
+      <section class="hero">
+        <h2>Noticias Destacadas</h2>
+        <div class="carousel">
+          <div class="carousel-inner">
             </div>
-            <button class="carousel-control prev" onclick="moveCarousel(-1)" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
-            <button class="carousel-control next" onclick="moveCarousel(1)" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
-        </section>
+          <button class="carousel-prev" onclick="moveCarousel(-1)">❮</button>
+          <button class="carousel-next" onclick="moveCarousel(1)">❯</button>
+        </div>
+      </section>
 
-        <!-- BLOQUE DE PUBLICIDAD LOCAL ROTATIVA (Patrocinadores Únicos) -->
-        <section class="local-ads-section">
-            <h3 class="ad-title">Patrocinadores Locales Destacados</h3>
-            <!-- ESTE ES EL CONTENEDOR SUPERIOR -->
-            <div class="local-ad-grid" id="local-ad-grid-top">
-                <!-- Anuncios locales rotativos van aquí, cargados por script.js -->
-            </div>
-        </section>
+      <section class="ad-section">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      </section>
 
-        <!-- Sección de Últimas Noticias (Grid) -->
-        <section class="news-grid-section">
-            <h2 class="section-title">Últimas Noticias</h2>
-            <div class="news-container" id="news-container">
-                <!-- Artículos de noticias se cargarán aquí por script.js -->
-            </div>
-        </section>
+      <section class="categories">
+        <h2>Categorías de Cobertura</h2>
+        <div class="category-grid">
+          <a href="atizapan.html" class="category">Atizapán</a>
+          <a href="naucalpan.html" class="category">Naucalpan</a>
+          <a href="tlalnepantla.html" class="category">Tlalnepantla</a>
+          <a href="nicolas-romero.html" class="category">N. Romero</a>
+          <a href="cuatitlan-izcalli.html" class="category">Izcalli</a>
+          <a href="#" class="category">Política</a>
+          <a href="#" class="category">Seguridad</a>
+          <a href="#" class="category">Sociedad</a>
+        </div>
+      </section>
+      
+      <section class="sponsored-ads">
+          <h2>⭐ Anuncios y Servicios Destacados ⭐</h2>
+          <div class="ad-grid">
+              
+              <a href="https://www.manzaboom.com" target="_blank" rel="noopener noreferrer" class="ad-card">
+                  <img src="placeholder-manzaboom.jpg" alt="Manzaboom - Tecnología y gadgets">
+                  <h4>Manzaboom.com</h4>
+                  <p>¡Lo último en tecnología y gadgets! Descubre las mejores ofertas.</p>
+              </a>
+              
+              <a href="https://www.mudanzas-en-mexico.com" target="_blank" rel="noopener noreferrer" class="ad-card">
+                  <img src="placeholder-mudanzas.jpg" alt="Mudanzas en México - Servicio profesional">
+                  <h4>Mudanzas-en-Mexico.com</h4>
+                  <p>Tu mudanza fácil y segura. Pide tu cotización sin compromiso.</p>
+              </a>
+              
+              <a href="https://www.tacosdecanastaenmexico.com" target="_blank" rel="noopener noreferrer" class="ad-card">
+                  <img src="placeholder-tacos.jpg" alt="Tacos de Canasta en México - ¡El sabor de México!">
+                  <h4>Tacos de Canasta en México.com</h4>
+                  <p>Auténticos tacos de canasta para tu evento. ¡Sabor garantizado!</p>
+              </a>
+              
+              <a href="https://www.lexfortis.legal" target="_blank" rel="noopener noreferrer" class="ad-card">
+                  <img src="placeholder-lexfortis.jpg" alt="Lex Fortis Legal - Asesoría Jurídica">
+                  <h4>LexFortis.legal</h4>
+                  <p>Asesoría legal experta y confiable para empresas y particulares.</p>
+              </a>
+              
+          </div>
+      </section>
+      
+      <section class="latest-news">
+        <h2>Últimas Noticias</h2>
+        <div class="news-grid" id="news-container">
+          </div>
+      </section>
 
-        <!-- Sección de Más Publicidad Local (Opcional) -->
-        <section class="local-ads-section">
-            <h3 class="ad-title">Otros Servicios Destacados</h3>
-            <!-- ESTE ES EL CONTENEDOR INFERIOR -->
-            <div class="local-ad-grid" id="local-ad-grid-bottom">
-                <!-- Anuncios locales rotativos van aquí, cargados por script.js -->
-            </div>
-        </section>
-
+      <section class="ad-section">
+        <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="9876543210"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      </section>
     </main>
 
-    <!-- Pie de Página -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section about">
-                <h3>México Se Enteré Qué</h3>
-                <p>Noticias imparciales y al momento. Compromiso con la verdad y la comunidad.</p>
-            </div>
-            <div class="footer-section links">
-                <h3>Enlaces Rápidos</h3>
-                <ul>
-                    <li><a href="#">Contacto</a></li>
-                    <li><a href="#">Aviso de Privacidad</a></li>
-                    <li><a href="#">Términos y Condiciones</a></li>
-                </ul>
-            </div>
-            <div class="footer-section social">
-                <h3>Síguenos</h3>
-                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2025 México Se Enteré Qué. Todos los derechos reservados.
-        </div>
+      <p>&copy; 2025 México Se Enteré Qué. Todos los derechos reservados.</p>
+      <div class="social-links">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+      <div class="legal-links">
+        <a href="privacidad.html">Política de Privacidad</a> ·
+        <a href="terminos.html">Aviso Legal y Términos</a> ·
+        <a href="cookies.html">Política de Cookies</a> ·
+        <button class="cookie-config-btn" onclick="openCookieBanner()">Configurar cookies</button>
+      </div>
     </footer>
 
-    <!-- Snackbar para mensajes temporales (ej. Copiado al portapapeles) -->
-    <div id="snackbar"></div>
-
-    <!-- Modal de Cookie Consent -->
-    <div id="cookie-banner" class="cookie-banner">
-        <div class="cookie-content">
-            <p>Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar navegando, aceptas nuestro uso de cookies.</p>
-            <div class="cookie-buttons">
-                <button id="accept-cookies" class="btn-primary">Aceptar</button>
-                <button id="reject-cookies" class="btn-secondary">Rechazar</button>
-            </div>
+    <div id="cookie-banner" class="cookie-banner" style="display:none;">
+      <div class="cookie-content">
+        <p>
+          Usamos cookies para mejorar tu experiencia y, con tu consentimiento, mostrar anuncios (AdSense). 
+          Puedes aceptar o rechazar. <a href="cookies.html">Más info</a>.
+        </p>
+        <div class="cookie-actions">
+          <button id="accept-cookies" class="btn-accept">Aceptar</button>
+          <button id="reject-cookies" class="btn-reject">Rechazar</button>
         </div>
+      </div>
+    </div>
+
+    <div id="app-modal" class="app-modal" style="display:none;">
+      <div class="app-modal-content">
+        <button class="close-btn" onclick="hideAppModal()">×</button>
+        <h3>📰 ¡Lleva las noticias contigo!</h3>
+        <p>Descarga la aplicación oficial de **México Se Enteré Qué** para recibir las últimas noticias de Atizapán, Naucalpan e Izcalli directamente en tu celular.</p>
+        <a href="#" class="btn-download btn-accept" target="_blank">Descargar App (Android / iOS)</a>
+      </div>
     </div>
     
-    <!-- Modal de Promoción de la Aplicación -->
-    <div id="app-modal" class="app-modal">
-        <div class="app-modal-content">
-            <button class="close-btn" onclick="hideAppModal()" aria-label="Cerrar">&times;</button>
-            <i class="fas fa-mobile-alt app-icon"></i>
-            <h2>¡Lleva las Noticias Contigo!</h2>
-            <p>Descarga la aplicación oficial de **México Se Enteré Qué** para recibir alertas de última hora y leer sin conexión.</p>
-            <div class="store-buttons">
-                <!-- Simula los enlaces a las tiendas de aplicaciones -->
-                <a href="#" onclick="downloadApp('Android')" class="btn-store btn-android"><i class="fab fa-google-play"></i> Android App</a>
-                <a href="#" onclick="downloadApp('iOS')" class="btn-store btn-ios"><i class="fab fa-apple"></i> iOS App</a>
-            </div>
-        </div>
-    </div>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <script>
+      // Este script ejecuta los bloques de AdSense una vez que se carga la página o se aceptan cookies
+      (function() {
+          if(window.adsbygoogle && window.adsbygoogle.loaded) {
+              window.adsbygoogle.push({});
+          }
+      })();
+    </script>
 
-    <!-- Carga del Script de JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>
