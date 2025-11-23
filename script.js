@@ -44,7 +44,7 @@ function alertMessage(message) {
 // --- Carga de JSON y Renderizado ---
 
 async function getNewsData() {
-    // URL simulada del JSON de noticias
+    // Datos del JSON simulados para que el código funcione sin el archivo local.
     const newsJsonData = {
         "noticias_list": [
             { "id": "2e3c0d60", "titulo": "Asesinan a Camilo Ochoa, 'El Alucín', en su domicilio en Temixco", "resumen": "El influencer Camilo Ochoa, conocido como 'El Alucín', fue asesinado a balazos...", "imagen": "https://i.postimg.cc/zfJ0KVJ4/FB-IMG-1755480044118.jpg", "categoria": "policía", "autor": "Javier Huerta Martinez", "destacada": false },
@@ -54,11 +54,6 @@ async function getNewsData() {
             { "id": "b8c7d6e5", "titulo": "🔥 México se entere qué: Incendio arrasa mercado en Monterrey", "resumen": "Un fuerte incendio consumió gran parte de un mercado popular en Monterrey durante la madrugada...", "imagen": "https://i.postimg.cc/J4nx9c8h/incendio-consume-nueve-locales-en-un-mercado-de-monterrey-2496html-incendio-nljpg-8123html-f0dbfbc7.webp", "categoria": "sociedad", "autor": "", "destacada": false }
         ]
     };
-    
-    // En un sitio real, usarías:
-    // const response = await fetch('noticias.json');
-    // const data = await response.json();
-    // return data.noticias_list || [];
     
     return newsJsonData.noticias_list || [];
 }
@@ -100,10 +95,9 @@ function renderNews(newsList, containerId) {
             </article>
         `;
 
-        const tag = isCarousel ? 'div' : 'span'; // Usar <span> o <div> para el grid container
+        const tag = isCarousel ? 'div' : 'span';
         const classNames = isCarousel ? 'carousel-item' : '';
 
-        // El grid-container ya tiene la clase 'news-grid', solo agregamos los artículos/spans
         if (isCarousel) {
              newsContainer.innerHTML += `<${tag} class="${classNames}">${articleContent}</${tag}>`;
         } else {
@@ -141,21 +135,18 @@ function moveCarousel(direction) {
     const items = document.querySelectorAll('.carousel-item');
     if (items.length <= 1) return;
     
-    // Quita 'active' del elemento actual
     if (items[currentIndex]) {
         items[currentIndex].classList.remove('active');
     }
 
-    // Calcula el nuevo índice
     currentIndex = (currentIndex + direction + items.length) % items.length;
     
-    // Mueve la vista (requiere CSS para funcionar correctamente)
     const carouselInner = document.getElementById('carousel-inner');
     if (carouselInner) {
+        // Asumiendo que el CSS utiliza flexbox o grid con scroll horizontal controlado
         carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
     
-    // Añade 'active' al nuevo elemento
     if (items[currentIndex]) {
         items[currentIndex].classList.add('active');
     }
@@ -203,7 +194,6 @@ function toggleMenu() {
         navMenu.classList.toggle('active');
         menuToggle.classList.toggle('active');
         
-        // Cierra la búsqueda si el menú se abre
         if (window.innerWidth < 768 && searchInputContainer) {
             searchInputContainer.classList.remove('active');
         }
@@ -218,12 +208,10 @@ function toggleSearch() {
     if (searchInputContainer) {
         searchInputContainer.classList.toggle('active');
         
-        // Cierra el menú si la búsqueda se abre
         if (navMenu) {
             navMenu.classList.remove('active');
         }
         
-        // Enfoca el input de búsqueda si se hace visible
         const searchInput = document.getElementById('search');
         if (searchInputContainer.classList.contains('active') && searchInput) {
             searchInput.focus();
@@ -247,14 +235,15 @@ function hideCookieBanner() {
     if (banner) banner.style.display = 'none';
 }
 
-function showAppModal() {
+function showAppModalInitial() {
     const appModal = document.getElementById('app-modal');
-    if (appModal && !localStorage.getItem('app-modal-seen') && localStorage.getItem('cookies-consent') === 'accepted') {
+    // Si el usuario no ha visto el modal, lo mostramos inmediatamente (sin dependencia de cookies)
+    if (appModal && !localStorage.getItem('app-modal-seen')) {
         setTimeout(() => {
             appModal.style.display = 'flex';
-            // Lo dejamos comentado para que se muestre en cada recarga para fines de prueba
+            // Opcional: si quieres que se muestre una sola vez, descomenta la siguiente línea
             // localStorage.setItem('app-modal-seen', 'true'); 
-        }, 3000);
+        }, 100);
     }
 }
 
@@ -267,29 +256,28 @@ window.hideAppModal = hideAppModal;
 
 // --- Evento Principal (Unificado) ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Carga de Contenido
+    // 1. Mostrar Banner de la App Inmediatamente (la corrección)
+    showAppModalInitial();
+
+    // 2. Carga de Contenido
     loadNews();
     loadCarousel();
     
-    // 2. Lógica de Cookies
+    // 3. Lógica de Cookies
     const consent = localStorage.getItem('cookies-consent');
     const acceptBtn = document.getElementById('accept-cookies');
     const rejectBtn = document.getElementById('reject-cookies');
 
     if (!consent) {
-        setTimeout(openCookieBanner, 1000); // Muestra el banner después de 1s si no hay consentimiento
-    } else if (consent === 'accepted') {
-        // En un sitio real, aquí cargarías Google Analytics y Adsense
-        showAppModal();
+        // Muestra el banner de cookies después de 1s si no hay consentimiento
+        setTimeout(openCookieBanner, 1000); 
     }
     
-    // 3. Manejadores de eventos de botones de Cookies
+    // 4. Manejadores de eventos de botones de Cookies
     if (acceptBtn) {
         acceptBtn.addEventListener('click', () => {
             localStorage.setItem('cookies-consent', 'accepted');
             hideCookieBanner();
-            // loadAdSense(); // Descomentar para cargar ads reales
-            showAppModal();
             alertMessage('Cookies aceptadas.');
         });
     }
@@ -302,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // 4. Manejador de Evento para el botón de búsqueda
+    // 5. Manejador de Evento para el botón de búsqueda
     const searchButton = document.getElementById('search-button'); 
     if (searchButton) {
         searchButton.addEventListener('click', searchNews);
