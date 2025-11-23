@@ -1,251 +1,317 @@
-/* --- 0. RESET Y TIPOGRAFÍA MODERNA --- */
-/* Un diseño moderno se basa en una base tipográfica fuerte. */
+/* ======================================================= */
+/* 0. RESET Y BASE (Mobile-First) */
+/* ======================================================= */
+
+:root {
+    --primary-color: #f44336; /* Rojo/Naranja de acento */
+    --secondary-color: #0d2c47; /* Azul Oscuro de titulares */
+    --background-light: #f7f9fc;
+    --text-dark: #333;
+    --header-height-mobile: 60px; /* Altura del header en móvil */
+    --app-bar-height: 45px; /* Altura del banner de la App en móvil */
+}
+
 body {
-    font-family: 'Open Sans', sans-serif; /* Fuente sans-serif limpia para el cuerpo */
+    font-family: 'Open Sans', sans-serif;
     line-height: 1.6;
     margin: 0;
-    padding-top: 50px; /* Espacio para el banner fijo de la App */
-    background-color: #f7f9fc; /* Fondo muy claro, casi blanco */
-    color: #333;
+    /* El body ahora tiene un padding fijo en la parte superior para el banner de la App */
+    padding-top: var(--app-bar-height); 
+    background-color: var(--background-light); 
+    color: var(--text-dark);
 }
 
 h1, h2, h3, h4 {
-    font-family: 'Merriweather', serif; /* Fuente serif distintiva para titulares */
-    color: #0d2c47; /* Azul oscuro para un toque de seriedad y lectura fácil */
+    font-family: 'Merriweather', serif;
+    color: var(--secondary-color);
     font-weight: 900;
 }
 
-/* --- 1. AJUSTES DEL HEADER Y NAVEGACIÓN (Limpieza Visual) --- */
-header {
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 50px; /* Se pega debajo del banner de la App */
-    z-index: 999;
+main {
+    padding: 10px; /* Espaciado general en el móvil */
 }
 
-.logo h1 {
-    font-size: 1.8em;
-    color: #f44336; /* Color de acento llamativo (Rojo/Naranja) */
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 10px 15px;
-}
-
-nav ul {
-    /* Estilo de navegación minimalista y horizontal en escritorio */
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 15px;
-}
-
-nav a {
-    color: #555;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 15px 0;
-    display: block;
-    transition: color 0.3s, border-bottom 0.3s;
-    border-bottom: 3px solid transparent; /* Efecto hover moderno */
-}
-
-nav a:hover {
-    color: #f44336;
-    border-bottom: 3px solid #f44336;
-}
-
-/* --- 2. BANNER DE DESCARGA DE APP (El elemento más importante en móvil) --- */
+/* ======================================================= */
+/* 1. BANNER DE DESCARGA DE APP (MOBILE-FIRST) */
+/* ======================================================= */
 .app-download-bar {
-    /* Fijo y prominente en la parte superior del viewport */
-    background: linear-gradient(90deg, #0d2c47 0%, #1f4f78 100%); /* Degradado oscuro y elegante */
+    background: linear-gradient(90deg, var(--secondary-color) 0%, #1f4f78 100%);
     color: white;
-    padding: 10px 15px;
-    text-align: center;
-    position: fixed; /* OJO: Ahora es 'fixed' para que quede siempre visible */
+    padding: 0 10px;
+    height: var(--app-bar-height); /* Altura fija para no moverse */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1001; /* Más alto que el header */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1001; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap;
 }
 
 .app-download-bar p {
-    margin: 0;
-    font-weight: 400;
-    font-size: 0.9em;
-    flex-grow: 1;
-    text-align: left;
-    padding-left: 10px;
-    white-space: nowrap; /* Evita que el texto se rompa en varias líneas en pantallas pequeñas */
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* El texto largo se oculta en móvil para dejar espacio al botón */
+    display: none; 
 }
 
 .app-download-bar a {
-    /* Botón de 'Call to Action' (CTA) distintivo */
-    background-color: #f44336; 
+    /* Botón CTA compacto y muy visible en móvil */
+    background-color: var(--primary-color); 
     color: white;
     text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 50px; /* Bordes redondeados modernos */
+    padding: 6px 10px;
+    border-radius: 50px;
     font-weight: 700;
-    font-size: 0.9em;
-    letter-spacing: 0.5px;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 0.85em;
+    white-space: nowrap;
+    transition: background-color 0.3s;
 }
 
-.app-download-bar a:hover {
-    background-color: #d32f2f;
-    transform: translateY(-1px);
+.app-download-bar a::before {
+    /* Ícono para mayor claridad en el móvil */
+    content: "📲 ";
 }
 
-
-/* --- 3. ANUNCIOS PATROCINADOS (Organización en Grid) --- */
-.sponsored-ads {
-    padding: 40px 20px;
-    background-color: white; /* Fondo blanco para hacerlos destacar de la sección de noticias */
-    border-top: 1px solid #eee;
+/* ======================================================= */
+/* 2. HEADER Y NAVEGACIÓN (MOBILE-FIRST) */
+/* ======================================================= */
+header {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: var(--app-bar-height); /* Se pega justo debajo del banner de la App */
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    height: var(--header-height-mobile); /* Altura fija del header */
 }
 
-.sponsored-ads h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #0d2c47;
-    text-transform: uppercase;
-    font-size: 1.5em;
+.logo h1 {
+    font-size: 1.4em; /* Logo más pequeño en móvil */
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.menu-toggle {
+    /* Botón de Hamburguesa */
+    display: block; /* Visible en móvil */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 15px;
     position: relative;
+    z-index: 100;
+}
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    margin: 5px 0;
+    transition: 0.4s;
 }
 
-.sponsored-ads h2::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background-color: #f44336; /* Línea de acento */
-    margin: 10px auto 0;
-    border-radius: 2px;
+nav {
+    /* Menú deslizable fuera de pantalla por defecto */
+    position: fixed;
+    top: calc(var(--app-bar-height) + var(--header-height-mobile)); 
+    left: -100%; /* Oculto a la izquierda */
+    width: 70%;
+    height: calc(100% - var(--app-bar-height) - var(--header-height-mobile)); 
+    background-color: white;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    transition: left 0.3s ease-in-out;
+    z-index: 990;
+    overflow-y: auto;
+}
+
+nav.open {
+    left: 0; /* Mostrar menú */
+}
+
+nav ul {
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+nav a {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.search-bar {
+    order: 3; /* Asegura que vaya al final en el flexbox */
+}
+.search-input {
+    display: none; /* Oculto por defecto en móvil */
+}
+
+/* --- ESTILOS DE ESCRITORIO (Media Query) --- */
+@media (min-width: 768px) {
+    /* HEADER y NAV */
+    body {
+        padding-top: 50px; /* Menos padding general en desktop */
+    }
+
+    header {
+        height: auto;
+        padding: 10px 20px;
+        justify-content: space-between;
+    }
+    .logo {
+        flex-shrink: 0;
+    }
+    .logo h1 {
+        font-size: 2em;
+    }
+
+    .menu-toggle {
+        display: none; /* Ocultar hamburguesa en escritorio */
+    }
+
+    nav {
+        position: static;
+        width: auto;
+        height: auto;
+        box-shadow: none;
+        flex-grow: 1; /* Permite que la navegación ocupe más espacio */
+        left: auto;
+    }
+    nav ul {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+    nav a {
+        padding: 15px 10px;
+        border-bottom: 3px solid transparent;
+        border-bottom: none;
+    }
+    
+    .search-input {
+        display: flex !important; /* Mostrar barra de búsqueda siempre */
+        align-items: center;
+        margin-left: 20px;
+    }
+    .search-toggle {
+        display: none;
+    }
+    
+    /* BANNER DE APP */
+    .app-download-bar {
+        padding: 12px 20px;
+        justify-content: center;
+    }
+    .app-download-bar p {
+        display: block; /* Mostrar texto completo en escritorio */
+        text-align: center;
+        padding-right: 20px;
+    }
+    .app-download-bar a {
+        font-size: 1em;
+    }
+    .app-download-bar a::before {
+        content: ""; /* Ocultar ícono en escritorio si el texto es descriptivo */
+    }
+    
+    main {
+        padding: 20px;
+    }
+}
+
+
+/* ======================================================= */
+/* 3. CONTENIDO PRINCIPAL Y ADS (RESPONSIVE GRID) */
+/* ======================================================= */
+
+/* HERO / Carrusel */
+.hero {
+    margin-bottom: 30px;
+}
+.hero h2 {
+    font-size: 1.8em;
+}
+
+/* SECCIÓN DE CATEGORÍAS */
+.category-grid {
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Alinear a la izquierda en móvil */
+    padding: 15px 0;
+}
+.category {
+    padding: 7px 12px;
+    font-size: 0.85em;
+}
+
+/* SECCIÓN DE ANUNCIOS PATROCINADOS */
+.sponsored-ads {
+    padding: 30px 10px;
+    margin: 20px 0;
+}
+.sponsored-ads h2 {
+    font-size: 1.3em; /* Título más pequeño en móvil */
 }
 
 .ad-grid {
-    display: grid;
-    /* 4 columnas en escritorio, adaptable */
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-    gap: 25px;
-    max-width: 1200px;
-    margin: 0 auto;
+    /* En móvil, una columna con scroll horizontal o 2 columnas si caben */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    gap: 15px;
 }
 
 .ad-card {
-    /* Tarjeta limpia y flotante */
-    border: none;
-    border-radius: 12px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-    background-color: #fff;
-    text-decoration: none;
-    display: block;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
-
-.ad-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-
 .ad-card img {
-    width: 100%;
-    height: 150px; /* Altura fija para uniformidad */
-    display: block;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    height: 120px; /* Altura más pequeña en móvil */
 }
-
 .ad-card h4 {
-    margin: 15px 0 5px;
-    color: #f44336;
-    font-size: 1.1em;
-    padding: 0 10px;
+    font-size: 1em;
 }
-
 .ad-card p {
-    padding: 0 15px 15px;
-    margin: 0;
-    font-size: 0.85em;
-    color: #666;
+    font-size: 0.75em;
+    padding: 0 10px 10px;
 }
 
-/* --- 4. CATEGORÍAS (Estilo de botones moderno) --- */
-.category-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    padding: 20px 0;
+/* Últimas Noticias (Asegurar que las tarjetas de noticias se vean bien) */
+.news-grid {
+    display: grid;
+    /* Una columna en móvil */
+    grid-template-columns: 1fr; 
+    gap: 20px;
 }
+@media (min-width: 600px) {
+    .news-grid {
+        /* Dos columnas en tablets */
+        grid-template-columns: repeat(2, 1fr); 
+    }
+}
+@media (min-width: 1024px) {
+    .news-grid {
+        /* Tres columnas en escritorio */
+        grid-template-columns: repeat(3, 1fr); 
+    }
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+/* ... otros estilos para tarjetas de noticias (news-item) que deberías crear ... */
 
-.category {
-    /* Estilo de 'tag' moderno */
-    background-color: #e4e6ea;
-    color: #333;
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 30px;
+
+/* ======================================================= */
+/* 4. FOOTER */
+/* ======================================================= */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: var(--secondary-color);
+    color: #ccc;
     font-size: 0.9em;
-    font-weight: 600;
-    transition: background-color 0.3s, color 0.3s;
 }
-
-.category:hover {
-    background-color: #f44336;
+footer a {
     color: white;
-}
-
-/* --- 5. RESPONSIVE Y MÓVIL --- */
-@media (max-width: 768px) {
-    /* Ajustes específicos para móviles */
-    body {
-        padding-top: 60px; /* Asegura el espacio para el banner en móvil */
-    }
-
-    /* Ajuste de Banner Móvil */
-    .app-download-bar {
-        justify-content: space-around;
-        padding: 8px 10px;
-    }
-    .app-download-bar p {
-        /* Oculta la parte larga del texto para ahorrar espacio */
-        display: none; 
-    }
-    .app-download-bar a {
-        padding: 6px 12px;
-        font-size: 0.85em;
-        /* El texto del botón es más corto y directo en móvil */
-        content: 'Descargar App'; 
-    }
-    .app-download-bar a::before {
-        content: "📲 ";
-    }
-    
-    header {
-        top: 60px; /* Header se pega debajo del banner móvil */
-    }
-}
-
-@media (max-width: 480px) {
-    /* Ajustes finos para celulares muy pequeños */
-    .app-download-bar {
-        padding: 5px 10px;
-        justify-content: center;
-    }
-    .app-download-bar a {
-        font-size: 0.8em;
-    }
+    margin: 0 5px;
 }
