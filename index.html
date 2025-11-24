@@ -133,7 +133,27 @@
       </div>
     </div>
 
+ 
     <script src="script.js"></script>
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // La función register apunta al archivo service-worker.js
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    // Mensaje de éxito en la consola
+                    console.log('Service Worker registrado con éxito:', registration.scope);
+                }, function(err) {
+                    // Mensaje de error si falla
+                    console.log('Fallo en el registro de Service Worker:', err);
+                });
+            });
+        } else {
+            console.log('El navegador no soporta Service Workers.');
+        }
+    </script>
+</body>
+
     <script src="share-modal.js"></script>
 </body>
 </html>
