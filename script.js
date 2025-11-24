@@ -13,9 +13,12 @@ function escapeHtml(text) {
     });
 }
 
-// --- Variables Globales (Para Carrusel) ---
+// --- Variables Globales ---
 let currentIndex = 0;
 let autoSlide;
+
+// **NUEVA VARIABLE GLOBAL PARA PWA**
+let deferredPrompt; 
 
 // --- Funciones de Utilidad (Alerta Temporal) ---
 
@@ -257,18 +260,52 @@ function hideAppModal() {
     const appModal = document.getElementById('app-modal');
     if (appModal) {
         // Solo la oculta para la sesión actual. 
-        // Si recarga, checkAppModalVisibility la hará visible de nuevo 
-        // si la PWA no está instalada.
         appModal.style.display = 'none'; 
     }
 }
-// ¡LÍNEA AÑADIDA! Expone la función para que el HTML pueda llamarla directamente con onclick.
+// Expone la función para que el HTML pueda llamarla directamente con onclick.
 window.hideAppModal = hideAppModal;
 
+// --- NUEVA LÓGICA DE INSTALACIÓN PWA ---
+
+// Captura el evento de instalación antes de que el navegador lo muestre automáticamente
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Evita que el prompt se muestre automáticamente
+    e.preventDefault();
+    // Almacena el evento para poder dispararlo después
+    deferredPrompt = e;
+});
+
+// Función para el botón "Instalar App" (llamada desde onclick="installPWA(event)")
+function installPWA(e) {
+    e.preventDefault();
+    
+    if (deferredPrompt) {
+        // Muestra el diálogo de instalación nativo
+        deferredPrompt.prompt();
+        // Espera la respuesta del usuario
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                alertMessage('¡Gracias por instalar nuestra App!');
+            } else {
+                alertMessage('Instalación cancelada.');
+            }
+            // Limpia la variable de prompt después de usarla
+            deferredPrompt = null;
+            // Oculta el banner después de intentar la instalación
+            hideAppModal(); 
+        });
+    } else {
+        // Fallback: Muestra un mensaje si el evento no fue capturado o no está disponible
+        alertMessage('Tu navegador no soporta la instalación directa. Prueba usando el menú del navegador (ej. "Añadir a pantalla de inicio").');
+    }
+}
+// Expone la función para que el HTML pueda llamarla.
+window.installPWA = installPWA; 
 
 // --- Evento Principal (Unificado) ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificar el estado del Banner de la App (para que se muestre si es la primera vez)
+    // 1. Verificar el estado del Banner de la App
     checkAppModalVisibility();
 
     // 2. Carga de Contenido
@@ -281,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rejectBtn = document.getElementById('reject-cookies');
 
     if (!consent) {
-        // Muestra el banner de cookies después de 1 segundo para no interrumpir la carga inicial
+        // Muestra el banner de cookies después de 1 segundo
         setTimeout(openCookieBanner, 1000); 
     }
     
@@ -305,7 +342,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. Manejador de Evento para el botón de búsqueda
     const searchButton = document.getElementById('search-button'); 
     if (searchButton) {
-        // Usa searchNews, ya que está definido arriba
         searchButton.addEventListener('click', searchNews);
     }
 });
