@@ -8,9 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="styles.css"> 
     <link rel="icon" type="image/png" href="/favicon.png">
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -24,13 +26,17 @@
     <div id="app-modal" class="app-download-bar" style="position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; padding: 10px; background-color: #388E3C; color: white;">
         <p style="margin: 0; font-size: 14px;">¡Descarga nuestra App de Noticias y lleva México Se Enteré Qué en tu bolsillo!</p>
         <div>
-            <a id="download-app-link" href="#" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; margin-right: 15px;">📲 Descargar App</a>
+            <a id="download-app-link" href="#" onclick="installPWA(event)" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; margin-right: 15px;">📲 Instalar App</a>
             <button onclick="hideAppModal()" style="background: none; border: none; color: white; cursor: pointer; font-size: 16px;">&times;</button>
         </div>
     </div>
 
     <header>
-      <div class="logo"><h1>México Se Enteré Qué</h1></div>
+      <div class="logo">
+          <a href="index.html">
+             <img src="images/logo_mexico.png" alt="México Se Enteré Qué" style="height: 40px; vertical-align: middle;">
+          </a>
+      </div>
       
       <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
         <span></span><span></span><span></span>
@@ -135,8 +141,6 @@
     </div>
 
     <script src="script.js"></script>
-    
-
     
     <script>
         if ('serviceWorker' in navigator) {
