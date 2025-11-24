@@ -105,9 +105,6 @@ section {
     text-decoration: none;
 }
 
-/* El estilo inline en el HTML para el botón de cerrar aplica */
-
-
 /*
  * ========================================
  * 4. HEADER Y NAVEGACIÓN
@@ -378,11 +375,17 @@ nav ul li a:hover {
     gap: 20px;
 }
 
-.news-grid article {
+.news-grid .news-card { /* Usando la clase .news-card del JS revisado */
     background: white;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.news-grid article {
+    /* Mantenemos article, pero lo envolvemos en news-card en el JS */
     display: flex;
     flex-direction: column;
 }
@@ -667,21 +670,35 @@ footer a {
         width: 100%;
     }
     
-    /* Ajuste para el banner de la app */
+    /* Ajuste para el banner de la app - CORRECCIÓN */
     .app-download-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding-bottom: 40px; /* Dejar espacio para el cierre */
+        /* Volvemos a la disposición original para centrar mejor el contenido y el botón de cerrar */
+        justify-content: space-between; 
+        align-items: center;
+        padding: 10px 15px; 
+        flex-direction: row; 
     }
     
-    .app-download-bar a {
-        margin-left: 0;
-        margin-top: 8px;
+    /* Envuelve solo el texto y el enlace de descarga en un contenedor para control */
+    .app-download-bar > p {
+        margin-right: 15px; 
     }
-    
+
+    /* Asegura que el botón de cerrar y el enlace de descarga no se superpongan */
     .app-download-bar div {
         display: flex;
-        justify-content: space-between;
-        width: 100%;
+        align-items: center;
+        /* Aseguramos que el 'div' que contiene el enlace y el botón de cerrar se comporte correctamente */
+    }
+
+    .app-download-bar a {
+        margin-left: 0;
+        margin-right: 15px; /* Separación del botón de cerrar */
+        margin-top: 0;
+    }
+    
+    /* Estilo para el botón de cerrar para asegurar que siempre esté en la esquina */
+    .app-download-bar button {
+        align-self: center;
     }
 }
