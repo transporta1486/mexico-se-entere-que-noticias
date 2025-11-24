@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
     
     <link rel="stylesheet" href="styles.css"> 
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -23,7 +24,7 @@
     <div id="app-modal" class="app-download-bar" style="position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; padding: 10px; background-color: #388E3C; color: white;">
         <p style="margin: 0; font-size: 14px;">¡Descarga nuestra App de Noticias y lleva México Se Enteré Qué en tu bolsillo!</p>
         <div>
-            <a href="#" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; margin-right: 15px;">📲 Descargar App</a>
+            <a id="download-app-link" href="#" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; margin-right: 15px;">📲 Descargar App</a>
             <button onclick="hideAppModal()" style="background: none; border: none; color: white; cursor: pointer; font-size: 16px;">&times;</button>
         </div>
     </div>
@@ -133,18 +134,17 @@
       </div>
     </div>
 
- 
     <script src="script.js"></script>
+    
+    <script src="share-modal.js"></script> 
     
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                // La función register apunta al archivo service-worker.js
+                // Registro del Service Worker
                 navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    // Mensaje de éxito en la consola
                     console.log('Service Worker registrado con éxito:', registration.scope);
                 }, function(err) {
-                    // Mensaje de error si falla
                     console.log('Fallo en el registro de Service Worker:', err);
                 });
             });
@@ -152,8 +152,5 @@
             console.log('El navegador no soporta Service Workers.');
         }
     </script>
-</body>
-
-    <script src="share-modal.js"></script>
 </body>
 </html>
