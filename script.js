@@ -36,9 +36,10 @@ function alertMessage(message) {
 }
 
 // --- Carga de JSON y Datos ---
+// --- Carga de JSON y Datos ---
 
 async function getNewsData() {
-    // **TU JSON DE NOTICIAS COMPLETO Y ACTUALIZADO**
+    // **TU JSON DE NOTICIAS COMPLETO Y CORREGIDO**
     const newsJsonData = {
         "noticias_list": [
             {
@@ -107,28 +108,24 @@ async function getNewsData() {
                 "ciudad": "Atizapán",
                 "autor": "Redacción Policía",
                 "destacada": true 
+            },
+            // >>> NOTICIA DE RONDÍN EN JARDINES (CORREGIDA)
+            {
+                "id": "as-seg-20251125", 
+                "titulo": "Implementan nuevo rondín de vigilancia en Jardines de Atizapán",
+                "resumen": "Vecinos y autoridades acuerdan establecer patrullajes nocturnos ante el aumento de robos a casa habitación. El operativo durará 90 días.",
+                "imagen": "https://miblog.com/imagenes/patrullaje_jardines.jpg", 
+                "categoria": "atizapan", // CLAVE PARA EL FILTRADO
+                "fecha": "2025-11-25",
+                "ciudad": "Atizapán",
+                "autor": "Redacción Atizapán",
+                "destacada": false 
             }
         ]
-        
-{
-    
-    "id": "as-seg-20251125", 
-    "titulo": "Implementan nuevo rondín de vigilancia en Jardines de Atizapán",
-    "resumen": "Vecinos y autoridades acuerdan establecer patrullajes nocturnos ante el aumento de robos a casa habitación. El operativo durará 90 días.",
-    "imagen": "https://miblog.com/imagenes/patrullaje_jardines.jpg", 
-    "categoria": "atizapan", // <--- ¡ESTA ES LA CLAVE! DEBE COINCIDIR CON LA URL
-    "fecha": "2025-11-25",
-    "ciudad": "Atizapán",
-    "autor": "Redacción Atizapán",
-    "destacada": false // Puedes poner true si quieres que salga en el carrusel de Atizapán.html
-}
-// ...
-]
     };
     
     return newsJsonData.noticias_list || [];
 }
-
 // --- Renderizado de Listas y Carrusel ---
 
 function renderNews(newsList, containerId) {
