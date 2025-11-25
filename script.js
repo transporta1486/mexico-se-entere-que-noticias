@@ -109,6 +109,21 @@ async function getNewsData() {
                 "destacada": true 
             }
         ]
+        
+{
+    
+    "id": "as-seg-20251125", 
+    "titulo": "Implementan nuevo rondín de vigilancia en Jardines de Atizapán",
+    "resumen": "Vecinos y autoridades acuerdan establecer patrullajes nocturnos ante el aumento de robos a casa habitación. El operativo durará 90 días.",
+    "imagen": "https://miblog.com/imagenes/patrullaje_jardines.jpg", 
+    "categoria": "atizapan", // <--- ¡ESTA ES LA CLAVE! DEBE COINCIDIR CON LA URL
+    "fecha": "2025-11-25",
+    "ciudad": "Atizapán",
+    "autor": "Redacción Atizapán",
+    "destacada": false // Puedes poner true si quieres que salga en el carrusel de Atizapán.html
+}
+// ...
+]
     };
     
     return newsJsonData.noticias_list || [];
