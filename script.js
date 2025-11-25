@@ -16,8 +16,6 @@ function escapeHtml(text) {
 // --- Variables Globales ---
 let currentIndex = 0;
 let autoSlide;
-
-// **NUEVA VARIABLE GLOBAL PARA PWA**
 let deferredPrompt; 
 
 // --- Funciones de Utilidad (Alerta Temporal) ---
@@ -25,7 +23,6 @@ let deferredPrompt;
 function alertMessage(message) {
     console.warn("Mensaje para el usuario:", message);
     const tempDiv = document.createElement('div');
-    // Estilos para la alerta flotante
     tempDiv.style.cssText = 'position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 5px; z-index: 2000; box-shadow: 0 4px 8px rgba(0,0,0,0.2); opacity: 0; transition: opacity 0.3s;';
     tempDiv.textContent = message;
     document.body.appendChild(tempDiv);
@@ -41,28 +38,32 @@ function alertMessage(message) {
 // --- Carga de JSON y Renderizado ---
 
 async function getNewsData() {
-    // Datos del JSON simulados
+    // **NOTA IMPORTANTE:**
+    // ASEGÚRATE DE QUE TUS NOTICIAS REALES TENGAN UN 'id' ÚNICO Y EL CAMPO 'categoria'
+    
     const newsJsonData = {
         "noticias_list": [
+            // Ejemplos de noticias con IDs y categorías
             { "id": "2e3c0d60", "titulo": "Asesinan a Camilo Ochoa, 'El Alucín', en su domicilio en Temixco", "resumen": "El influencer Camilo Ochoa, conocido como 'El Alucín', fue asesinado a balazos...", "imagen": "https://i.postimg.cc/zfJ0KVJ4/FB-IMG-1755480044118.jpg", "categoria": "policía", "autor": "Javier Huerta Martinez", "destacada": false },
-            { "id": "a9b8c7d6", "titulo": "Baches afectan casi el 80 % del Valle de México, según denunciantes", "resumen": "Denuncias ciudadanas, apoyadas por imágenes y videos, revelan que los baches se han convertido en un problema crítico y generalizado...", "imagen": "https://i.postimg.cc/xdr6Ct7j/FB-IMG-1755466516879.jpg", "categoria": "infraestructura", "autor": "Javier Huerta Martinez", "destacada": false },
-            { "id": "1f2g3h4i", "titulo": "Familia de AMLO en el foco mediático tras rumores de mudanza presidencial", "resumen": "Versiones sin confirmar, que circulan principalmente en redes sociales, han desatado una ola de especulaciones sobre una supuesta mudanza...", "imagen": "https://i.postimg.cc/sX5dxMKq/f3eed-16-08-2025-bety-1.jpg", "categoria": "política", "autor": "Javier Huerta Martinez", "destacada": true },
-            { "id": "c7d6e5f4", "titulo": "🚨 México se entere qué: Rescatan a 15 personas atrapadas en Teleférico de Torreón", "resumen": "Momentos de tensión se vivieron en Torreón, Coahuila, cuando una falla mecánica dejó varadas a 15 personas en las góndolas...", "imagen": "https://i.postimg.cc/d08j8525/telefericotorreonsl-312b03dd-focus-0-0-1200-600.webp", "categoria": "sucesos", "autor": "", "destacada": false },
-            { "id": "b8c7d6e5", "titulo": "🔥 México se entere qué: Incendio arrasa mercado en Monterrey", "resumen": "Un fuerte incendio consumió gran parte de un mercado popular en Monterrey durante la madrugada...", "imagen": "https://i.postimg.cc/J4nx9c8h/incendio-consume-nueve-locales-en-un-mercado-de-monterrey-2496html-incendio-nljpg-8123html-f0dbfbc7.webp", "categoria": "sociedad", "autor": "", "destacada": false }
+            { "id": "a9b8c7d6", "titulo": "Baches afectan casi el 80 % del Valle de México", "resumen": "Denuncias ciudadanas revelan que los baches se han convertido en un problema crítico y generalizado...", "imagen": "https://i.postimg.cc/xdr6Ct7j/FB-IMG-1755466516879.jpg", "categoria": "infraestructura", "autor": "Javier Huerta Martinez", "destacada": false },
+            { "id": "1f2g3h4i", "titulo": "🚨 Detienen a ex-funcionario en Naucalpan por desvío de fondos", "resumen": "La Fiscalía anticorrupción ejecutó una orden de aprehensión contra el ex-titular de obras públicas.", "imagen": "https://i.postimg.cc/sX5dxMKq/f3eed-16-08-2025-bety-1.jpg", "categoria": "naucalpan", "autor": "Javier Huerta Martinez", "destacada": true },
+            { "id": "c7d6e5f4", "titulo": "Tragedia en Atizapán: Fuerte choque en la Calzada San Mateo", "resumen": "Dos vehículos impactados dejan saldo de dos heridos graves y tráfico denso.", "imagen": "https://i.postimg.cc/d08j8525/telefericotorreonsl-312b03dd-focus-0-0-1200-600.webp", "categoria": "atizapan", "autor": "Redacción", "destacada": false },
+            { "id": "b8c7d6e5", "titulo": "Nuevo parque ecológico inaugurado en Tlalnepantla", "resumen": "El gobierno municipal celebra la apertura de una nueva área verde en la zona poniente.", "imagen": "https://i.postimg.cc/J4nx9c8h/incendio-consume-nueve-locales-en-un-mercado-de-monterrey-2496html-incendio-nljpg-8123html-f0dbfbc7.webp", "categoria": "tlalnepantla", "autor": "Redacción", "destacada": false },
+            { "id": "f9g0h1i2", "titulo": "Feria del empleo en Cuautitlán Izcalli con más de 50 empresas", "resumen": "Oportunidades de trabajo para jóvenes y adultos en la zona industrial de Izcalli.", "imagen": "https://placehold.co/600x338/26A69A/FFFFFF?text=Empleo+Izcalli", "categoria": "izcalli", "autor": "Redacción", "destacada": false },
+            { "id": "j3k4l5m6", "titulo": "Vecinos de Nicolás Romero denuncian falta de agua por 4 días", "resumen": "Problemas con el suministro afectan a varias colonias; el ayuntamiento promete soluciones inmediatas.", "imagen": "https://placehold.co/600x338/546E7A/FFFFFF?text=Agua+NR", "categoria": "nicolas-romero", "autor": "Vecinos", "destacada": false }
         ]
     };
     
-    // Devolvemos la lista de noticias, no el objeto completo
     return newsJsonData.noticias_list || [];
 }
 
-
+// **MODIFICADA: Ahora crea el enlace a noticia.html**
 function renderNews(newsList, containerId) {
     const newsContainer = document.getElementById(containerId);
     if (!newsContainer) return;
 
     if (!newsList.length) {
-        newsContainer.innerHTML = '<p>No se encontraron noticias.</p>';
+        newsContainer.innerHTML = '<p class="no-news">No se encontraron noticias para esta sección.</p>';
         return;
     }
 
@@ -71,22 +72,28 @@ function renderNews(newsList, containerId) {
         const safeTitle = escapeHtml(news.titulo || 'Noticia');
         const isCarousel = containerId === 'carousel-inner';
         
-        // El contenido varía si es para el carrusel o para la cuadrícula principal
+        // URL de la Noticia Individual
+        const newsUrl = `noticia.html?id=${news.id}`; 
+        
         const articleContent = isCarousel ? `
-            <img src="${news.imagen || 'https://via.placeholder.com/800x400?text=Imagen+No+Disponible'}" alt="${safeTitle}">
-            <div class="carousel-content">
-                <h3>${safeTitle}</h3>
-                <p>${escapeHtml(news.resumen)}</p>
-                <div class="author-info">
-                    <span>Por: ${escapeHtml(news.autor || 'Redacción')}</span>
+            <a href="${newsUrl}" class="carousel-link">
+                <img src="${news.imagen || 'https://via.placeholder.com/800x400?text=Imagen+No+Disponible'}" alt="${safeTitle}">
+                <div class="carousel-content">
+                    <h3>${safeTitle}</h3>
+                    <p>${escapeHtml(news.resumen)}</p>
+                    <div class="author-info">
+                        <span>Por: ${escapeHtml(news.autor || 'Redacción')}</span>
+                    </div>
                 </div>
-                <button class="share-btn" onclick="shareArticle('${safeTitle}')">Compartir</button>
-            </div>
+            </a>
+            <button class="share-btn" onclick="shareArticle('${safeTitle}')">Compartir</button>
         ` : `
             <article>
-                <img src="${news.imagen || 'https://via.placeholder.com/800x400?text=Imagen+No+Disponible'}" alt="${safeTitle}">
-                <h4>${safeTitle}</h4>
-                <p>${escapeHtml(news.resumen)}</p>
+                <a href="${newsUrl}">
+                    <img src="${news.imagen || 'https://via.placeholder.com/800x400?text=Imagen+No+Disponible'}" alt="${safeTitle}">
+                    <h4>${safeTitle}</h4>
+                    <p>${escapeHtml(news.resumen)}</p>
+                </a>
                 <div class="author-info">
                     <span>Por: ${escapeHtml(news.autor || 'Redacción')}</span>
                 </div>
@@ -95,26 +102,46 @@ function renderNews(newsList, containerId) {
         `;
 
         const tag = isCarousel ? 'div' : 'span';
-        const classNames = isCarousel ? 'carousel-item' : 'news-card'; // Cambiado a news-card para mejor semántica en el grid
+        const classNames = isCarousel ? 'carousel-item' : 'news-card'; 
 
         if (isCarousel) {
              newsContainer.innerHTML += `<${tag} class="${classNames}">${articleContent}</${tag}>`;
         } else {
-             // Envuelve el artículo en una tarjeta si no es carrusel
              newsContainer.innerHTML += `<div class="${classNames}">${articleContent}</div>`;
         }
     });
 }
 
-async function loadNews() {
+
+// Función unificada para cargar noticias filtradas por categoría
+async function loadFilteredNews(category, containerId) {
     const noticias = await getNewsData();
-    renderNews(noticias.slice(0, 6), 'news-container');
+    let filteredNews = noticias;
+
+    if (category) {
+        filteredNews = noticias.filter(n => n.categoria && n.categoria.toLowerCase() === category.toLowerCase());
+    }
+    
+    renderNews(filteredNews.slice(0, 6), containerId);
 }
 
-async function loadCarousel() {
+// Función unificada para cargar el carrusel filtrado por categoría
+async function loadFilteredCarousel(category) {
     const noticias = await getNewsData();
-    // Filtra las noticias destacadas, o usa las primeras 3 si no hay destacadas
-    const destacadas = noticias.filter(n => n.destacada);
+    
+    let destacadas = noticias;
+    
+    if (category) {
+        destacadas = noticias.filter(n => n.destacada && n.categoria && n.categoria.toLowerCase() === category.toLowerCase());
+        
+        if (destacadas.length === 0) {
+            destacadas = noticias.filter(n => n.categoria && n.categoria.toLowerCase() === category.toLowerCase());
+        }
+    } else {
+        // Si no hay categoría (index.html), usar todas las destacadas
+        destacadas = noticias.filter(n => n.destacada);
+    }
+    
     const lista = destacadas.length ? destacadas.slice(0, 3) : noticias.slice(0, 3);
     
     renderNews(lista, 'carousel-inner');
@@ -130,6 +157,60 @@ async function loadCarousel() {
     }
 }
 
+// Función para obtener un parámetro de la URL
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    const results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+// **NUEVA LÓGICA DE CARGA DE ARTÍCULO ÚNICO**
+async function loadSingleArticle(id) {
+    const noticias = await getNewsData();
+    const article = noticias.find(n => n.id === id);
+    const container = document.getElementById('news-article-container');
+    const titleElement = document.querySelector('title');
+
+    if (!container) return;
+
+    if (!article) {
+        container.innerHTML = '<h2>🚨 Error 404: Noticia No Encontrada</h2><p>Lo sentimos, el artículo solicitado no existe o fue eliminado.</p>';
+        titleElement.textContent = 'Error 404 | México Se Enteré Qué';
+        return;
+    }
+
+    const safeTitle = escapeHtml(article.titulo);
+    titleElement.textContent = safeTitle + ' | México Se Enteré Qué'; // Actualiza el título de la pestaña
+
+    container.innerHTML = `
+        <h1>${safeTitle}</h1>
+        <div class="article-meta">
+            <span>📅 ${new Date().toLocaleDateString('es-MX')}</span>
+            <span>✍️ Por: ${escapeHtml(article.autor || 'Redacción')}</span>
+            <span>🏷️ Categoría: ${escapeHtml(article.categoria)}</span>
+        </div>
+        <img src="${article.imagen || 'https://via.placeholder.co/1200x600?text=Imagen+Principal'}" alt="${safeTitle}" class="article-image">
+        <p class="article-summary">${escapeHtml(article.resumen)}</p>
+        
+        <section class="article-body">
+            <h3>Contenido completo</h3>
+            <p>Este es el cuerpo del artículo. En un sistema real, aquí iría el texto completo y detallado de la noticia que cargaste con el ID <strong>${id}</strong>. </p>
+            <p>Para esta demostración, el contenido completo es el mismo que el resumen, pero en un entorno real cargarías un campo adicional (ej. "contenido_completo") de tu JSON.</p>
+        </section>
+
+        <button class="share-btn large" onclick="shareArticle('${safeTitle}')">Compartir Artículo</button>
+    `;
+    
+    // Cargar noticias relacionadas
+    const relatedNews = noticias
+        .filter(n => n.categoria === article.categoria && n.id !== article.id)
+        .slice(0, 3);
+        
+    renderNews(relatedNews, 'related-news-container');
+}
+
+
 // --- Carrusel Control ---
 function moveCarousel(direction) {
     const items = document.querySelectorAll('.carousel-item');
@@ -141,7 +222,6 @@ function moveCarousel(direction) {
     
     const carouselInner = document.getElementById('carousel-inner');
     if (carouselInner) {
-        // Mueve el carrusel usando CSS Transform
         carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
     
@@ -170,17 +250,14 @@ function shareArticle(title) {
     const url = window.location.href;
     const text = `¡Mira esta noticia en México Se Enteré Qué!: ${title}`;
     if (navigator.share) {
-        // Uso de la API nativa de compartir
         navigator.share({ title, text, url }).catch(() => {});
     } else {
-        // Opción de fallback para navegadores antiguos
         alertMessage(`Copia este enlace para compartir: ${url}`);
     }
 }
 window.shareArticle = shareArticle;
 
 // --- Menú / Búsqueda (UI) ---
-
 function toggleMenu() {
     const navMenu = document.getElementById('nav-menu');
     const menuToggle = document.querySelector('.menu-toggle');
@@ -190,7 +267,6 @@ function toggleMenu() {
         navMenu.classList.toggle('active');
         menuToggle.classList.toggle('active'); 
         
-        // Cierra la búsqueda si el menú se abre (en vista móvil)
         if (window.innerWidth < 768 && searchInputContainer) {
             searchInputContainer.classList.remove('active');
         }
@@ -218,7 +294,6 @@ window.toggleSearch = toggleSearch;
 
 function openCookieBanner() {
     const banner = document.getElementById('cookie-banner');
-    // Muestra el banner solo si no hay consentimiento previo
     if (banner && localStorage.getItem('cookies-consent') === null) {
         banner.style.display = 'block';
     }
@@ -230,103 +305,113 @@ function hideCookieBanner() {
     if (banner) banner.style.display = 'none';
 }
 
-// Verifica si la página se está ejecutando como una PWA instalada
 function isPWAInstalled() {
-    // Si el modo de visualización es 'standalone', 'fullscreen', o 'minimal-ui',
-    // significa que la PWA está instalada y ejecutándose desde el ícono de inicio.
     return window.matchMedia('(display-mode: standalone)').matches || 
            window.matchMedia('(display-mode: fullscreen)').matches || 
            window.matchMedia('(display-mode: minimal-ui)').matches;
 }
 
-// Función que se ejecuta al cargar la página
 function checkAppModalVisibility() {
     const appModal = document.getElementById('app-modal');
     if (!appModal) return;
 
-    // Lógica para mostrar/ocultar:
+    // Solo muestra el banner si no está instalada la PWA
     if (isPWAInstalled()) {
-        // 1. Si está instalada, OCULTAR el banner.
         appModal.style.display = 'none';
-        
     } else {
-        // 2. Si NO está instalada, MOSTRAR el banner.
         appModal.style.display = 'flex';
     }
 }
 
-// La función que se llama cuando el usuario hace clic en el botón de cerrar ('&times;')
 function hideAppModal() {
     const appModal = document.getElementById('app-modal');
     if (appModal) {
-        // Solo la oculta para la sesión actual. 
         appModal.style.display = 'none'; 
     }
 }
-// Expone la función para que el HTML pueda llamarla directamente con onclick.
 window.hideAppModal = hideAppModal;
 
-// --- NUEVA LÓGICA DE INSTALACIÓN PWA ---
+// --- LÓGICA DE INSTALACIÓN PWA (Smart Banner) ---
 
-// Captura el evento de instalación antes de que el navegador lo muestre automáticamente
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Evita que el prompt se muestre automáticamente
     e.preventDefault();
-    // Almacena el evento para poder dispararlo después
     deferredPrompt = e;
 });
 
-// Función para el botón "Instalar App" (llamada desde onclick="installPWA(event)")
 function installPWA(e) {
     e.preventDefault();
     
     if (deferredPrompt) {
-        // Muestra el diálogo de instalación nativo
         deferredPrompt.prompt();
-        // Espera la respuesta del usuario
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
                 alertMessage('¡Gracias por instalar nuestra App!');
             } else {
                 alertMessage('Instalación cancelada.');
             }
-            // Limpia la variable de prompt después de usarla
             deferredPrompt = null;
-            // Oculta el banner después de intentar la instalación
             hideAppModal(); 
         });
     } else {
-        // Fallback: Muestra un mensaje si el evento no fue capturado o no está disponible
         alertMessage('Tu navegador no soporta la instalación directa. Prueba usando el menú del navegador (ej. "Añadir a pantalla de inicio").');
     }
 }
-// Expone la función para que el HTML pueda llamarla.
 window.installPWA = installPWA; 
 
-// --- Evento Principal (Unificado) ---
+// --- Evento Principal (Unificado y Final) ---
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificar el estado del Banner de la App
+    // 1. Detección de la página actual
+    const path = window.location.pathname;
+    
+    if (path.includes('noticia.html')) {
+        // **LÓGICA PARA PÁGINA DE NOTICIA INDIVIDUAL**
+        const articleId = getUrlParameter('id');
+        if (articleId) {
+            loadSingleArticle(articleId);
+        } else {
+            document.getElementById('news-article-container').innerHTML = '<h2>ID de noticia no proporcionado.</h2>';
+        }
+        
+    } else {
+        // **LÓGICA PARA PÁGINAS DE LISTADO (Index, Atizapán, etc.)**
+        let categoryToFilter = null;
+        
+        // Mapea la URL a la categoría de noticias (usa minúsculas)
+        if (path.includes('atizapan.html')) {
+            categoryToFilter = 'atizapan';
+        } else if (path.includes('tlalnepantla.html')) {
+            categoryToFilter = 'tlalnepantla';
+        } else if (path.includes('cuatitlan-izcalli.html')) {
+            categoryToFilter = 'izcalli'; 
+        } else if (path.includes('nicolas-romero.html')) {
+            categoryToFilter = 'nicolas-romero'; 
+        } else if (path.includes('naucalpan.html')) {
+            categoryToFilter = 'naucalpan';
+        }
+        // Si es index.html, categoryToFilter es null y carga las destacadas.
+
+        loadFilteredNews(categoryToFilter, 'news-container');
+        loadFilteredCarousel(categoryToFilter);
+    }
+    
+    // 2. Lógica de PWA, Cookies, Búsqueda (Se ejecuta en todas las páginas)
     checkAppModalVisibility();
 
-    // 2. Carga de Contenido
-    loadNews();
-    loadCarousel();
-    
-    // 3. Lógica de Cookies
     const consent = localStorage.getItem('cookies-consent');
     const acceptBtn = document.getElementById('accept-cookies');
     const rejectBtn = document.getElementById('reject-cookies');
 
     if (!consent) {
-        // Muestra el banner de cookies después de 1 segundo
         setTimeout(openCookieBanner, 1000); 
     }
     
-    // 4. Manejadores de eventos de botones de Cookies
+    // Manejadores de eventos de cookies y búsqueda
     if (acceptBtn) {
         acceptBtn.addEventListener('click', () => {
             localStorage.setItem('cookies-consent', 'accepted');
             hideCookieBanner();
+            // Ya que aceptó, el banner de la app no debería salir hasta que borre el caché
+            hideAppModal(); 
             alertMessage('Cookies aceptadas.');
         });
     }
@@ -339,7 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // 5. Manejador de Evento para el botón de búsqueda
     const searchButton = document.getElementById('search-button'); 
     if (searchButton) {
         searchButton.addEventListener('click', searchNews);
