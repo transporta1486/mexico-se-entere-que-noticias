@@ -1,3 +1,23 @@
+// ===================================================
+// Bloque de registro del Service Worker (PWA)
+// ¡DEBE IR AL PRINCIPIO DEL ARCHIVO!
+// ===================================================
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => {
+                console.log('Service Worker registrado con éxito:', reg);
+            })
+            .catch(error => {
+                // Este es el error que estás viendo: InvalidStateError
+                console.error('Fallo en el registro del Service Worker:', error);
+            });
+    });
+}
+// ===================================================
+
+
+
 // Funciones para escapar caracteres especiales de una cadena HTML (Seguridad XSS)
 function escapeHtml(text) {
     if (typeof text !== 'string') return '';
