@@ -1,17 +1,4 @@
 
-if ('serviceWorker' in navigator) {
-
-    window.addEventListener('load', () => { 
-
-        navigator.serviceWorker.register('./service-worker.js') 
-            .then(reg => {
-                console.log('Service Worker registrado con éxito:', reg);
-            })
-            .catch(error => {
-                console.error('Fallo en el registro del Service Worker:', error);
-            });
-    });
-}
 
 // Funciones para escapar caracteres especiales de una cadena HTML (Seguridad XSS)
 function escapeHtml(text) {
