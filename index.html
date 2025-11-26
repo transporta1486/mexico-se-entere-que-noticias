@@ -142,19 +142,6 @@
 
     <script src="script.js"></script>
     
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                // Registro del Service Worker
-                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                    console.log('Service Worker registrado con éxito:', registration.scope);
-                }, function(err) {
-                    console.log('Fallo en el registro de Service Worker:', err);
-                });
-            });
-        } else {
-            console.log('El navegador no soporta Service Workers.');
-        }
-    </script>
+    
 </body>
 </html>
