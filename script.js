@@ -1,31 +1,115 @@
-// EN script.js (línea 8-10)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => { // Usar 'load' es más seguro que 'DOMContentLoaded'
-        navigator.serviceWorker.register('./service-worker.js') // Usar ruta relativa './'
-            // ... el resto del código de registro ...
-    });
-}
+// ===================================================
+// INICIALIZACIÓN Y REGISTRO DEL SERVICE WORKER (PWA)
+// ===================================================
+// Usamos window.addEventListener('load') para asegurar que el registro del Service Worker
+// se ejecute cuando toda la página está completamente cargada, evitando el InvalidStateError.
 
-// Funciones para escapar caracteres especiales de una cadena HTML (Seguridad XSS)
-function escapeHtml(text) {
-    if (typeof text !== 'string') return '';
-    return text.replace(/[&<>"']/g, function(match) {
-        switch (match) {
-            case '&': return '&amp;';
-            case '<': return '&lt;';
-            case '>': return '&gt;';
-            case '"': return '&quot;';
-            case "'": return '&#039;';
-            default: return match;
-        }
-    });
-} // <--- ¡Esta llave de cierre y el punto y coma faltaban o estaban corruptos!
-
-// --- A partir de aquí sigue el resto de tu código JS: Funciones de Utilidad, getNewsData, etc. ---
-// --- Variables Globales ---
 let currentIndex = 0;
 let autoSlide;
 let deferredPrompt; 
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        // RUTA CORREGIDA: Usamos './' para GitHub Pages
+        navigator.serviceWorker.register('./service-worker.js') 
+            .then(reg => {
+                console.log('Service Worker registrado con éxito:', reg);
+            })
+            .catch(error => {
+                console.error('Fallo en el registro del Service Worker:', error);
+            });
+        
+        // ===================================================
+        // --- LÓGICA PRINCIPAL (Ahora dentro de window.load) ---
+        // ===================================================
+
+        // 1. Detección de la página actual
+        const path = window.location.pathname;
+        
+        if (path.includes('noticia.html')) {
+            // **LÓGICA PARA PÁGINA DE NOTICIA INDIVIDUAL**
+            const articleId = getUrlParameter('id');
+            if (articleId) {
+                loadSingleArticle(articleId);
+            } else {
+                document.getElementById('news-article-container').innerHTML = '<h2>ID de noticia no proporcionado.</h2>';
+            }
+            
+        } else {
+            // **LÓGICA PARA PÁGINAS DE LISTADO (Index, Atizapán, etc.)**
+            let categoryToFilter = null;
+            
+            // Mapea la URL a la categoría de noticias (usa minúsculas)
+            if (path.includes('atizapan.html')) {
+                categoryToFilter = 'atizapan';
+            } else if (path.includes('tlalnepantla.html')) {
+                categoryToFilter = 'tlalnepantla';
+            } else if (path.includes('cuatitlan-izcalli.html')) {
+                categoryToFilter = 'izcalli'; 
+            } else if (path.includes('nicolas-romero.html')) {
+                categoryToFilter = 'nicolas-romero'; 
+            } else if (path.includes('naucalpan.html')) {
+                categoryToFilter = 'naucalpan';
+            }
+            
+            loadFilteredNews(categoryToFilter, 'news-container');
+            loadFilteredCarousel(categoryToFilter);
+        }
+        
+        // 2. Lógica de PWA, Cookies, Búsqueda (Se ejecuta en todas las páginas)
+        checkAppModalVisibility();
+
+        const consent = localStorage.getItem('cookies-consent');
+        const acceptBtn = document.getElementById('accept-cookies');
+        const rejectBtn = document.getElementById('reject-cookies');
+
+        if (!consent) {
+            setTimeout(openCookieBanner, 1000); 
+        }
+        
+        // Manejadores de eventos de cookies y búsqueda
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => {
+                localStorage.setItem('cookies-consent', 'accepted');
+                hideCookieBanner();
+                alertMessage('Cookies aceptadas.');
+            });
+        }
+
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', () => {
+                localStorage.setItem('cookies-consent', 'rejected');
+                hideCookieBanner();
+                alertMessage('Cookies rechazadas.');
+            });
+        }
+        
+        const searchButton = document.getElementById('search-button'); 
+        if (searchButton) {
+            searchButton.addEventListener('click', searchNews);
+        }
+
+    });
+}
+// ===================================================
+// FIN DEL REGISTRO DE SW / INICIO DE DECLARACIONES GLOBALES
+// ===================================================
+
+
+// Funciones para escapar caracteres especiales de una cadena HTML (Seguridad XSS)
+function escapeHtml(text) {
+    if (typeof text !== 'string') return '';
+    return text.replace(/[&<>"']/g, function(match) {
+        switch (match) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '"': return '&quot;';
+            case "'": return '&#039;';
+            default: return match;
+        }
+    });
+}
 
 // --- Funciones de Utilidad (Alerta Temporal) ---
 
@@ -47,7 +131,7 @@ function alertMessage(message) {
 // --- Carga de JSON y Datos ---
 
 async function getNewsData() {
-    // **TU JSON DE NOTICIAS COMPLETO Y FINALIZADO CON TODAS LAS NOTICIAS DE ATIZAPÁN**
+    // **TU JSON DE NOTICIAS COMPLETO**
     const newsJsonData = {
         "noticias_list": [
             {
@@ -168,7 +252,7 @@ async function getNewsData() {
     return newsJsonData.noticias_list || [];
 }
 
-// --- Renderizado de Listas y Carrusel (CÓDIGO SIN CAMBIOS) ---
+// --- Renderizado de Listas y Carrusel ---
 
 function renderNews(newsList, containerId) {
     const newsContainer = document.getElementById(containerId);
@@ -274,7 +358,7 @@ async function loadFilteredCarousel(category) {
 }
 
 
-// --- Lógica de Artículo Individual (noticia.html) (CÓDIGO SIN CAMBIOS) ---
+// --- Lógica de Artículo Individual (noticia.html) ---
 
 // Función para obtener un parámetro de la URL (ej. el ID)
 function getUrlParameter(name) {
@@ -331,7 +415,7 @@ async function loadSingleArticle(id) {
 }
 
 
-// --- Carrusel Control (CÓDIGO SIN CAMBIOS) ---
+// --- Carrusel Control ---
 function moveCarousel(direction) {
     const items = document.querySelectorAll('.carousel-item');
     if (items.length <= 1) return;
@@ -349,7 +433,7 @@ function moveCarousel(direction) {
 }
 window.moveCarousel = moveCarousel;
 
-// --- Búsqueda (CÓDIGO SIN CAMBIOS) ---
+// --- Búsqueda ---
 async function searchNews() {
     const searchInput = document.getElementById('search');
     if (!searchInput) return;
@@ -365,7 +449,7 @@ async function searchNews() {
 }
 window.searchNews = searchNews;
 
-// --- Compartir (CÓDIGO SIN CAMBIOS) ---
+// --- Compartir ---
 function shareArticle(title) {
     const url = window.location.href;
     const text = `¡Mira esta noticia en México Se Enteré Qué!: ${title}`;
@@ -383,7 +467,7 @@ function shareArticle(title) {
 }
 window.shareArticle = shareArticle;
 
-// --- Menú / Búsqueda (UI) (CÓDIGO SIN CAMBIOS) ---
+// --- Menú / Búsqueda (UI) ---
 function toggleMenu() {
     const navMenu = document.getElementById('nav-menu');
     const menuToggle = document.querySelector('.menu-toggle');
@@ -416,7 +500,7 @@ function toggleSearch() {
 }
 window.toggleSearch = toggleSearch;
 
-// --- Cookies y App Modal (PWA) (CÓDIGO CORREGIDO) ---
+// --- Cookies y App Modal (PWA) ---
 
 function openCookieBanner() {
     const banner = document.getElementById('cookie-banner');
@@ -457,7 +541,7 @@ function hideAppModal() {
 }
 window.hideAppModal = hideAppModal;
 
-// --- LÓGICA DE INSTALACIÓN PWA (Smart Banner) (CÓDIGO SIN CAMBIOS) ---
+// --- LÓGICA DE INSTALACIÓN PWA (Smart Banner) ---
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -482,76 +566,4 @@ function installPWA(e) {
         alertMessage('Tu navegador no soporta la instalación directa. Prueba usando el menú del navegador (ej. "Añadir a pantalla de inicio").');
     }
 }
-window.installPWA = installPWA; 
-
-// --- Evento Principal (Unificado y Final) ---
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Detección de la página actual
-    const path = window.location.pathname;
-    
-    if (path.includes('noticia.html')) {
-        // **LÓGICA PARA PÁGINA DE NOTICIA INDIVIDUAL**
-        const articleId = getUrlParameter('id');
-        if (articleId) {
-            loadSingleArticle(articleId);
-        } else {
-            document.getElementById('news-article-container').innerHTML = '<h2>ID de noticia no proporcionado.</h2>';
-        }
-        
-    } else {
-        // **LÓGICA PARA PÁGINAS DE LISTADO (Index, Atizapán, etc.)**
-        let categoryToFilter = null;
-        
-        // Mapea la URL a la categoría de noticias (usa minúsculas)
-        if (path.includes('atizapan.html')) {
-            categoryToFilter = 'atizapan';
-        } else if (path.includes('tlalnepantla.html')) {
-            categoryToFilter = 'tlalnepantla';
-        } else if (path.includes('cuatitlan-izcalli.html')) {
-            categoryToFilter = 'izcalli'; 
-        } else if (path.includes('nicolas-romero.html')) {
-            categoryToFilter = 'nicolas-romero'; 
-        } else if (path.includes('naucalpan.html')) {
-            categoryToFilter = 'naucalpan';
-        }
-        // Si es index.html, categoryToFilter es null y carga las destacadas/generales.
-
-        loadFilteredNews(categoryToFilter, 'news-container');
-        loadFilteredCarousel(categoryToFilter);
-    }
-    
-    // 2. Lógica de PWA, Cookies, Búsqueda (Se ejecuta en todas las páginas)
-    checkAppModalVisibility();
-
-    const consent = localStorage.getItem('cookies-consent');
-    const acceptBtn = document.getElementById('accept-cookies');
-    const rejectBtn = document.getElementById('reject-cookies');
-
-    if (!consent) {
-        setTimeout(openCookieBanner, 1000); 
-    }
-    
-    // Manejadores de eventos de cookies y búsqueda
-    if (acceptBtn) {
-        // *** LÍNEA CORREGIDA: Eliminamos hideAppModal() aquí ***
-        acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookies-consent', 'accepted');
-            hideCookieBanner();
-            // ¡Ya no se oculta el App Modal al aceptar cookies!
-            alertMessage('Cookies aceptadas.');
-        });
-    }
-
-    if (rejectBtn) {
-        rejectBtn.addEventListener('click', () => {
-            localStorage.setItem('cookies-consent', 'rejected');
-            hideCookieBanner();
-            alertMessage('Cookies rechazadas.');
-        });
-    }
-    
-    const searchButton = document.getElementById('search-button'); 
-    if (searchButton) {
-        searchButton.addEventListener('click', searchNews);
-    }
-});
+window.installPWA = installPWA;
