@@ -1,19 +1,15 @@
-// ===================================================
-
 if ('serviceWorker' in navigator) {
-    document.addEventListener('DOMContentLoaded', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then(reg => {
-                console.log('Service Worker registrado con éxito:', reg);
-            })
-            .catch(error => {
-                // Si el error persiste, puede ser un problema con /service-worker.js o el entorno.
-                console.error('Fallo en el registro del Service Worker:', error);
-            });
-    });
+    document.addEventListener('DOMContentLoaded', () => {
+        // CÓDIGO CORREGIDO: Usar la ruta relativa (./) en lugar de la ruta absoluta (/)
+        navigator.serviceWorker.register('./service-worker.js') 
+            .then(reg => {
+                console.log('Service Worker registrado con éxito:', reg);
+            })
+            .catch(error => {
+                console.error('Fallo en el registro del Service Worker:', error);
+            });
+    });
 }
-// ===================================================
-
 
 
 // Funciones para escapar caracteres especiales de una cadena HTML (Seguridad XSS)
