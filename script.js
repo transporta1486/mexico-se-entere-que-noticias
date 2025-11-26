@@ -1,7 +1,8 @@
 if ('serviceWorker' in navigator) {
     document.addEventListener('DOMContentLoaded', () => {
         // CÓDIGO CORREGIDO: Usar la ruta relativa (./) en lugar de la ruta absoluta (/)
-        navigator.serviceWorker.register('./service-worker.js') 
+     // CORRECCIÓN APLICADA:
+navigator.serviceWorker.register('./service-worker.js')
             .then(reg => {
                 console.log('Service Worker registrado con éxito:', reg);
             })
