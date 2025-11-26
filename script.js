@@ -1,4 +1,10 @@
-
+// EN script.js (línea 8-10)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => { // Usar 'load' es más seguro que 'DOMContentLoaded'
+        navigator.serviceWorker.register('./service-worker.js') // Usar ruta relativa './'
+            // ... el resto del código ...
+    });
+}
 
 // Funciones para escapar caracteres especiales de una cadena HTML (Seguridad XSS)
 function escapeHtml(text) {
