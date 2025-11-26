@@ -11,7 +11,7 @@ let deferredPrompt;
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         // RUTA CORREGIDA: Usamos './' para GitHub Pages
-        navigator.serviceWorker.register('./service-worker.js') 
+navigator.serviceWorker.register('/mexico-se-entere/service-worker.js')
             .then(reg => {
                 console.log('Service Worker registrado con éxito:', reg);
             })
