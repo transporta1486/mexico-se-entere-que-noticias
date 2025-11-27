@@ -91,9 +91,11 @@
     <div id="cookie-banner" class="cookie-banner" style="display:none; position: fixed; bottom: 0; width: 100%; z-index: 1000;">
     </div>
 
+    <!-- Carga el SDK principal de Firebase (DEFINE EL OBJETO 'firebase') -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script> 
+    <!-- Carga el SDK de Firestore (DEFINE LA FUNCIÓN 'firebase.firestore') -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> 
+    <!-- Carga tu script.js local (USA EL OBJETO 'firebase' que acaba de ser definido) -->
     <script src="script.js"></script>
-    <script>
-        // ... código de registro de Service Worker ...
-    </script>
 </body>
 </html>
