@@ -1,150 +1,208 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>México Se Enteré Qué | Noticias de Atizapán, Naucalpan, Izcalli y más</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-    
-    <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" href="styles.css"> 
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-Q3ZL4VNDPW');
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias PWA - Modo Autónomo</title>
+    <!-- Carga de Tailwind CSS para la estética -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { font-family: 'Inter', sans-serif; }
+        /* Para limitar las líneas del resumen en la lista */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* Estilo para el espacio del anuncio */
+        .ad-placeholder {
+            min-height: 150px;
+            background-color: #fef3c7; /* Amarillo muy suave */
+            border: 2px dashed #fcd34d; /* Borde punteado amarillo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b45309;
+            font-weight: bold;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+    </style>
 </head>
-<body>
-    
-    <div id="app-modal" class="app-download-bar" style="position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; padding: 10px; background-color: #388E3C; color: white;">
-        <p style="margin: 0; font-size: 14px;">¡Descarga nuestra App de Noticias y lleva México Se Enteré Qué en tu bolsillo!</p>
-        <div>
-            <a id="download-app-link" href="#" onclick="installPWA(event)" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; margin-right: 15px;">📲 Instalar App</a>
-            <button onclick="hideAppModal()" style="background: none; border: none; color: white; cursor: pointer; font-size: 16px;">&times;</button>
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-emerald-600 text-white p-4 shadow-xl">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-2xl font-bold">Mi Aplicación de Noticias (Modo Sin Conexión)</h1>
         </div>
-    </div>
-
-    <header>
-      <div class="logo">
-          <a href="index.html">
-             <img src="images/logo_mexico.png" alt="México Se Enteré Qué" style="height: 40px; vertical-align: middle;">
-          </a>
-      </div>
-      
-      <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </button>
-      
-      <nav id="nav-menu">
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="atizapan.html">Atizapán</a></li>
-          <li><a href="tlalnepantla.html">Tlalnepantla</a></li>
-          <li><a href="naucalpan.html">Naucalpan</a></li>
-          <li><a href="nicolas-romero.html">N. Romero</a></li>
-          <li><a href="cuatitlan-izcalli.html">Izcalli</a></li>
-        </ul>
-      </nav>
-      
-      <div class="search-bar">
-        <button class="search-toggle" aria-label="Mostrar búsqueda" onclick="toggleSearch()">🔍</button>
-        <div class="search-input" id="search-input">
-          <input type="text" id="search" placeholder="Buscar noticias..." />
-          <button id="search-button" onclick="searchNews()">🔍</button> 
-        </div>
-      </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <h2>Noticias Destacadas</h2>
-        <div class="carousel">
-          <div class="carousel-inner" id="carousel-inner" style="min-height: 200px; text-align: center; padding: 20px;">
-            <p>Cargando carrusel...</p>
-          </div>
-          <button class="carousel-prev" onclick="moveCarousel(-1)">❮</button>
-          <button class="carousel-next" onclick="moveCarousel(1)">❯</button>
+    <main class="max-w-4xl mx-auto p-4 sm:p-6">
+        
+        <!-- ============================================== -->
+        <!-- 1. CONTENEDOR DE LA LISTA (PÁGINA PRINCIPAL)   -->
+        <!-- ============================================== -->
+        <div id="newsListContainer">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-6">Últimas Noticias</h2>
+            
+            <!-- Aquí se inyectan las tarjetas -->
+            <div id="newsList" class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <p class="col-span-full text-center text-gray-500 py-10">Cargando contenido...</p>
+            </div>
         </div>
-      </section>
 
-      <section class="sponsored-ads">
-          <h2>⭐ Patrocinadores Destacados ⭐</h2>
-          <div class="ad-grid">
-              
-              <a href="https://manzaboom.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/FF5722/FFFFFF?text=Manzaboom" alt="Manzaboom - Tecnología">
-                  <h4>Manzaboom.com</h4>
-                  <p>La tecnología que necesitas para tu negocio.</p>
-              </a>
-              
-              <a href="https://tacosdecanastaenmexico.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/FFC107/333333?text=Tacos" alt="Tacos de Canasta">
-                  <h4>Tacos de Canasta</h4>
-                  <p>El mejor sabor para tus eventos.</p>
-              </a>
-              
-              <a href="https://mudanzas-en-mexico.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/009688/FFFFFF?text=Mudanzas" alt="Mudanzas en México">
-                  <h4>Mudanzas en México</h4>
-                  <p>Servicio profesional, seguro y rápido.</p>
-              </a>
-              
-              <a href="https://manzaboom.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/795548/FFFFFF?text=Manzaboom+Servicios" alt="Manzaboom - Servicios">
-                  <h4>Servicios Manzaboom</h4>
-                  <p>Soporte técnico y diseño web.</p>
-              </a>
-              
-          </div>
-      </section>
-      
-      <section class="latest-news">
-        <h2>Últimas Noticias</h2>
-        <div class="news-grid" id="news-container">
-            <p>Cargando últimas noticias...</p>
-          </div>
-      </section>
+        <!-- ============================================== -->
+        <!-- 2. CONTENEDOR DE DETALLE (INICIA OCULTO)       -->
+        <!-- ============================================== -->
+        <div id="newsDetailContainer" style="display: none;">
+            <!-- La noticia completa se carga aquí -->
+        </div>
+
     </main>
+    
+    <!-- ============================================== -->
+    <!-- CÓDIGO JAVASCRIPT Y LÓGICA DE DATOS (SIN FIREBASE) -->
+    <!-- ============================================== -->
+    <script>
+        
+        // ===================================================================
+        // *** BASE DE DATOS LOCAL ***
+        // Aquí se almacenan las noticias. Puedes agregar o modificar más items.
+        // ===================================================================
+        const LOCAL_NEWS_DATA = [
+            {
+                id: "noticia-001",
+                titulo: "El Futuro de la IA en la Educación Superior",
+                resumen: "Expertos debaten el impacto de la Inteligencia Artificial en los métodos de enseñanza y evaluación universitarios, enfocándose en la personalización del aprendizaje.",
+                imagenUrl: "https://placehold.co/600x400/10b981/ffffff?text=INTELIGENCIA+ARTIFICIAL",
+                contenidoCompleto: "El reciente auge de modelos de lenguaje avanzados ha obligado a las instituciones educativas a reevaluar por completo sus estrategias. La IA promete ser una herramienta poderosa para aliviar la carga de trabajo de los profesores y ofrecer tutorías personalizadas a los estudiantes.",
+                fecha: new Date().getTime() - 86400000 // Ayer
+            },
+            {
+                id: "noticia-002",
+                titulo: "Mercado de Criptomonedas Estabiliza su Crecimiento",
+                resumen: "Tras un período de alta volatilidad, el mercado digital muestra señales de maduración con una adopción institucional creciente, impulsando la confianza del inversor.",
+                imagenUrl: "https://placehold.co/600x400/3b82f6/ffffff?text=CRIPTOMONEDAS",
+                contenidoCompleto: "Los analistas señalan que la entrada de grandes bancos de inversión y fondos de pensiones al espacio criptográfico es un indicador de que las criptomonedas se están consolidando como una clase de activo legítima. Se espera un marco regulatorio más claro en los próximos meses, lo que podría atraer más capital.",
+                fecha: new Date().getTime() - 172800000 // Anteayer
+            },
+            {
+                id: "noticia-003",
+                titulo: "La Nueva Tendencia en Dieta: Foco en la Microbiota",
+                resumen: "Más allá de las calorías, la investigación actual subraya la importancia de alimentar a las bacterias intestinales para mejorar la salud mental y el sistema inmunológico.",
+                imagenUrl: "https://placehold.co/600x400/ef4444/ffffff?text=SALUD+Y+DIETA",
+                contenidoCompleto: "El concepto de que el intestino es el 'segundo cerebro' ha pasado de ser una teoría a una verdad científica ampliamente aceptada. Consumir alimentos ricos en fibra prebiótica y probióticos naturales es clave para mantener un ecosistema intestinal equilibrado.",
+                fecha: new Date().getTime() // Hoy
+            }
+        ];
+        
+        // Referencias a elementos del DOM
+        const newsListContainer = document.getElementById('newsListContainer');
+        const newsDetailContainer = document.getElementById('newsDetailContainer');
+        const newsListDiv = document.getElementById('newsList');
+        
+        
+        // ------------------------------------------------------------------
+        // A. FUNCIÓN PARA VOLVER A LA LISTA PRINCIPAL
+        // ------------------------------------------------------------------
+        function showNewsList() {
+            newsListContainer.style.display = 'block'; 
+            newsDetailContainer.style.display = 'none'; 
+            newsDetailContainer.innerHTML = ''; 
+        }
+        window.showNewsList = showNewsList; // Hacer la función accesible globalmente
 
-    <footer>
-      <p>&copy; 2025 México Se Enteré Qué. Todos los derechos reservados.</p>
-      <div class="social-links">
-        <a href="#">Facebook</a>
-        <a href="#">Twitter</a>
-        <a href="#">Instagram</a>
-      </div>
-      <div class="legal-links">
-        <a href="privacidad.html">Política de Privacidad</a> ·
-        <a href="terminos.html">Aviso Legal y Términos</a> ·
-        <a href="cookies.html">Política de Cookies</a> ·
-        <button class="cookie-config-btn" onclick="openCookieBanner()">Configurar cookies</button>
-      </div>
-    </footer>
+        // ------------------------------------------------------------------
+        // B. FUNCIÓN PARA IR AL DETALLE Y CARGAR EL CONTENIDO COMPLETO
+        // ------------------------------------------------------------------
+        function showNewsDetailPage(newsId) {
+            
+            showNewsList(); // Oculta la lista por si acaso
+            newsListContainer.style.display = 'none';
+            newsDetailContainer.style.display = 'block';
+            
+            // Buscar la noticia por ID en la base de datos local
+            const data = LOCAL_NEWS_DATA.find(news => news.id === newsId);
 
-    <div id="cookie-banner" class="cookie-banner" style="display:none; position: fixed; bottom: 0; width: 100%; z-index: 1000;">
-      <div class="cookie-content">
-        <p>
-          Usamos cookies para mejorar tu experiencia. Puedes aceptar o rechazar. <a href="cookies.html">Más info</a>.
-        </p>
-        <div class="cookie-actions">
-          <button id="accept-cookies" class="btn-accept">Aceptar</button>
-          <button id="reject-cookies" class="btn-reject">Rechazar</button>
-        </div>
-      </div>
-    </div>
+            if (data) {
+                // Renderizar la noticia COMPLETA
+                newsDetailContainer.innerHTML = `
+                    <div class="p-4 sm:p-8 bg-white rounded-xl shadow-2xl">
+                        <!-- Botón Volver -->
+                        <button onclick="showNewsList()" class="mb-6 text-emerald-600 hover:text-emerald-800 font-semibold flex items-center transition duration-200 text-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Volver a la lista de noticias
+                        </button>
+                        
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">${data.titulo}</h1>
+                        
+                        <!-- La imagen ahora es local y funciona sin Firebase -->
+                        <img src="${data.imagenUrl}" alt="${data.titulo}" class="w-full h-auto max-h-96 object-cover rounded-xl mb-8 shadow-lg border border-gray-200">
+                        
+                        <!-- Resumen/Bajada -->
+                        <p class="text-xl font-semibold text-gray-600 mb-8 border-l-4 border-emerald-500 pl-4 italic">${data.resumen}</p>
+                        
+                        <!-- ESPACIO DEL ANUNCIO -->
+                        <div class="ad-placeholder">
+                            ESPACIO PUBLICITARIO (Aquí irá el código de AdSense)
+                        </div>
 
-    <!-- Carga el SDK principal de Firebase (DEFINE EL OBJETO 'firebase') -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script> 
-    <!-- Carga el SDK de Firestore (DEFINE LA FUNCIÓN 'firebase.firestore') -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> 
-    <!-- Carga tu script.js local (USA EL OBJETO 'firebase' que acaba de ser definido) -->
-    <script src="script.js"></script>
+                        <!-- EL CONTENIDO COMPLETO APARECE AQUÍ -->
+                        <div class="text-gray-800 leading-relaxed text-lg space-y-4">
+                            ${data.contenidoCompleto.split('\n').map(p => `<p>${p}</p>`).join('')}
+                        </div>
+
+                        <hr class="my-8 border-gray-200">
+                        <p class="text-sm text-gray-500 text-right">Publicado: ${new Date(data.fecha).toLocaleDateString()}</p>
+                    </div>
+                `;
+                
+            } else {
+                newsDetailContainer.innerHTML = `<p class="text-center text-red-500 mt-12">Error: Noticia no encontrada.</p>`;
+            }
+        }
+        window.showNewsDetailPage = showNewsDetailPage;
+
+        // ------------------------------------------------------------------
+        // C. FUNCIÓN DE CARGA DE NOTICIAS (DEL JSON LOCAL)
+        // ------------------------------------------------------------------
+        function fetchNews() {
+            if (LOCAL_NEWS_DATA.length === 0) {
+                newsListDiv.innerHTML = '<p class="col-span-full text-center text-gray-400 py-10">No hay noticias cargadas.</p>';
+                return;
+            }
+            
+            newsListDiv.innerHTML = ''; 
+            
+            LOCAL_NEWS_DATA.forEach(data => {
+                
+                // Creamos la tarjeta (elemento DIV)
+                const newsItem = document.createElement('div');
+                newsItem.className = 'bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition cursor-pointer transform hover:scale-[1.01]';
+                
+                // AÑADIMOS EL EVENTO ONCLICK
+                newsItem.onclick = () => {
+                    showNewsDetailPage(data.id); 
+                };
+
+                // Contenido visual de la tarjeta
+                newsItem.innerHTML = `
+                    <img src="${data.imagenUrl}" alt="${data.titulo}" class="w-full h-40 object-cover rounded-lg mb-4 shadow-sm">
+                    <h3 class="font-bold text-xl text-gray-900 mb-2">${data.titulo}</h3>
+                    <p class="text-gray-600 text-sm line-clamp-2">${data.resumen}</p>
+                    <p class="mt-3 text-emerald-600 text-sm font-medium">Leer Noticia Completa</p>
+                `;
+                
+                newsListDiv.appendChild(newsItem);
+            });
+        }
+
+        // Iniciar la aplicación al cargar la ventana
+        window.onload = fetchNews;
+    </script>
 </body>
 </html>
