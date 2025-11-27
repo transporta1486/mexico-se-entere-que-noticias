@@ -91,7 +91,6 @@
         
         // ===================================================================
         // *** ENLACES PATROCINADOS DEL PROPIETARIO ***
-        // Se usarán para llenar el espacio de publicidad de forma rotativa.
         // ===================================================================
         const SPONSORED_LINKS = [
             { title: "ManzaBoom - El Mejor Software para tu Negocio", url: "https://manzaboom.com" },
@@ -178,6 +177,58 @@
         }
 
         // ------------------------------------------------------------------
+        // F. FUNCIÓN PARA COMPARTIR LA NOTICIA
+        // ------------------------------------------------------------------
+        async function shareNews(title, text, url) {
+            if (navigator.share) {
+                // Si la Web Share API está disponible (móvil o desktop compatible)
+                try {
+                    await navigator.share({
+                        title: title,
+                        text: text,
+                        url: url 
+                    });
+                    console.log('Contenido compartido con éxito');
+                } catch (error) {
+                    // El usuario canceló o hubo un error
+                    console.error('Error al compartir o usuario canceló:', error);
+                }
+            } else {
+                // Fallback para navegadores sin soporte (ej. Desktop)
+                // Se intentará copiar el enlace al portapapeles.
+                const shareText = `¡Mira esta noticia! ${title}: ${url}`;
+                try {
+                    // Usamos document.execCommand para compatibilidad en iframes
+                    const el = document.createElement('textarea');
+                    el.value = shareText;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    // Usamos una alerta custom para notificar al usuario (sin window.alert)
+                    alert('Enlace copiado al portapapeles: ' + shareText);
+                } catch (err) {
+                    console.error('No se pudo copiar el texto al portapapeles', err);
+                    alert('Tu navegador no soporta la función de compartir/copiar directamente.');
+                }
+            }
+        }
+        window.shareNews = shareNews; // Hacer la función accesible globalmente
+
+        // Usamos una función simple para simular una alerta sin usar window.alert
+        function alert(message) {
+            const container = document.getElementById('newsDetailContainer') || document.body;
+            const alertBox = document.createElement('div');
+            alertBox.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-emerald-500 text-white p-3 rounded-lg shadow-lg z-50 transition-opacity duration-300';
+            alertBox.textContent = message;
+            container.appendChild(alertBox);
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => container.removeChild(alertBox), 300);
+            }, 3000);
+        }
+
+        // ------------------------------------------------------------------
         // A. FUNCIÓN PARA VOLVER A LA LISTA PRINCIPAL
         // ------------------------------------------------------------------
         function showNewsList() {
@@ -215,18 +266,34 @@
 
             // Obtener el anuncio rotativo
             const adContent = getRandomSponsoredLink();
+            
+            // URL simulada de la noticia (usamos la URL actual + un hash de ID)
+            const newsUrl = window.location.href.split('#')[0] + `#${data.id}`;
+
 
             if (data) {
                 // Renderizar la noticia COMPLETA
                 newsDetailContainer.innerHTML = `
                     <div class="p-4 sm:p-8 bg-white rounded-xl shadow-2xl">
-                        <!-- Botón Volver -->
-                        <button onclick="showNewsList()" class="mb-6 text-emerald-600 hover:text-emerald-800 font-semibold flex items-center transition duration-200 text-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-                            </svg>
-                            Volver a la lista
-                        </button>
+                        <!-- Contenedor de Botones (Volver y Compartir) -->
+                        <div class="flex justify-between items-center mb-6">
+                            <!-- Botón Volver -->
+                            <button onclick="showNewsList()" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center transition duration-200 text-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                </svg>
+                                Volver
+                            </button>
+                            
+                            <!-- Botón Compartir -->
+                            <button onclick="shareNews('${data.titulo.replace(/'/g, "\\'")}', '${data.resumen.substring(0, 100).replace(/'/g, "\\'")}...', '${newsUrl}')" 
+                                    class="bg-emerald-500 text-white py-2 px-4 rounded-full font-bold text-sm shadow-md hover:bg-emerald-700 transition duration-200 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.314l4.94 2.47a3 3 0 10.832-1.664l-4.94-2.47a3.001 3.001 0 000-1.036l4.94-2.47A3 3 0 0015 8z" />
+                                </svg>
+                                Compartir
+                            </button>
+                        </div>
                         
                         <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-4">${municipioTag}</span>
 
@@ -238,7 +305,7 @@
                         <!-- Resumen/Bajada -->
                         <p class="text-xl font-semibold text-gray-600 mb-8 border-l-4 border-emerald-500 pl-4 italic">${data.resumen}</p>
                         
-                        <!-- ESPACIO DEL ANUNCIO (Ahora con tus sitios) -->
+                        <!-- ESPACIO DEL ANUNCIO -->
                         <div class="ad-placeholder">
                             ${adContent}
                         </div>
@@ -253,6 +320,10 @@
                     </div>
                 `;
                 
+                // Si la URL tiene un hash, lo limpiamos después de cargar
+                if (window.location.hash) {
+                    history.replaceState(null, null, ' ');
+                }
             } else {
                 newsDetailContainer.innerHTML = `<p class="text-center text-red-500 mt-12">Error: Noticia no encontrada.</p>`;
             }
@@ -307,6 +378,15 @@
                 
                 newsListDiv.appendChild(newsItem);
             });
+            
+            // Manejar si se entra con un hash de URL (ej. si se comparte un enlace)
+            if (window.location.hash) {
+                const newsIdFromHash = window.location.hash.substring(1);
+                const newsToLoad = LOCAL_NEWS_DATA.find(news => news.id === newsIdFromHash);
+                if (newsToLoad) {
+                    showNewsDetailPage(newsIdFromHash);
+                }
+            }
         }
 
         // ------------------------------------------------------------------
