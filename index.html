@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>México Se Enteré Qué | Noticias de Atizapán, Naucalpan, Izcalli y más</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">México se Entere: Noticias Locales | Edomex</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-    
-    <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" href="styles.css"> 
-    <link rel="icon" type="image/png" href="/favicon.png">
-
+    <!-- ============================================================= -->
+    <!-- CÓDIGO DE GOOGLE ANALYTICS 4 (GA4) - Medición de tráfico -->
+    <!-- ============================================================= -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -20,131 +15,632 @@
       gtag('js', new Date());
       gtag('config', 'G-Q3ZL4VNDPW');
     </script>
-</head>
-<body>
     
-    <div id="app-modal" class="app-download-bar" style="position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; padding: 10px; background-color: #388E3C; color: white;">
-        <p style="margin: 0; font-size: 14px;">¡Descarga nuestra App de Noticias y lleva México Se Enteré Qué en tu bolsillo!</p>
-        <div>
-            <a id="download-app-link" href="#" onclick="installPWA(event)" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline; margin-right: 15px;">📲 Instalar App</a>
-            <button onclick="hideAppModal()" style="background: none; border: none; color: white; cursor: pointer; font-size: 16px;">&times;</button>
+    <!-- ============================================================= -->
+    <!-- METADATOS PREDETERMINADOS PARA COMPARTIR (OPEN GRAPH TAGS) -->
+    <!-- Facebook, WhatsApp y otras redes leen estas etiquetas. -->
+    <!-- ============================================================= -->
+    <meta property="og:title" content="México se Entere: Noticias Locales y Urgentes del Valle de México" id="ogTitle">
+    <meta property="og:description" content="Toda la información de Atizapán, Tlalnepantla, Naucalpan, Izcalli y Nicolás Romero. Entérate de lo que realmente pasa en tu municipio." id="ogDescription">
+    <meta property="og:image" content="https://placehold.co/1200x630/059669/ffffff?text=MÉXICO+SE+ENTERE" id="ogImage">
+    <meta property="og:url" content="" id="ogUrl">
+    <meta property="og:type" content="website">
+    
+    <!-- Configuración para PWA: Indica el manifiesto -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Carga de Tailwind CSS para la estética -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { font-family: 'Inter', sans-serif; }
+        /* Para limitar las líneas del resumen en la lista */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* Estilo para el espacio del anuncio rotativo */
+        .ad-placeholder {
+            min-height: 150px;
+            background-color: #fef3c7; /* Amarillo muy suave */
+            border: 2px dashed #fcd34d; /* Borde punteado amarillo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b45309;
+            font-weight: bold;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+        }
+        .ad-placeholder:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background-color: #fffbeb;
+            transform: scale(1.02);
+        }
+        .ad-placeholder a {
+            color: #b45309;
+            text-decoration: underline;
+            font-size: 1.1rem;
+        }
+        /* Nuevo estilo para el banner de encabezado premium */
+        .premium-banner {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e0f2f1; /* Verde menta claro */
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .premium-banner img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-emerald-600 text-white p-4 shadow-xl">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold">México se Entere</h1>
+                <p class="text-sm opacity-90">Atizapán, Tlane, Naucalpan e Izcalli</p>
+            </div>
+            <!-- Botón de Instalación PWA (será visible si el Service Worker falla o si el navegador lo requiere) -->
+            <button id="installAppButton" style="display:none;" class="bg-white text-emerald-600 py-1 px-3 rounded-full font-semibold shadow hover:bg-emerald-50 transition duration-200">
+                Instalar App
+            </button>
         </div>
-    </div>
-
-    <header>
-      <div class="logo">
-          <a href="index.html">
-             <img src="images/logo_mexico.png" alt="México Se Enteré Qué" style="height: 40px; vertical-align: middle;">
-          </a>
-      </div>
-      
-      <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </button>
-      
-      <nav id="nav-menu">
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="atizapan.html">Atizapán</a></li>
-          <li><a href="tlalnepantla.html">Tlalnepantla</a></li>
-          <li><a href="naucalpan.html">Naucalpan</a></li>
-          <li><a href="nicolas-romero.html">N. Romero</a></li>
-          <li><a href="cuatitlan-izcalli.html">Izcalli</a></li>
-        </ul>
-      </nav>
-      
-      <div class="search-bar">
-        <button class="search-toggle" aria-label="Mostrar búsqueda" onclick="toggleSearch()">🔍</button>
-        <div class="search-input" id="search-input">
-          <input type="text" id="search" placeholder="Buscar noticias..." />
-          <button id="search-button" onclick="searchNews()">🔍</button> 
-        </div>
-      </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <h2>Noticias Destacadas</h2>
-        <div class="carousel">
-          <div class="carousel-inner" id="carousel-inner" style="min-height: 200px; text-align: center; padding: 20px;">
-            <p>Cargando carrusel...</p>
-          </div>
-          <button class="carousel-prev" onclick="moveCarousel(-1)">❮</button>
-          <button class="carousel-next" onclick="moveCarousel(1)">❯</button>
+    <main class="max-w-4xl mx-auto p-4 sm:p-6">
+        
+        <!-- ============================================== -->
+        <!-- ESPACIO DE PUBLICIDAD PREMIUM (BANNER DE ENCABEZADO) -->
+        <!-- ============================================== -->
+        <div id="premiumBanner" class="premium-banner" style="display: none;">
+            <!-- Aquí se inyecta el banner gráfico del cliente que pague el Paquete C -->
         </div>
-      </section>
 
-      <section class="sponsored-ads">
-          <h2>⭐ Patrocinadores Destacados ⭐</h2>
-          <div class="ad-grid">
-              
-              <a href="https://manzaboom.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/FF5722/FFFFFF?text=Manzaboom" alt="Manzaboom - Tecnología">
-                  <h4>Manzaboom.com</h4>
-                  <p>La tecnología que necesitas para tu negocio.</p>
-              </a>
-              
-              <a href="https://tacosdecanastaenmexico.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/FFC107/333333?text=Tacos" alt="Tacos de Canasta">
-                  <h4>Tacos de Canasta</h4>
-                  <p>El mejor sabor para tus eventos.</p>
-              </a>
-              
-              <a href="https://mudanzas-en-mexico.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/009688/FFFFFF?text=Mudanzas" alt="Mudanzas en México">
-                  <h4>Mudanzas en México</h4>
-                  <p>Servicio profesional, seguro y rápido.</p>
-              </a>
-              
-              <a href="https://manzaboom.com" target="_blank" rel="noopener noreferrer" class="ad-card">
-                  <img src="https://placehold.co/600x338/795548/FFFFFF?text=Manzaboom+Servicios" alt="Manzaboom - Servicios">
-                  <h4>Servicios Manzaboom</h4>
-                  <p>Soporte técnico y diseño web.</p>
-              </a>
-              
-          </div>
-      </section>
-      
-      <section class="latest-news">
-        <h2>Últimas Noticias</h2>
-        <div class="news-grid" id="news-container">
-            <p>Cargando últimas noticias...</p>
-          </div>
-      </section>
+        
+        <!-- ============================================== -->
+        <!-- 1. CONTENEDOR DE LA LISTA (PÁGINA PRINCIPAL)   -->
+        <!-- ============================================== -->
+        <div id="newsListContainer">
+            <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b-2 pb-2 border-emerald-500">Últimas Noticias Locales</h2>
+            
+            <!-- Aquí se inyectan las tarjetas -->
+            <div id="newsList" class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <p id="loadingMessage" class="col-span-full text-center text-gray-500 py-10">Cargando contenido...</p>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 2. CONTENEDOR DE DETALLE (INICIA OCULTO)       -->
+        <!-- ============================================== -->
+        <div id="newsDetailContainer" style="display: none;">
+            <!-- La noticia completa se carga aquí -->
+        </div>
+
     </main>
+    
+    <!-- ============================================== -->
+    <!-- CONFIGURACIÓN Y CÓDIGO JAVASCRIPT CON FIREBASE -->
+    <!-- ============================================== -->
+    <script type="module">
+        
+        // ===================================================================
+        // *** 1. CONFIGURACIÓN DE FIREBASE E IMPORTACIONES ***
+        // ===================================================================
+        import { initializeApp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // Usamos onSnapshot para la lectura en tiempo real y doc/getDoc para el detalle
+        import { getFirestore, collection, query, orderBy, onSnapshot, doc as firestoreDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <footer>
-      <p>&copy; 2025 México Se Enteré Qué. Todos los derechos reservados.</p>
-      <div class="social-links">
-        <a href="#">Facebook</a>
-        <a href="#">Twitter</a>
-        <a href="#">Instagram</a>
-      </div>
-      <div class="legal-links">
-        <a href="privacidad.html">Política de Privacidad</a> ·
-        <a href="terminos.html">Aviso Legal y Términos</a> ·
-        <a href="cookies.html">Política de Cookies</a> ·
-        <button class="cookie-config-btn" onclick="openCookieBanner()">Configurar cookies</button>
-      </div>
-    </footer>
+        // Variables de entorno de Canvas (MANDATORIAS)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        // Inicializar Firebase
+        let app, db, auth;
+        let userId = null;
+        let isAuthReady = false; // Bandera para saber si la autenticación está completa
+        let newsDataCache = []; // Caché de noticias para evitar re-lecturas
 
-    <div id="cookie-banner" class="cookie-banner" style="display:none; position: fixed; bottom: 0; width: 100%; z-index: 1000;">
-      <div class="cookie-content">
-        <p>
-          Usamos cookies para mejorar tu experiencia. Puedes aceptar o rechazar. <a href="cookies.html">Más info</a>.
-        </p>
-        <div class="cookie-actions">
-          <button id="accept-cookies" class="btn-accept">Aceptar</button>
-          <button id="reject-cookies" class="btn-reject">Rechazar</button>
-        </div>
-      </div>
-    </div>
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            setLogLevel('debug');
+        } catch (error) {
+            console.error("Error al inicializar Firebase:", error);
+            document.getElementById('loadingMessage').textContent = 'Error al conectar con la base de datos.';
+        }
 
-    <!-- Carga el SDK principal de Firebase (DEFINE EL OBJETO 'firebase') -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script> 
-    <!-- Carga el SDK de Firestore (DEFINE LA FUNCIÓN 'firebase.firestore') -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script> 
-    <!-- Carga tu script.js local (USA EL OBJETO 'firebase' que acaba de ser definido) -->
-    <script src="script.js"></script>
+
+        // ===================================================================
+        // *** 2. LÓGICA DE AUTENTICACIÓN ***
+        // ===================================================================
+        function setupAuthentication() {
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                    isAuthReady = true;
+                    console.log("Usuario autenticado (UID):", userId);
+                    // Una vez autenticado, manejar la carga inicial de la página
+                    handleInitialLoad();
+                    
+                    // Iniciar el listener de noticias
+                    setupNewsListener();
+                } else {
+                    // Si no hay usuario, intentar autenticar o iniciar sesión anónima
+                    try {
+                        if (initialAuthToken) {
+                            // Usar token si está disponible
+                            await signInWithCustomToken(auth, initialAuthToken);
+                        } else {
+                            // Si no, iniciar sesión anónima
+                            await signInAnonymously(auth);
+                        }
+                    } catch (error) {
+                        console.error("Error durante el intento de signIn:", error);
+                        isAuthReady = true; // Marcar como listo aunque haya fallado, para no bloquear la UI
+                        document.getElementById('loadingMessage').textContent = 'Error de autenticación. No se pueden cargar noticias.';
+                    }
+                }
+            });
+        }
+
+
+        // ===================================================================
+        // *** 3. LECTURA DE DATOS (REAL-TIME con onSnapshot) ***
+        // ===================================================================
+        function setupNewsListener() {
+            if (!isAuthReady || !userId) return;
+
+            // La ruta es la misma que usamos para subir en news_upload_form.html
+            const newsCollectionPath = `artifacts/${appId}/users/${userId}/noticias`;
+            const newsRef = collection(db, newsCollectionPath);
+            
+            // Usaremos el campo 'fecha' (que guardamos como ISO string) para ordenar
+            const q = query(newsRef); // Firestore tiene restricciones con orderBy sin índices, así que ordenaremos en memoria.
+
+            // onSnapshot se mantiene activo y actualiza 'newsDataCache' cada vez que hay un cambio
+            onSnapshot(q, (snapshot) => {
+                newsDataCache = [];
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    // Agregar el ID del documento, que es crucial para el deep linking
+                    newsDataCache.push({ 
+                        id: doc.id,
+                        ...data,
+                        // Convertir la fecha ISO string a un timestamp para ordenamiento local
+                        fechaTimestamp: new Date(data.fecha).getTime() 
+                    });
+                });
+
+                // Ordenar la data en memoria por fecha descendente (más reciente primero)
+                newsDataCache.sort((a, b) => b.fechaTimestamp - a.fechaTimestamp);
+
+                console.log(`Noticias cargadas en caché: ${newsDataCache.length}`);
+                // Si estamos en la vista de lista, refrescar
+                if (newsListContainer.style.display !== 'none') {
+                    renderNewsList(); 
+                }
+                
+                // Si la URL tiene un hash y la noticia existe en el caché, recargar el detalle
+                const newsIdFromHash = window.location.hash.substring(1);
+                if (newsIdFromHash && newsDataCache.some(n => n.id === newsIdFromHash)) {
+                    showNewsDetailPage(newsIdFromHash);
+                }
+                
+            }, (error) => {
+                console.error("Error al escuchar noticias:", error);
+                document.getElementById('loadingMessage').textContent = 'Error al cargar noticias en tiempo real.';
+            });
+        }
+
+
+        // ===================================================================
+        // *** 4. LÓGICA DE LA INTERFAZ DE USUARIO (USANDO newsDataCache) ***
+        // ===================================================================
+        
+        // Referencias a elementos del DOM y Meta Tags (MANTENER)
+        const newsListContainer = document.getElementById('newsListContainer');
+        const newsDetailContainer = document.getElementById('newsDetailContainer');
+        const newsListDiv = document.getElementById('newsList');
+        const installAppButton = document.getElementById('installAppButton');
+        const premiumBanner = document.getElementById('premiumBanner'); 
+        let deferredPrompt; 
+
+        // Referencias a Meta Tags (usando IDs para modificarlas fácilmente)
+        const pageTitle = document.getElementById('pageTitle');
+        const ogTitle = document.getElementById('ogTitle');
+        const ogDescription = document.getElementById('ogDescription');
+        const ogImage = document.getElementById('ogImage');
+        const ogUrl = document.getElementById('ogUrl');
+
+        // Valores genéricos por defecto
+        const DEFAULT_TITLE = 'México se Entere: Noticias Locales | Edomex';
+        const DEFAULT_OG_TITLE = 'México se Entere: Noticias Locales y Urgentes del Valle de México';
+        const DEFAULT_OG_DESCRIPTION = 'Toda la información de Atizapán, Tlalnepantla, Naucalpan, Izcalli y Nicolás Romero. Entérate de lo que realmente pasa en tu municipio.';
+        const DEFAULT_OG_IMAGE = 'https://placehold.co/1200x630/059669/ffffff?text=MÉXICO+SE+ENTERE';
+        
+        // *** ENLACES PATROCINADOS DEL PROPIETARIO ***
+        const SPONSORED_LINKS = [
+            { title: "ManzaBoom - El Mejor Software para tu Negocio", url: "https://manzaboom.com" },
+            { title: "Mudanzas en México - ¡Tu mudanza sin estrés!", url: "https://mudanzas-en-mexico.com" },
+            { title: "Tacos de Canasta en México - Sabor y Tradición", url: "https://tacosdecanastaenmexico.com" },
+            { title: "Lexfortis Legal - Asesoría Jurídica y Corporativa", url: "https://lexfortis.legal" }
+        ];
+
+        // *** INFO DEL CLIENTE PREMIUM (PAQUETE C) ***
+        const PREMIUM_AD = {
+            active: true, 
+            imagenUrl: "https://placehold.co/728x90/16a34a/ffffff?text=Tu+Negocio+Aquí+728x90", 
+            link: "https://ejemplo-cliente-premium.com", 
+            altText: "Publicidad Premium de [Nombre del Cliente]"
+        };
+
+        
+        // ------------------------------------------------------------------
+        // E. FUNCIÓN PARA OBTENER EL ANUNCIO ROTATIVO
+        // ------------------------------------------------------------------
+        function getRandomSponsoredLink() {
+            const index = Math.floor(Math.random() * SPONSORED_LINKS.length);
+            const ad = SPONSORED_LINKS[index];
+            return `
+                <p class="text-xl font-extrabold text-gray-900 mb-2">✨ ANUNCIO PATROCINADO ✨</p>
+                <a href="${ad.url}" target="_blank" rel="noopener noreferrer" class="font-bold hover:text-orange-700 transition">
+                    ${ad.title}
+                </a>
+                <p class="text-sm text-gray-600 mt-1">Visítanos en ${ad.url.replace(/(^\w+:|^)\/\//, '').replace('www.', '')}</p>
+            `;
+        }
+
+        // ------------------------------------------------------------------
+        // F. FUNCIÓN PARA COMPARTIR LA NOTICIA
+        // ------------------------------------------------------------------
+        async function shareNews(title, text, url) {
+            
+            if (navigator.share) {
+                // Si la Web Share API está disponible (móvil o desktop compatible)
+                try {
+                    await navigator.share({
+                        title: title,
+                        text: text,
+                        url: url 
+                    });
+                    console.log('Contenido compartido con éxito');
+                } catch (error) {
+                    // El usuario canceló o hubo un error
+                    console.error('Error al compartir o usuario canceló:', error);
+                }
+            } else {
+                // Fallback para navegadores sin soporte (ej. Desktop)
+                const shareText = `¡Mira esta noticia! ${title}: ${url}`;
+                try {
+                    const el = document.createElement('textarea');
+                    el.value = shareText;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    alert('Enlace copiado al portapapeles. Compártelo: ' + shareText);
+                } catch (err) {
+                    console.error('No se pudo copiar el texto al portapapeles', err);
+                    alert('Tu navegador no soporta la función de compartir/copiar directamente.');
+                }
+            }
+        }
+        window.shareNews = shareNews; 
+
+        // Usamos una función simple para simular una alerta sin usar window.alert
+        function alert(message) {
+            const container = document.getElementById('newsDetailContainer') || document.body;
+            const alertBox = document.createElement('div');
+            alertBox.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-emerald-500 text-white p-3 rounded-lg shadow-lg z-50 transition-opacity duration-300';
+            alertBox.textContent = message;
+            container.appendChild(alertBox);
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => container.removeChild(alertBox), 300);
+            }, 3000);
+        }
+
+        // ------------------------------------------------------------------
+        // A. FUNCIÓN PARA VOLVER A LA LISTA PRINCIPAL
+        // ------------------------------------------------------------------
+        function showNewsList() {
+            newsListContainer.style.display = 'block'; 
+            newsDetailContainer.style.display = 'none'; 
+            newsDetailContainer.innerHTML = ''; 
+            
+            // 1. Limpiar el hash de la URL
+            history.pushState(null, null, window.location.pathname + window.location.search);
+            
+            // 2. Restaurar las Meta Etiquetas OG a los valores genéricos
+            pageTitle.textContent = DEFAULT_TITLE;
+            ogTitle.setAttribute('content', DEFAULT_OG_TITLE);
+            ogDescription.setAttribute('content', DEFAULT_OG_DESCRIPTION);
+            ogImage.setAttribute('content', DEFAULT_OG_IMAGE);
+            ogUrl.setAttribute('content', window.location.href.split('#')[0]);
+            
+            // 3. Mostrar el banner premium en la lista
+            if (PREMIUM_AD.active) {
+                premiumBanner.style.display = 'flex';
+                premiumBanner.innerHTML = `
+                    <a href="${PREMIUM_AD.link}" target="_blank" rel="noopener noreferrer" onclick="console.log('Premium Ad Clicked')">
+                        <img src="${PREMIUM_AD.imagenUrl}" alt="${PREMIUM_AD.altText}" class="rounded-lg" onerror="this.onerror=null; this.src='https://placehold.co/728x90/e0f2f1/16a34a?text=Publicidad+Premium';">
+                    </a>
+                `;
+            } else {
+                premiumBanner.style.display = 'none';
+            }
+        }
+        window.showNewsList = showNewsList; 
+
+        // ------------------------------------------------------------------
+        // B. FUNCIÓN PARA IR AL DETALLE Y CARGAR EL CONTENIDO COMPLETO
+        // Modificada para usar datos de Firestore
+        // ------------------------------------------------------------------
+        async function showNewsDetailPage(newsId) {
+            if (!isAuthReady || !userId) return; // Esperar autenticación
+            
+            // Ocultar la lista y mostrar mensaje de carga
+            newsListContainer.style.display = 'none';
+            newsDetailContainer.style.display = 'block';
+            newsDetailContainer.innerHTML = `<p class="text-center text-gray-500 py-10">Cargando noticia ${newsId}...</p>`;
+            premiumBanner.style.display = 'none';
+
+            let data = newsDataCache.find(news => news.id === newsId);
+
+            if (!data) {
+                // Si no está en caché (ej. carga inicial con hash), se busca directamente en Firestore
+                try {
+                    const newsDocRef = firestoreDoc(db, `artifacts/${appId}/users/${userId}/noticias`, newsId);
+                    const docSnap = await getDoc(newsDocRef);
+                    
+                    if (docSnap.exists()) {
+                        data = { id: docSnap.id, ...docSnap.data() };
+                    }
+                } catch (error) {
+                    console.error("Error al obtener el detalle de la noticia:", error);
+                }
+            }
+            
+            if (data) {
+                // 1. Actualizar la URL para que el enlace sea compartible
+                history.pushState(null, null, `#${newsId}`);
+                const newsUrl = window.location.href.split('#')[0] + `#${data.id}`;
+                
+                // 2. Usar el campo 'contenidoCompleto' para el cuerpo, si existe, sino usa 'resumen'.
+                const fullContent = data.contenidoCompleto || data.resumen;
+
+                // 3. *** ACTUALIZAR LAS META ETIQUETAS Y TÍTULO DE LA PÁGINA ***
+                pageTitle.textContent = `${data.titulo} | México se Entere`;
+                ogTitle.setAttribute('content', data.titulo);
+                ogDescription.setAttribute('content', data.resumen.substring(0, 150).trim() + '...');
+                ogImage.setAttribute('content', data.imagenUrl);
+                ogUrl.setAttribute('content', newsUrl);
+
+                // Función para obtener la etiqueta de municipio (se asume que hay un campo 'categoria' en la noticia)
+                const getMunicipioTag = (category) => {
+                    if (!category) return 'Edomex';
+                    const map = {
+                        'atizapan': 'Atizapán',
+                        'tlalnepantla': 'Tlalnepantla',
+                        'naucalpan': 'Naucalpan',
+                        'cuatitlan izcallí': 'Izcalli',
+                        'nicolas romero': 'Nicolás Romero',
+                        'méxico': 'Nacional' 
+                    };
+                    return map[category.toLowerCase()] || category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+                };
+                const municipioTag = getMunicipioTag(data.categoria || 'Edomex');
+
+                // Obtener el anuncio rotativo (Paquete A)
+                const adContent = getRandomSponsoredLink();
+                
+                // 4. Renderizar la noticia COMPLETA
+                // Reemplazamos los saltos de línea (\n) por etiquetas <p> para formato de párrafo.
+                const fullContentHtml = fullContent.split('\n').map(p => {
+                    if(p.trim() === '') return ''; 
+                    return `<p>${p.trim()}</p>`;
+                }).join('');
+                
+                // Formatear la fecha ISO para la visualización
+                const dateToDisplay = new Date(data.fecha || new Date().toISOString()).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+
+                newsDetailContainer.innerHTML = `
+                    <div class="p-4 sm:p-8 bg-white rounded-xl shadow-2xl">
+                        <!-- Contenedor de Botones (Volver y Compartir) -->
+                        <div class="flex justify-between items-center mb-6">
+                            <!-- Botón Volver -->
+                            <button onclick="showNewsList()" class="text-emerald-600 hover:text-emerald-800 font-semibold flex items-center transition duration-200 text-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                </svg>
+                                Volver
+                            </button>
+                            
+                            <!-- Botón Compartir -->
+                            <button onclick="shareNews('${data.titulo.replace(/'/g, "\\'")}', '${data.resumen.substring(0, 100).replace(/'/g, "\\'")}...', '${newsUrl}')" 
+                                    class="bg-emerald-500 text-white py-2 px-4 rounded-full font-bold text-sm shadow-md hover:bg-emerald-700 transition duration-200 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.314l4.94 2.47a3 3 0 10.832-1.664l-4.94-2.47a3.001 3.001 0 000-1.036l4.94-2.47A3 3 0 0015 8z" />
+                                </svg>
+                                Compartir
+                            </button>
+                        </div>
+                        
+                        <span class="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full uppercase mb-4">${municipioTag}</span>
+
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">${data.titulo}</h1>
+                        
+                        <!-- Imagen de la Noticia -->
+                        <img src="${data.imagenUrl}" alt="${data.titulo}" class="w-full h-auto max-h-96 object-cover rounded-xl mb-8 shadow-lg border border-gray-200" onerror="this.onerror=null; this.src='https://placehold.co/600x400/94a3b8/ffffff?text=Error+Carga+Imagen';">
+                        
+                        <!-- Resumen/Bajada: Este es el primer párrafo destacado (se usa el resumen completo para este ejemplo) -->
+                        <p class="text-xl font-semibold text-gray-600 mb-8 border-l-4 border-emerald-500 pl-4 italic">${data.resumen.split('\n')[0]}</p>
+                        
+                        <!-- ESPACIO DEL ANUNCIO ROTATIVO (Paquete A) -->
+                        <div class="ad-placeholder">
+                            ${adContent}
+                        </div>
+
+                        <!-- EL CONTENIDO COMPLETO APARECE AQUÍ -->
+                        <div class="text-gray-800 leading-relaxed text-lg space-y-4">
+                            ${fullContentHtml}
+                        </div>
+
+                        <hr class="my-8 border-gray-200">
+                        <p class="text-sm text-gray-500 text-right">Publicado: ${dateToDisplay}</p>
+                    </div>
+                `;
+                
+            } else {
+                // Noticia no encontrada
+                newsDetailContainer.innerHTML = `<div class="p-8 bg-white rounded-xl shadow-lg"><p class="text-center text-red-500 mt-12">Error 404: La noticia solicitada no fue encontrada. Asegúrate de que existe en Firestore.</p><button onclick="showNewsList()" class="mt-6 block mx-auto bg-emerald-500 text-white py-2 px-4 rounded-full hover:bg-emerald-700">Volver a la portada</button></div>`;
+                history.replaceState(null, null, window.location.pathname + window.location.search);
+                showNewsList(); 
+            }
+        }
+        window.showNewsDetailPage = showNewsDetailPage;
+
+        // ------------------------------------------------------------------
+        // D. FUNCIÓN PARA DIBUJAR LA LISTA COMPLETA DE NOTICIAS
+        // Ahora usa 'newsDataCache' que se llena con Firestore
+        // ------------------------------------------------------------------
+        function renderNewsList() {
+            newsListDiv.innerHTML = ''; // Limpiar el contenedor
+            
+            if (newsDataCache.length === 0) {
+                 newsListDiv.innerHTML = '<p class="col-span-full text-center text-gray-500 py-10">Aún no hay noticias. Usa el formulario de carga para agregar contenido.</p>';
+                 return;
+            }
+
+            const sortedNews = newsDataCache; // Ya viene ordenado por fecha de setupNewsListener
+
+            sortedNews.forEach((data, index) => {
+                const categoryColorMap = {
+                    'atizapan': 'bg-red-500',
+                    'tlalnepantla': 'bg-blue-600',
+                    'naucalpan': 'bg-yellow-600',
+                    'cuatitlan izcallí': 'bg-pink-700',
+                    'nicolas romero': 'bg-teal-700',
+                    'méxico': 'bg-gray-600'
+                };
+                
+                const categoryClasses = categoryColorMap[(data.categoria || '').toLowerCase()] || 'bg-emerald-500';
+                const municipioTag = (data.categoria || 'Edomex').charAt(0).toUpperCase() + (data.categoria || 'Edomex').slice(1).toLowerCase();
+
+                // Formato de fecha (usando fechaTimestamp)
+                const formattedDate = new Date(data.fechaTimestamp).toLocaleDateString('es-MX', {
+                    day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+                });
+
+                const newsCard = `
+                    <div onclick="showNewsDetailPage('${data.id}')" class="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden transform hover:scale-[1.01] border border-gray-200">
+                        <img src="${data.imagenUrl}" alt="${data.titulo}" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x400/94a3b8/ffffff?text=Error+Carga';">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-semibold uppercase px-3 py-1 rounded-full text-white ${categoryClasses}">
+                                    ${municipioTag}
+                                </span>
+                                <span class="text-xs text-gray-500">${formattedDate.replace(/\./g, '')}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2 leading-snug">${data.titulo}</h3>
+                            <p class="text-sm text-gray-600 line-clamp-2">${data.resumen}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Insertar la tarjeta
+                newsListDiv.insertAdjacentHTML('beforeend', newsCard);
+
+                // Insertar el anuncio rotativo después del segundo ítem
+                if (index === 1 && sortedNews.length > 2) {
+                    const adContent = getRandomSponsoredLink();
+                    const adHtml = `<div class="col-span-1 md:col-span-2 ad-placeholder">${adContent}</div>`;
+                    newsListDiv.insertAdjacentHTML('beforeend', adHtml);
+                }
+            });
+        }
+
+        // ------------------------------------------------------------------
+        // C. MANEJO DE LA CARGA INICIAL (Deep Linking)
+        // Ahora espera a que la autenticación esté lista
+        // ------------------------------------------------------------------
+        function handleInitialLoad() {
+            // El listener (setupNewsListener) ya se encarga de llamar a renderNewsList
+            // Ahora solo nos enfocamos en el Deep Linking si el caché ya se cargó
+            if (isAuthReady) {
+                const newsId = window.location.hash.substring(1); 
+                if (newsId) {
+                    // Si hay un hash, cargar la página de detalle
+                    showNewsDetailPage(newsId);
+                } else {
+                    // Si no hay hash, mostrar la lista principal
+                    showNewsList();
+                }
+            } else {
+                // Si la autenticación no está lista, esperar al onAuthStateChanged
+                // El onAuthStateChanged llamará a handleInitialLoad() cuando esté listo.
+            }
+        }
+
+        // ------------------------------------------------------------------
+        // G. EVENT HANDLERS PARA PWA (Instalación)
+        // (MANTENER)
+        // ------------------------------------------------------------------
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installAppButton.style.display = 'block';
+        });
+
+        installAppButton.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                installAppButton.style.display = 'none';
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+            } else {
+                alert('La aplicación ya ha sido instalada o el navegador no permite la instalación ahora.');
+            }
+        });
+        
+        // ------------------------------------------------------------------
+        // H. MANEJO DEL BOTÓN DE ATRÁS DEL NAVEGADOR (popstate)
+        // (MANTENER)
+        // ------------------------------------------------------------------
+        window.addEventListener('popstate', () => {
+            const newsId = window.location.hash.substring(1);
+            if (newsId) {
+                showNewsDetailPage(newsId);
+            } else {
+                showNewsList();
+            }
+        });
+
+        // ------------------------------------------------------------------
+        // INICIALIZACIÓN
+        // ------------------------------------------------------------------
+        window.onload = function() {
+            setupAuthentication(); // El punto de entrada es la autenticación
+        };
+
+    </script>
 </body>
 </html>

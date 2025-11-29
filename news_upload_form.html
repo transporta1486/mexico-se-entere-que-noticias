@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Noticias (Sin Storage)</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Fuente Inter para mejor estética */
+        :root { font-family: 'Inter', sans-serif; }
+    </style>
+    <!-- Carga de Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // Importar doc y getDoc para referenciar documentos individuales
+        import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+
+        // Configuración y variables globales (MANDATORIAS)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        
+        // URL de marcador de posición (placeholder) que usaremos en lugar de Firebase Storage
+        const PLACEHOLDER_IMAGE_URL = 'https://placehold.co/800x400/22C55E/FFFFFF?text=Noticia+Sin+Foto';
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        // Configuración de Log (útil para depuración)
+        setLogLevel('debug');
+
+        let userId = null;
+        
+        // Referencias a elementos del DOM
+        const form = document.getElementById('newsForm');
+        const statusDiv = document.getElementById('statusMessage');
+        const newsListDiv = document.getElementById('newsList');
+
+        // Función de autenticación
+        async function authenticate() {
+            try {
+                if (initialAuthToken) {
+                    const userCredential = await signInWithCustomToken(auth, initialAuthToken);
+                    userId = userCredential.user.uid;
+                } else {
+                    const userCredential = await signInAnonymously(auth);
+                    userId = userCredential.user.uid;
+                }
+                document.getElementById('userIdDisplay').textContent = userId;
+                console.log("Autenticación exitosa. User ID:", userId);
+                fetchNews(); // Cargar noticias después de autenticar
+            } catch (error) {
+                console.error("Error en la autenticación:", error);
+                statusDiv.innerHTML = `<p class="text-red-600">Error de autenticación: ${error.message}</p>`;
+            }
+        }
+
+        // Función principal para guardar noticia
+        async function saveNews(event) {
+            event.preventDefault();
+            
+            if (!userId) {
+                statusDiv.innerHTML = `<p class="text-red-600">Error: Autenticación incompleta. Intente de nuevo.</p>`;
+                return;
+            }
+
+            const title = document.getElementById('title').value;
+            const summary = document.getElementById('summary').value;
+            const content = document.getElementById('content').value; 
+
+            if (!title || !summary || !content) {
+                statusDiv.innerHTML = `<p class="text-yellow-600">Por favor, complete todos los campos (Título, Resumen y Contenido Completo).</p>`;
+                return;
+            }
+
+            statusDiv.innerHTML = `<p class="text-blue-500">Guardando noticia en Firestore...</p>`;
+
+            try {
+                // 1. Crear el objeto de la noticia
+                const newsData = {
+                    titulo: title,
+                    resumen: summary,
+                    contenidoCompleto: content, // <--- CAMPO CLAVE (SOLUCIÓN DEL PROBLEMA)
+                    imagenUrl: PLACEHOLDER_IMAGE_URL, // <--- Usamos el marcador de posición (placeholder)
+                    fecha: new Date().toISOString(),
+                    userId: userId 
+                };
+
+                // 2. Guardar la noticia en Firestore
+                const newsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/noticias`);
+                await addDoc(newsCollectionRef, newsData);
+
+                statusDiv.innerHTML = `<p class="text-green-600">Noticia guardada con éxito. ¡Ya tiene todo el contenido!</p>`;
+                form.reset();
+                fetchNews(); // Refrescar lista
+            } catch (error) {
+                console.error("Error al guardar la noticia:", error);
+                statusDiv.innerHTML = `<p class="text-red-600">Error: No se pudo completar la operación. ${error.message}</p>`;
+            }
+        }
+        
+        // Función para cargar noticias y mostrarlas
+        async function fetchNews() {
+             if (!userId) return;
+             newsListDiv.innerHTML = '<p class="text-center text-gray-500">Cargando noticias...</p>';
+
+             try {
+                const newsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/noticias`);
+                const q = query(newsCollectionRef);
+                const querySnapshot = await getDocs(q);
+
+                newsListDiv.innerHTML = '';
+                if (querySnapshot.empty) {
+                    newsListDiv.innerHTML = '<p class="text-center text-gray-400 p-4">Aún no hay noticias. ¡Crea la primera!</p>';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const newsItem = `
+                        <div class="bg-white p-4 rounded-lg shadow flex space-x-4 border border-gray-100">
+                            <div class="flex-shrink-0">
+                                <img src="${data.imagenUrl}" 
+                                     alt="${data.titulo}" 
+                                     class="w-20 h-20 object-cover rounded-md">
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-lg">${data.titulo}</h3>
+                                <p class="text-gray-600 text-sm line-clamp-2">${data.resumen}</p>
+                                <p class="text-xs text-gray-400 mt-1">ID del Documento: <span class="font-mono text-xs text-indigo-500">${doc.id}</span></p>
+                            </div>
+                        </div>
+                    `;
+                    newsListDiv.innerHTML += newsItem;
+                });
+
+             } catch (error) {
+                console.error("Error al obtener noticias:", error);
+                newsListDiv.innerHTML = `<p class="text-red-600 text-center p-4">Error al cargar la lista: ${error.message}</p>`;
+             }
+        }
+
+
+        // Event listeners
+        form.addEventListener('submit', saveNews);
+        
+        // Iniciar autenticación al cargar la página
+        window.onload = authenticate;
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold text-green-600">Administrador de Noticias (Plan Gratuito Spark)</h1>
+            <p class="text-sm text-gray-500 mt-2">Usuario Actual (ID): <span id="userIdDisplay" class="font-mono text-xs bg-gray-200 px-2 py-0.5 rounded">Cargando...</span></p>
+        </header>
+
+        <!-- Sección de Estado -->
+        <div id="statusMessage" class="mb-6 p-3 rounded-lg bg-gray-100 border border-gray-200 text-sm">
+            Esperando autenticación...
+        </div>
+
+        <!-- Formulario de Carga -->
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Crear Nueva Noticia (Solo Texto)</h2>
+            <p class="text-sm text-red-500 mb-4 border-l-4 border-red-500 pl-3 bg-red-50 rounded-md py-1">⚠️ **Aviso:** Debido a las restricciones del Plan Spark, no se permite la carga de archivos. La imagen se reemplazará por un marcador de posición.</p>
+            <form id="newsForm" class="space-y-4">
+                
+                <!-- Título -->
+                 Problema de agua en Atizapán "
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                    <input type="text" id="title" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500">
+                </div>
+                
+                <!-- Resumen (Preview) -->
+                 "La escasez de agua es un problema persistente en Atizapán de Zaragoza y se espera que continúe siendo un desafío en 2026. La situación se debe principalmente a los bajos niveles en el Sistema Cutzamala, del cual el municipio depende en un 78%, y a fallas en la infraestructura local, como la planta potabilizadora Madín.
+                <div>
+                    <label for="summary" class="block text-sm font-medium text-gray-700">Resumen (Se muestra en la lista principal)</label>
+                    <textarea id="summary" required rows="2"
+                              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"></textarea>
+                </div>
+                
+                <!-- Contenido Completo (Campo CLAVE para solucionar tu problema) -->
+                 La escasez de agua es un problema persistente en Atizapán de Zaragoza y se espera que continúe siendo un desafío en 2026. La situación se debe principalmente a los bajos niveles en el Sistema Cutzamala, del cual el municipio depende en un 78%, y a fallas en la infraestructura local, como la planta potabilizadora Madín. Causas Principales Bajos niveles del Sistema Cutzamala: La Comisión Nacional del Agua (Conagua) ha tenido que disminuir el suministro debido a que las presas están en sus niveles más bajos en años, un problema que se agudiza por el cambio climático y la falta de lluvias. Problemas de infraestructura: Fallas en equipos de bombeo y rupturas de tuberías (megafugas) han afectado gravemente la distribución del líquido en diversas colonias. Crecimiento inmobiliario y sobrepoblación: El rápido crecimiento de desarrollos habitacionales ejerce una presión adicional sobre el sistema hídrico, que ya es insuficiente. Gestión inadecuada: La falta de inversión y una gestión deficiente del agua a diferentes niveles de gobierno también contribuyen a la crisis. "
+                <div>
+                    <label for="content" class="block text-sm font-medium text-gray-700">Contenido Completo de la Noticia</label>
+                    <textarea id="content" required rows="5"
+                              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
+                              placeholder="Escribe aquí todo el cuerpo del artículo. Este contenido es el que se verá completo en tu PWA."></textarea>
+                </div>
+                
+                <!-- Botón de Envío -->
+                <button type="submit" 
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 ease-in-out">
+                    Subir Noticia Completa (Texto)
+                </button>
+            </form>
+        </div>
+
+        <!-- Sección de Noticias Existentes -->
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Noticias Guardadas (Prueba)</h2>
+            <div id="newsList" class="space-y-4">
+                <!-- Las noticias se cargarán aquí -->
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
