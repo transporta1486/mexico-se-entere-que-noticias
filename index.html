@@ -206,7 +206,7 @@
                     document.execCommand('copy');
                     document.body.removeChild(el);
                     // Usamos una alerta custom para notificar al usuario (sin window.alert)
-                    alert('Enlace copiado al portapapeles: ' + shareText);
+                    alert('Enlace copiado al portapapeles. Compártelo: ' + shareText);
                 } catch (err) {
                     console.error('No se pudo copiar el texto al portapapeles', err);
                     alert('Tu navegador no soporta la función de compartir/copiar directamente.');
@@ -235,6 +235,8 @@
             newsListContainer.style.display = 'block'; 
             newsDetailContainer.style.display = 'none'; 
             newsDetailContainer.innerHTML = ''; 
+            // Limpiar el hash de la URL para volver a la página principal limpia
+            history.pushState(null, null, window.location.pathname + window.location.search);
         }
         window.showNewsList = showNewsList; // Hacer la función accesible globalmente
 
@@ -243,9 +245,13 @@
         // ------------------------------------------------------------------
         function showNewsDetailPage(newsId) {
             
-            showNewsList(); // Oculta la lista por si acaso
+            // 1. Mostrar el detalle y ocultar la lista
             newsListContainer.style.display = 'none';
             newsDetailContainer.style.display = 'block';
+            
+            // 2. Actualizar la URL para que el enlace sea compartible
+            // Esto garantiza que la URL en la barra de direcciones sea la correcta
+            history.pushState(null, null, `#${newsId}`);
             
             // Buscar la noticia por ID en la base de datos local
             const data = LOCAL_NEWS_DATA.find(news => news.id === newsId);
@@ -267,7 +273,7 @@
             // Obtener el anuncio rotativo
             const adContent = getRandomSponsoredLink();
             
-            // URL simulada de la noticia (usamos la URL actual + un hash de ID)
+            // URL simulada de la noticia (usamos la URL actual + el hash de ID)
             const newsUrl = window.location.href.split('#')[0] + `#${data.id}`;
 
 
@@ -320,10 +326,6 @@
                     </div>
                 `;
                 
-                // Si la URL tiene un hash, lo limpiamos después de cargar
-                if (window.location.hash) {
-                    history.replaceState(null, null, ' ');
-                }
             } else {
                 newsDetailContainer.innerHTML = `<p class="text-center text-red-500 mt-12">Error: Noticia no encontrada.</p>`;
             }
@@ -331,11 +333,12 @@
         window.showNewsDetailPage = showNewsDetailPage;
 
         // ------------------------------------------------------------------
-        // C. FUNCIÓN DE CARGA DE NOTICIAS (DEL JSON LOCAL)
+        // C. FUNCIÓN DE CARGA DE NOTICIAS Y LÓGICA DE INICIO
         // ------------------------------------------------------------------
         function fetchNews() {
             if (LOCAL_NEWS_DATA.length === 0) {
                 newsListDiv.innerHTML = '<p class="col-span-full text-center text-gray-400 py-10">No hay noticias cargadas. ¡Añade tu primera nota!</p>';
+                showNewsList();
                 return;
             }
             
@@ -379,13 +382,17 @@
                 newsListDiv.appendChild(newsItem);
             });
             
-            // Manejar si se entra con un hash de URL (ej. si se comparte un enlace)
-            if (window.location.hash) {
-                const newsIdFromHash = window.location.hash.substring(1);
-                const newsToLoad = LOCAL_NEWS_DATA.find(news => news.id === newsIdFromHash);
-                if (newsToLoad) {
-                    showNewsDetailPage(newsIdFromHash);
-                }
+            // 4. Lógica de Vista Inicial (Mostrar Detalle o Lista)
+            const newsIdFromHash = window.location.hash.substring(1);
+            const newsToLoad = LOCAL_NEWS_DATA.find(news => news.id === newsIdFromHash);
+
+            if (newsToLoad) {
+                // Si hay un hash válido (ej. al entrar por un enlace compartido),
+                // cargamos directamente el detalle de la noticia.
+                showNewsDetailPage(newsIdFromHash);
+            } else {
+                // Si no hay hash, mostramos la lista principal.
+                showNewsList(); 
             }
         }
 
