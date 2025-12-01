@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación Firebase y DOM Corregida</title>
-    <!-- Carga Tailwind CSS para un estilo rápido y limpio -->
+    <title>México se Entere: Noticias Locales</title>
+    <!-- Configuración PWA: Enlace al Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Carga Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -12,169 +14,306 @@
             font-family: 'Inter', sans-serif;
             background-color: #f7f9fb;
         }
-        .container-card {
-            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        /* Clase para manejar el formato del contenido completo */
+        .full-content {
+            white-space: pre-wrap; 
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen p-4 sm:p-8">
 
-    <div id="app-container" class="container-card w-full max-w-lg bg-white p-8 rounded-xl">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Estado de la Aplicación</h1>
-        
-        <!-- Elemento para mostrar el estado de Firebase y Auth -->
-        <div id="status-display" class="mb-6 p-4 rounded-lg text-sm transition duration-300 bg-gray-100 border border-gray-200">
-            <p id="firebase-status" class="font-medium text-gray-700">Inicializando Firebase...</p>
-            <p id="auth-status" class="text-gray-600">Estado de autenticación: Esperando...</p>
-            <p id="user-id" class="text-xs mt-2 break-all text-gray-500 hidden"></p>
-        </div>
+    <div class="max-w-3xl mx-auto">
+        <header class="text-center mb-8 bg-white p-6 rounded-xl shadow-md border-t-4 border-emerald-500">
+            <h1 class="text-4xl font-extrabold text-emerald-700">México se Entere</h1>
+            <p class="text-lg text-gray-600 mt-2">Noticias de Atizapán, Tlalnepantla, Naucalpan e Izcalli.</p>
+            
+            <!-- Enlace al formulario de carga -->
+            <a href="news_upload_form_spark.html" class="inline-block mt-4 text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-600 px-4 py-2 rounded-lg shadow-md transition duration-200">
+                Administración (Subir Noticias)
+            </a>
+            <p class="text-xs text-gray-400 mt-3">ID de Usuario: <span id="userIdDisplay" class="font-mono bg-gray-100 px-1 rounded">Cargando...</span></p>
+        </header>
 
-        <!-- Botón que causaba el Error 3, ahora manejado en DOMContentLoaded -->
-        <button id="share-button" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-300 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50">
-            Abrir Modal de Compartir (Simulación)
-        </button>
-
-        <!-- Placeholder para el Modal de Compartir (simulado) -->
-        <div id="share-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4" aria-modal="true" role="dialog">
-            <div class="bg-white p-6 rounded-lg w-full max-w-sm">
-                <h3 class="text-xl font-semibold mb-4">Modal de Compartir</h3>
-                <p>¡El DOM estaba listo y el evento se adjuntó correctamente!</p>
-                <button id="close-modal-button" class="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg">Cerrar</button>
+        <!-- Contenedor de la lista de noticias -->
+        <div id="newsListContainer" class="space-y-6">
+            <h2 class="text-2xl font-bold text-gray-700 mb-4">Últimas Noticias</h2>
+            <div id="newsList" class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <!-- Las noticias se cargarán aquí -->
             </div>
+            <p id="loadingStatus" class="text-center text-gray-500 mt-8">Cargando noticias...</p>
         </div>
+
+        <!-- Contenedor para el detalle de la noticia (Inicialmente oculto) -->
+        <div id="newsDetailContainer" class="hidden">
+            <!-- El contenido del detalle de la noticia cargará aquí -->
+        </div>
+
     </div>
 
+    <!-- SCRIPT PRINCIPAL CON TODA LA LÓGICA FUSIONADA -->
     <script type="module">
         // Importaciones de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { initializeApp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { 
             getAuth, 
             signInAnonymously, 
             signInWithCustomToken, 
             onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { 
+            getFirestore, 
+            collection, 
+            query, 
+            onSnapshot, 
+            doc, 
+            getDoc 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Habilitar logs de debug de Firebase
+        setLogLevel('debug'); 
 
-        // Globales del entorno Canvas
+        // -----------------------------------------------------------
+        // CONFIGURACIÓN GLOBAL (Variables proporcionadas por el entorno)
+        // -----------------------------------------------------------
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         
         let app;
         let auth;
         let db;
+        let userId = null;
+        
+        // Elementos DOM
+        const newsListContainer = document.getElementById('newsListContainer'); 
+        const newsDetailContainer = document.getElementById('newsDetailContainer'); 
+        const newsListDiv = document.getElementById('newsList'); 
+        const loadingStatusEl = document.getElementById('loadingStatus');
+        const userIdDisplay = document.getElementById('userIdDisplay');
 
-        /**
-         * Inicializa Firebase (Soluciona Error 1 y prepara para Error 2).
-         */
+
+        // -----------------------------------------------------------
+        // INICIALIZACIÓN DE FIREBASE Y AUTH
+        // -----------------------------------------------------------
         function initializeFirebase() {
-            const statusEl = document.getElementById('firebase-status');
-            
             try {
-                // 1. Manejo de la configuración (Solución al Error 1)
                 const firebaseConfigString = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
                 const firebaseConfig = JSON.parse(firebaseConfigString);
 
-                // Comprobar si falta projectId (causa raíz del Error 1)
-                if (!firebaseConfig.projectId) {
-                    throw new Error('"projectId" no proporcionado. Revisar __firebase_config.');
+                // <<<<< ESTA ES LA COMPROBACIÓN QUE FALLÓ ANTES >>>>>
+                if (!firebaseConfig || !firebaseConfig.projectId) {
+                    throw new Error('Configuración de Firebase incompleta ("projectId" no proporcionado).');
                 }
+                // <<<<< FIN DE COMPROBACIÓN >>>>>
 
-                // Inicializar la aplicación
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
-                auth = getAuth(app); // Inicialización exitosa del servicio Auth (Soluciona Error 2)
-
-                statusEl.textContent = '✅ Firebase inicializado correctamente.';
+                auth = getAuth(app); 
                 return true;
 
             } catch (error) {
-                console.error("Error al inicializar Firebase:", error);
-                statusEl.textContent = `❌ Error al inicializar Firebase: ${error.message}`;
+                console.error("CRÍTICO: Error al inicializar Firebase:", error.message);
+                loadingStatusEl.textContent = `❌ Error de inicio de Firebase: ${error.message}. Por favor, verifique la configuración.`;
                 return false;
             }
         }
 
-        /**
-         * Configura la autenticación (usa el objeto 'auth' ya inicializado).
-         */
         async function setupAuthentication() {
-            const statusEl = document.getElementById('auth-status');
-            const userIdEl = document.getElementById('user-id');
-            
-            if (!auth) {
-                statusEl.textContent = '🔴 Auth no disponible. Inicialización de Firebase fallida.';
-                return;
-            }
-
             try {
-                // Autenticar al usuario
                 if (initialAuthToken) {
                     await signInWithCustomToken(auth, initialAuthToken);
                 } else {
                     await signInAnonymously(auth);
                 }
 
-                // Configurar el oyente de estado de autenticación (que antes fallaba en el Error 2)
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
-                        statusEl.textContent = '✅ Autenticado con éxito.';
-                        userIdEl.textContent = `ID de Usuario (UID): ${user.uid}`;
-                        userIdEl.classList.remove('hidden');
-                        console.log("Usuario autenticado. UID:", user.uid);
+                        userId = user.uid;
+                        userIdDisplay.textContent = user.uid;
+                        listenForNews(); 
                     } else {
-                        statusEl.textContent = '⚠️ Autenticado anónimamente (o no loggeado).';
-                        userIdEl.classList.add('hidden');
+                        userIdDisplay.textContent = 'Anónimo';
                     }
                 });
 
             } catch (error) {
-                console.error("Error en la autenticación:", error);
-                statusEl.textContent = `❌ Error de autenticación: ${error.message}`;
+                console.error("CRÍTICO: Error en la autenticación:", error);
+                loadingStatusEl.textContent = `❌ Error de autenticación: ${error.message}`;
             }
         }
 
-        /**
-         * Maneja los eventos del DOM (Soluciona Error 3).
-         */
-        function setupDOMElements() {
-            // El código aquí se ejecuta SÓLO después de que el DOM está listo
-            const shareButton = document.getElementById('share-button');
-            const shareModal = document.getElementById('share-modal');
-            const closeModalButton = document.getElementById('close-modal-button');
 
-            // 1. Comprobamos la existencia de los elementos (aunque en este caso siempre existirán)
-            // (Solución al Error 3: 'addEventListener' on 'null')
-            if (shareButton && shareModal && closeModalButton) {
-                
-                shareButton.addEventListener('click', () => {
-                    shareModal.classList.remove('hidden');
-                    console.log("Modal de compartir abierto.");
+        // -----------------------------------------------------------
+        // LÓGICA DE DETALLE Y NAVEGACIÓN (Funciones accesibles globalmente)
+        // -----------------------------------------------------------
+
+        /** Muestra la vista de la lista principal de noticias. */
+        function showNewsList() {
+            newsListContainer.classList.remove('hidden'); 
+            newsDetailContainer.classList.add('hidden'); 
+        }
+
+        /** Carga y muestra el contenido completo de una noticia específica. */
+        async function showNewsDetailPage(newsId) {
+            newsListContainer.classList.add('hidden');
+            newsDetailContainer.classList.remove('hidden');
+            newsDetailContainer.innerHTML = `
+                <div class="flex justify-center items-center h-48 bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-xl text-gray-500">Cargando noticia...</p>
+                </div>
+            `;
+
+            try {
+                const newsRef = doc(db, `artifacts/${appId}/users/${userId}/noticias`, newsId);
+                const docSnap = await getDoc(newsRef); 
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    
+                    newsDetailContainer.innerHTML = `
+                        <div class="p-4 sm:p-6 bg-white rounded-xl shadow-xl border-t-4 border-emerald-500">
+                            <!-- Botón Volver -->
+                            <button onclick="window.showNewsList()" class="mb-6 text-emerald-600 hover:text-emerald-800 font-semibold flex items-center transition duration-150">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                </svg>
+                                Volver a la lista
+                            </button>
+                            
+                            <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-6">${data.titulo || 'Noticia sin Título'}</h1>
+                            
+                            <!-- Imagen -->
+                            <img src="${data.imagenUrl || 'https://placehold.co/800x400/94A3B8/FFFFFF?text=Sin+Imagen'}" 
+                                 alt="${data.titulo}" 
+                                 class="w-full h-auto object-cover rounded-lg mb-6 shadow-md border border-gray-100"
+                                 onerror="this.onerror=null; this.src='https://placehold.co/800x400/94A3B8/FFFFFF?text=Error+Carga';">
+                            
+                            <!-- Resumen/Lead -->
+                            <p class="text-xl font-medium text-gray-600 mb-8 border-l-4 border-emerald-400 pl-4">${data.resumen || 'Sin resumen.'}</p>
+                            
+                            <!-- CONTENIDO COMPLETO -->
+                            <div class="text-gray-800 leading-relaxed text-lg full-content">
+                                ${data.contenidoCompleto || 'El contenido completo de esta noticia no fue cargado.'}
+                            </div>
+                            
+                            <p class="text-sm text-gray-400 mt-8 text-right">Publicado: ${new Date(data.fecha).toLocaleDateString()}</p>
+                        </div>
+                    `;
+                    
+                } else {
+                    newsDetailContainer.innerHTML = `<p class="text-center text-red-500 mt-12">Error: Noticia con ID ${newsId} no encontrada.</p>`;
+                }
+            } catch (error) {
+                console.error("Error al cargar la noticia completa:", error);
+                newsDetailContainer.innerHTML = `<p class="text-center text-red-500 mt-12">Error de conexión: ${error.message}</p>`;
+            }
+        }
+        
+        // Hacemos las funciones accesibles globalmente para el 'onclick' del HTML
+        window.showNewsList = showNewsList; 
+        window.showNewsDetailPage = showNewsDetailPage; 
+
+        // -----------------------------------------------------------
+        // LÓGICA DE FIREBASE FIRETSORE (LISTADO EN TIEMPO REAL)
+        // -----------------------------------------------------------
+
+        function listenForNews() {
+            if (!db || !userId) return;
+
+            const newsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/noticias`);
+            const q = query(newsCollectionRef); 
+            
+            loadingStatusEl.textContent = 'Conectando a la base de datos...';
+            
+            onSnapshot(q, (querySnapshot) => {
+                const newsItems = [];
+                querySnapshot.forEach((doc) => {
+                    newsItems.push({ id: doc.id, ...doc.data() });
                 });
 
-                closeModalButton.addEventListener('click', () => {
-                    shareModal.classList.add('hidden');
-                    console.log("Modal de compartir cerrado.");
-                });
+                // Ordenar por fecha (descendente) en JS
+                newsItems.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+                renderNews(newsItems);
+
+            }, (error) => {
+                console.error("Error al escuchar noticias:", error);
+                loadingStatusEl.textContent = `❌ Error de conexión en tiempo real: ${error.message}`;
+            });
+        }
+        
+        // -----------------------------------------------------------
+        // RENDERIZADO DE NOTICIAS
+        // -----------------------------------------------------------
+
+        function renderNews(items) {
+            newsListDiv.innerHTML = ''; 
+            loadingStatusEl.classList.add('hidden'); 
+
+            if (items.length === 0) {
+                loadingStatusEl.classList.remove('hidden');
+                loadingStatusEl.textContent = 'Aún no hay noticias publicadas. Utiliza el enlace de Administración para subir contenido.';
+                return;
+            }
+
+            items.forEach(data => {
+                const imageUrl = data.imagenUrl || 'https://placehold.co/400x200/94A3B8/FFFFFF?text=Sin+Imagen';
+
+                const newsCard = `
+                    <div id="news-${data.id}" 
+                         class="card bg-white p-5 rounded-lg shadow-lg border border-gray-100 cursor-pointer" 
+                         onclick="window.showNewsDetailPage('${data.id}')">
+                        
+                        <img src="${imageUrl}" 
+                             alt="${data.titulo || 'Noticia'}" 
+                             class="w-full h-40 object-cover rounded-md mb-4"
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x200/EF4444/FFFFFF?text=Error+Carga';">
+                        
+                        <h3 class="font-bold text-xl text-gray-800 line-clamp-2">${data.titulo || 'Sin Título'}</h3>
+                        <p class="text-gray-600 text-sm mt-2 line-clamp-3">${data.resumen || 'Sin resumen disponible.'}</p>
+                        
+                        <div class="mt-3 flex justify-between items-center text-xs">
+                            <p class="text-emerald-500 font-medium hover:text-emerald-700">Leer más →</p>
+                            <p class="text-gray-400">${new Date(data.fecha).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+                `;
+                newsListDiv.innerHTML += newsCard;
+            });
+        }
+        
+        // -----------------------------------------------------------
+        // REGISTRO DEL SERVICE WORKER (PWA)
+        // -----------------------------------------------------------
+
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('✅ Service Worker registrado con éxito:', reg.scope))
+                    .catch(error => console.error('❌ Fallo el registro del Service Worker:', error));
             } else {
-                console.warn("Faltan elementos DOM: shareButton o shareModal no encontrados.");
+                console.warn('⚠️ Este navegador no soporta Service Workers (PWA).');
             }
         }
-
-
+        
         // -----------------------------------------------------------
-        // Punto de Entrada de la Aplicación
+        // PUNTO DE ENTRADA PRINCIPAL
         // -----------------------------------------------------------
-
-        // 1. Inicializa Firebase (debe ser lo primero)
-        const isFirebaseInitialized = initializeFirebase();
-
-        // 2. Si Firebase es exitoso, configura la autenticación
-        if (isFirebaseInitialized) {
-            setupAuthentication();
-        }
-
-        // 3. Espera a que el DOM esté completamente cargado para interactuar con los elementos
-        document.addEventListener('DOMContentLoaded', setupDOMElements);
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Registrar el service worker para la funcionalidad PWA
+            registerServiceWorker(); 
+            
+            // 2. Iniciar Firebase y la autenticación
+            if (initializeFirebase()) {
+                setupAuthentication();
+            }
+        });
 
     </script>
 </body>
