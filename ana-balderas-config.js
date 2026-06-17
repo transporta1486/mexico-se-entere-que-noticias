@@ -10,7 +10,7 @@ window.DIPUTADA_CONFIG = {
         'Ana Balderas destacó que este logro pertenece a toda la comunidad: “Hoy celebramos que Jerson podrá escuchar, pero sobre todo celebramos el gran corazón de nuestra gente. La solidaridad en Atizapán se convierte en acciones que transforman vidas”.',
         'La legisladora invitó a continuar participando: la campaña de recolección seguirá activa para apoyar a Lupita, quien enfrenta una batalla contra el cáncer y requiere del respaldo de la comunidad para continuar con su tratamiento.'
     ],
-    imagen: 'https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg',
+    imagen: 'img/pedro.jpg',
     video: 'tapitas.mp4',
-    videoPoster: 'https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg'
+    videoPoster: 'img/pedro.jpg'
 };
