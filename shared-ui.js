@@ -99,7 +99,12 @@ function toggleSearch() {
     const navMenu = document.getElementById('nav-menu');
     if (searchInputContainer) {
         searchInputContainer.classList.toggle('active');
-        if (navMenu) navMenu.classList.remove('active');
+        if (typeof setMenuOpen === 'function') {
+            setMenuOpen(false);
+        } else if (navMenu) {
+            navMenu.classList.remove('active');
+            document.querySelector('.menu-toggle')?.classList.remove('active');
+        }
         const searchInput = document.getElementById('search');
         if (searchInputContainer.classList.contains('active') && searchInput) {
             searchInput.focus();
