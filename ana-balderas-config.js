@@ -1,4 +1,4 @@
-/** Sección Diputada Ana Balderas — coloca el video en img/ana-balderas.mp4 */
+/** Sección Diputada Ana Balderas */
 window.DIPUTADA_CONFIG = {
     nombre: 'Dip. Ana Balderas',
     cargo: 'Diputada local · Solidaridad con Atizapán',
@@ -10,7 +10,8 @@ window.DIPUTADA_CONFIG = {
         'Ana Balderas destacó que este logro pertenece a toda la comunidad: “Hoy celebramos que Jerson podrá escuchar, pero sobre todo celebramos el gran corazón de nuestra gente. La solidaridad en Atizapán se convierte en acciones que transforman vidas”.',
         'La legisladora invitó a continuar participando: la campaña de recolección seguirá activa para apoyar a Lupita, quien enfrenta una batalla contra el cáncer y requiere del respaldo de la comunidad para continuar con su tratamiento.'
     ],
-    imagen: 'img/pedro.jpg',
+    foto: 'img/diputada.jpg',
+    imagen: 'img/diputada.jpg',
     video: 'tapitas.mp4',
-    videoPoster: 'img/pedro.jpg'
+    videoPoster: 'img/diputada.jpg'
 };

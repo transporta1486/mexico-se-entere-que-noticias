@@ -1794,6 +1794,69 @@ footer a:hover { color: var(--aurora-1); }
     padding: 28px 22px 32px;
 }
 
+.diputada-profile {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.diputada-portrait-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 108px;
+    height: 108px;
+}
+
+.diputada-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 22px;
+    display: block;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+.diputada-portrait-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #7dd3fc, #c4b5fd, #f472b6, #4ade80);
+    background-size: 300% 300%;
+    animation: diputadaPortraitRing 6s ease infinite;
+    z-index: 0;
+}
+
+@keyframes diputadaPortraitRing {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.diputada-portrait-badge {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0f172a;
+    background: linear-gradient(135deg, #7dd3fc, #c4b5fd);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+}
+
+.diputada-profile-text {
+    flex: 1;
+    min-width: 0;
+}
+
 .diputada-pill {
     background: rgba(167, 139, 250, 0.15);
     border-color: rgba(167, 139, 250, 0.35);
@@ -1801,7 +1864,7 @@ footer a:hover { color: var(--aurora-1); }
 }
 
 .diputada-cargo {
-    margin: 10px 0 4px;
+    margin: 8px 0 4px;
     font-size: 0.82rem;
     font-weight: 600;
     letter-spacing: 0.06em;
@@ -1874,12 +1937,52 @@ footer a:hover { color: var(--aurora-1); }
 
 /* Compartir — Diputada Ana Balderas */
 .diputada-share-zone {
+    position: relative;
     margin-top: 28px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(196, 181, 253, 0.18);
+    padding: 22px 18px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(125, 211, 252, 0.22);
+    background: linear-gradient(160deg, rgba(15, 17, 30, 0.92) 0%, rgba(30, 27, 75, 0.75) 100%);
+    overflow: hidden;
 }
 
-.diputada-share-trigger {
+.diputada-share-beam {
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 60%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(125, 211, 252, 0.12), transparent 65%);
+    pointer-events: none;
+}
+
+.diputada-share-tagline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #a5f3fc;
+}
+
+.diputada-share-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22d3ee;
+    box-shadow: 0 0 12px #22d3ee;
+    animation: diputadaSharePulse 2s ease infinite;
+}
+
+@keyframes diputadaSharePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.diputada-share-orb {
     position: relative;
     display: block;
     width: 100%;
@@ -1888,119 +1991,177 @@ footer a:hover { color: var(--aurora-1); }
     background: transparent;
     cursor: pointer;
     font-family: var(--font-body);
-    text-align: left;
+    margin-bottom: 14px;
 }
 
-.diputada-share-trigger-ring {
+.diputada-share-orb-halo {
     position: absolute;
-    inset: -1px;
+    inset: -2px;
     border-radius: 18px;
-    background: linear-gradient(135deg, #7dd3fc, #c4b5fd, #f472b6, #7dd3fc);
-    background-size: 300% 300%;
-    animation: diputadaShareRing 5s ease infinite;
-    opacity: 0.85;
+    background: linear-gradient(90deg, #22d3ee, #a78bfa, #f472b6, #4ade80, #22d3ee);
+    background-size: 400% 100%;
+    animation: diputadaShareHalo 4s linear infinite;
+    opacity: 0.9;
 }
 
-@keyframes diputadaShareRing {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+@keyframes diputadaShareHalo {
+    0% { background-position: 0% center; }
+    100% { background-position: 400% center; }
 }
 
-.diputada-share-trigger-inner {
+.diputada-share-orb-body {
     position: relative;
     z-index: 1;
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 16px 18px;
-    margin: 1px;
-    border-radius: 17px;
-    background: linear-gradient(135deg, rgba(15, 17, 30, 0.98) 0%, rgba(30, 27, 75, 0.92) 100%);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    padding: 15px 16px;
+    margin: 2px;
+    border-radius: 16px;
+    background: rgba(8, 10, 22, 0.95);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.diputada-share-trigger:hover .diputada-share-trigger-inner,
-.diputada-share-trigger:focus-visible .diputada-share-trigger-inner {
+.diputada-share-orb:hover .diputada-share-orb-body,
+.diputada-share-orb:focus-visible .diputada-share-orb-body {
     transform: translateY(-2px);
-    box-shadow: 0 16px 48px rgba(125, 211, 252, 0.15);
+    box-shadow: 0 14px 40px rgba(34, 211, 238, 0.18);
 }
 
-.diputada-share-trigger.is-open .diputada-share-trigger-inner {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-
-.diputada-share-trigger:focus-visible {
-    outline: 2px solid var(--aurora-1);
+.diputada-share-orb:focus-visible {
+    outline: 2px solid #22d3ee;
     outline-offset: 3px;
     border-radius: 18px;
 }
 
-.diputada-share-trigger-icon {
+.diputada-share-orb-icon {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: rgba(125, 211, 252, 0.1);
-    border: 1px solid rgba(125, 211, 252, 0.28);
-    color: #7dd3fc;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.25), rgba(167, 139, 250, 0.12));
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    color: #67e8f9;
 }
 
-.diputada-share-trigger-icon svg {
-    width: 22px;
-    height: 22px;
+.diputada-share-orb-icon svg {
+    width: 24px;
+    height: 24px;
 }
 
-.diputada-share-trigger-copy {
+.diputada-share-orb-text {
     flex: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 2px;
+    text-align: left;
 }
 
-.diputada-share-trigger-copy strong {
-    font-size: 1rem;
+.diputada-share-orb-text strong {
+    font-size: 1.05rem;
     font-weight: 700;
     color: #f8fafc;
-    letter-spacing: 0.01em;
 }
 
-.diputada-share-trigger-copy small {
-    font-size: 0.8rem;
+.diputada-share-orb-text small {
+    font-size: 0.78rem;
     color: var(--text-muted);
+    line-height: 1.4;
 }
 
-.diputada-share-trigger-chevron {
+.diputada-share-orb-arrow {
     flex-shrink: 0;
-    color: var(--aurora-1);
-    transition: transform 0.3s ease;
+    color: #c4b5fd;
+    transition: transform 0.25s ease;
 }
 
-.diputada-share-trigger-chevron svg {
-    width: 20px;
-    height: 20px;
+.diputada-share-orb-arrow svg {
+    width: 22px;
+    height: 22px;
     display: block;
 }
 
-.diputada-share-trigger.is-open .diputada-share-trigger-chevron {
-    transform: rotate(180deg);
+.diputada-share-orb.is-open .diputada-share-orb-arrow {
+    transform: rotate(90deg);
+}
+
+.diputada-share-quick-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.diputada-share-quick {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 6px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: #e2e8f0;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.diputada-share-quick:hover {
+    transform: translateY(-2px);
+    border-color: rgba(125, 211, 252, 0.35);
+    background: rgba(125, 211, 252, 0.1);
+}
+
+.diputada-share-quick-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.diputada-share-quick-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.diputada-share-quick-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.diputada-share-quick.diputada-share-opt--wa .diputada-share-quick-icon {
+    background: rgba(37, 211, 102, 0.15);
+    color: #4ade80;
+}
+
+.diputada-share-quick.diputada-share-opt--fb .diputada-share-quick-icon {
+    background: rgba(59, 89, 152, 0.18);
+    color: #93c5fd;
+}
+
+.diputada-share-quick.diputada-share-opt--x .diputada-share-quick-icon {
+    background: rgba(255, 255, 255, 0.08);
+    color: #f8fafc;
+}
+
+.diputada-share-quick.diputada-share-opt--copy .diputada-share-quick-icon {
+    background: rgba(196, 181, 253, 0.14);
+    color: #c4b5fd;
 }
 
 .diputada-share-panel {
-    margin-top: 10px;
-    padding: 18px 16px 16px;
-    border-radius: 0 0 18px 18px;
-    background: rgba(8, 10, 20, 0.75);
-    border: 1px solid rgba(196, 181, 253, 0.2);
-    border-top: none;
-    backdrop-filter: blur(16px);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-6px);
     transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
@@ -2014,49 +2175,44 @@ footer a:hover { color: var(--aurora-1); }
 }
 
 .diputada-share-panel-label {
-    margin: 0 0 12px 4px;
+    margin: 0 0 10px;
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--aurora-1);
-}
-
-.diputada-share-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    color: var(--text-muted);
 }
 
 .diputada-share-opt {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 12px;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
     color: #e2e8f0;
     cursor: pointer;
     font-family: var(--font-body);
     text-align: left;
-    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    transition: border-color 0.2s, background 0.2s;
 }
 
 .diputada-share-opt:hover {
-    transform: translateY(-1px);
     border-color: rgba(125, 211, 252, 0.35);
     background: rgba(125, 211, 252, 0.08);
 }
 
 .diputada-share-opt-icon {
-    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(125, 211, 252, 0.1);
+    color: #7dd3fc;
 }
 
 .diputada-share-opt-icon svg {
@@ -2067,45 +2223,17 @@ footer a:hover { color: var(--aurora-1); }
 .diputada-share-opt-text {
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    min-width: 0;
+    gap: 2px;
 }
 
 .diputada-share-opt-text strong {
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.88rem;
     color: #f1f5f9;
 }
 
 .diputada-share-opt-text small {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     color: var(--text-muted);
-    line-height: 1.3;
-}
-
-.diputada-share-opt--wa .diputada-share-opt-icon {
-    background: rgba(37, 211, 102, 0.12);
-    color: #4ade80;
-}
-
-.diputada-share-opt--fb .diputada-share-opt-icon {
-    background: rgba(59, 89, 152, 0.15);
-    color: #93c5fd;
-}
-
-.diputada-share-opt--x .diputada-share-opt-icon {
-    background: rgba(255, 255, 255, 0.08);
-    color: #f8fafc;
-}
-
-.diputada-share-opt--copy .diputada-share-opt-icon {
-    background: rgba(196, 181, 253, 0.12);
-    color: #c4b5fd;
-}
-
-.diputada-share-opt--native .diputada-share-opt-icon {
-    background: rgba(125, 211, 252, 0.1);
-    color: #7dd3fc;
 }
 
 .diputada-share-toast {
@@ -2137,12 +2265,14 @@ footer a:hover { color: var(--aurora-1); }
         flex: 1;
     }
 
-    .diputada-share-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .diputada-portrait-wrap {
+        width: 120px;
+        height: 120px;
     }
 
-    .diputada-share-opt--native {
-        grid-column: span 3;
+    .diputada-share-quick-row {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
     }
 }
 
