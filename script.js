@@ -193,10 +193,14 @@ function shareArticle(title) {
 window.shareArticle = shareArticle;
 
 function toggleMenu() {
+    if (typeof setMenuOpen === 'function') {
+        const nav = document.getElementById('nav-menu');
+        setMenuOpen(!nav?.classList.contains('active'));
+        return;
+    }
     const navMenu = document.getElementById('nav-menu');
     const menuToggle = document.querySelector('.menu-toggle');
     const searchInputContainer = document.getElementById('search-input');
-
     if (navMenu && menuToggle) {
         navMenu.classList.toggle('active');
         menuToggle.classList.toggle('active');

@@ -34,17 +34,17 @@
           <h1>México Se Enteré Qué</h1>
         </div>
       </a>
-      <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" onclick="toggleMenu()">
         <span></span><span></span><span></span>
       </button>
-      <nav id="nav-menu">
+      <nav id="nav-menu" aria-label="Menú principal">
         <ul>
           <li><a href="index.html" class="nav-link">Inicio</a></li>
           <li><a href="atizapan.html" class="nav-link active">Atizapán</a></li>
           <li><a href="tlalnepantla.html" class="nav-link">Tlalnepantla</a></li>
           <li><a href="naucalpan.html" class="nav-link">Naucalpan</a></li>
-          <li><a href="nicolas-romero.html" class="nav-link">N. Romero</a></li>
-          <li><a href="cuatitlan-izcalli.html" class="nav-link">Izcalli</a></li>
+          <li><a href="nicolas-romero.html" class="nav-link">Nicolás Romero</a></li>
+          <li><a href="cuatitlan-izcalli.html" class="nav-link">Cuautitlán Izcalli</a></li>
         </ul>
       </nav>
     </header>
@@ -86,6 +86,7 @@
       </div>
     </footer>
 
+    <script src="nav-mobile.js"></script>
     <script src="shared-ui.js"></script>
     <script src="social-config.js"></script>
     <script src="social-section.js"></script>

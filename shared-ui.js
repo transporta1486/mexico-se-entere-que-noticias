@@ -5,8 +5,8 @@ const NAV_ITEMS = [
     { href: 'atizapan.html', label: 'Atizapán', key: 'atizapan' },
     { href: 'tlalnepantla.html', label: 'Tlalnepantla', key: 'tlalnepantla' },
     { href: 'naucalpan.html', label: 'Naucalpan', key: 'naucalpan' },
-    { href: 'nicolas-romero.html', label: 'N. Romero', key: 'nicolas-romero' },
-    { href: 'cuatitlan-izcalli.html', label: 'Izcalli', key: 'cuatitlan-izcalli' }
+    { href: 'nicolas-romero.html', label: 'Nicolás Romero', key: 'nicolas-romero' },
+    { href: 'cuatitlan-izcalli.html', label: 'Cuautitlán Izcalli', key: 'cuatitlan-izcalli' }
 ];
 
 function buildNav(activeKey) {
@@ -77,6 +77,11 @@ function buildSiteFooter() {
 }
 
 function toggleMenu() {
+    if (typeof setMenuOpen === 'function') {
+        const nav = document.getElementById('nav-menu');
+        setMenuOpen(!nav?.classList.contains('active'));
+        return;
+    }
     const navMenu = document.getElementById('nav-menu');
     const menuToggle = document.querySelector('.menu-toggle');
     const searchInputContainer = document.getElementById('search-input');
