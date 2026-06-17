@@ -1715,6 +1715,137 @@ footer a:hover { color: var(--aurora-1); }
     margin: 0;
 }
 
+/* Sección Diputada Ana Balderas */
+.diputada-spotlight {
+    margin: 8px var(--padding-mobile) 28px;
+}
+
+.diputada-inner {
+    position: relative;
+    overflow: hidden;
+    padding: 0 !important;
+    border: 1px solid rgba(196, 181, 253, 0.28);
+}
+
+.diputada-glow {
+    position: absolute;
+    inset: -30%;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(167, 139, 250, 0.2), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(125, 211, 252, 0.14), transparent 42%);
+    pointer-events: none;
+}
+
+.diputada-content {
+    position: relative;
+    z-index: 1;
+    padding: 28px 22px 32px;
+}
+
+.diputada-pill {
+    background: rgba(167, 139, 250, 0.15);
+    border-color: rgba(167, 139, 250, 0.35);
+    color: #e9d5ff;
+}
+
+.diputada-cargo {
+    margin: 10px 0 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--aurora-1);
+}
+
+.diputada-title {
+    margin: 0 0 8px;
+    font-size: clamp(1.35rem, 4vw, 1.9rem);
+    line-height: 1.2;
+    background: linear-gradient(135deg, #e9d5ff, #7dd3fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.diputada-subtitle {
+    margin: 0 0 10px;
+    font-size: 1.05rem;
+    line-height: 1.45;
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+.diputada-date {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+.diputada-body {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.diputada-media {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.diputada-image,
+.diputada-video {
+    width: 100%;
+    display: block;
+    max-height: 420px;
+    object-fit: cover;
+}
+
+.diputada-video-wrap {
+    background: #000;
+}
+
+.diputada-text p {
+    color: #cbd5e1;
+    line-height: 1.85;
+    margin: 0 0 14px;
+    font-size: 1rem;
+}
+
+.diputada-lead {
+    font-size: 1.05rem !important;
+    color: #e2e8f0 !important;
+    font-weight: 500;
+}
+
+@media (min-width: 768px) {
+    .diputada-spotlight {
+        margin-left: var(--padding-desktop);
+        margin-right: var(--padding-desktop);
+    }
+
+    .diputada-content {
+        padding: 36px 32px 40px;
+    }
+
+    .diputada-body {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 28px;
+    }
+
+    .diputada-media {
+        flex: 0 0 42%;
+        max-width: 480px;
+    }
+
+    .diputada-text {
+        flex: 1;
+    }
+}
+
 /* Móvil — lectura cómoda y tarjetas grandes */
 @media (max-width: 767px) {
     :root {

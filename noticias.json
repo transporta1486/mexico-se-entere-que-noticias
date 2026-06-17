@@ -1,6 +1,46 @@
 {
   "noticias": [
     {
+      "id": "noticia-nromero-005",
+      "titulo": "Cierres viales en Nicolás Romero por la Feria San Pedro Azcapotzaltongo 2026",
+      "resumen": "El Gobierno Municipal de Nicolás Romero informó que, con motivo de la Feria Patronal San Pedro Azcapotzaltongo 2026, se cerrarán diversas calles a partir del 17 de junio. Las autoridades exhortan a conductores y familias a tomar precauciones, planear rutas alternas y atender los avisos oficiales sobre los tramos afectados durante los días de la feria, que se celebrará del 22 al 29 de junio en la explanada municipal y zonas aledañas del centro del municipio.",
+      "imagen": "https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg",
+      "categoria": "vialidad",
+      "fecha": "2026-06-17",
+      "ciudad": "Nicolás Romero",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-atizapan-006",
+      "titulo": "Solidaridad Atizapán transforma vidas: Jerson escuchará por primera vez",
+      "resumen": "Gracias a la recolección de PET y tapitas impulsada por la diputada Ana Balderas, el joven Jerson podrá escuchar por primera vez este jueves 18 de junio. Cientos de familias atizapenses se sumaron a la causa y demostraron que el trabajo conjunto entre ciudadanía y representantes sociales puede generar esperanza. La campaña continúa activa para apoyar a Lupita en su lucha contra el cáncer.",
+      "imagen": "https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg",
+      "categoria": "sociedad",
+      "fecha": "2026-06-18",
+      "ciudad": "Atizapán",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-atizapan-005",
+      "titulo": "¿Cumple el nuevo encargado de Seguridad de Atizapán con el perfil que exige la ley?",
+      "resumen": "Ciudadanos de Atizapán piden una explicación clara del presidente municipal Pedro Rodríguez Villegas y del Cabildo sobre el nombramiento del Capitán Justino Bautista Osorio como encargado de Seguridad Pública. De acuerdo con el Registro Nacional de Profesionistas, cuenta con licenciatura en Ingeniería Topográfica; sin embargo, la Ley de Seguridad del Estado de México exige título de licenciatura y preferentemente especialización en seguridad pública, además de experiencia y certificaciones. Se solicita transparencia sobre los criterios de la designación en un municipio de más de medio millón de habitantes.",
+      "imagen": "https://i.postimg.cc/DzgczqyG/mexico-entrega-26-reos-criminales-eeuu-768x512.jpg",
+      "categoria": "seguridad",
+      "fecha": "2026-06-17",
+      "ciudad": "Atizapán",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-naucalpan-005",
+      "titulo": "Naucalpan: contrastes económicos y percepción de inseguridad preocupan a vecinos",
+      "resumen": "Naucalpan es uno de los municipios del país con mayores contrastes económicos: en algunas zonas destaca la riqueza y a pocos metros se nota la pobreza, pero en ambos lados persisten problemas comunes, principalmente la inseguridad. Vecinos reportan robos en casa habitación, asaltos a transeúntes, robo de vehículos y autopartes, y la ausencia de patrullas en varias calles. También se señala la circulación de personas armadas en motocicleta o vehículos sin que la policía actúe con la contundencia que la población demanda.",
+      "imagen": "https://www.eluniversal.com.mx/resizer/v2/PAPKOGV27RCAJJNC2SFNYFFDZ4.jpeg?auth=ab7bad3b2a1a127f94dac6f579d4464f9bc5ba658730d6e12c2189544e3b8c49",
+      "categoria": "seguridad",
+      "fecha": "2026-06-17",
+      "ciudad": "Naucalpan",
+      "autor": "Redacción"
+    },
+    {
       "id": "noticia-atizapan-002",
       "titulo": "Atizapán retira más de 2,100 m³ de azolve en vaso regulador La Cañada",
       "resumen": "El Organismo SAPASA intensificó las labores de desazolve en el vaso regulador La Cañada, ubicado en el fraccionamiento Villas de la Cañada, una de las obras clave para captar y controlar aguas pluviales en el municipio. Hasta el momento se han retirado aproximadamente 2 mil 100 metros cúbicos de azolve, lo que permite recuperar la capacidad operativa de la infraestructura y reducir el riesgo de desbordamientos en zonas bajas. De manera paralela, el gobierno de Pedro Rodríguez Villegas mantiene limpieza y deshierbe en ríos, barrancas y cauces naturales del municipio. Las autoridades exhortaron a la población a no tirar basura en calles, coladeras y barrancas, ya que los residuos sólidos son una de las principales causas de taponamientos durante la temporada de lluvias.",
