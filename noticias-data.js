@@ -3,7 +3,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-atizapan-002",
     "titulo": "Atizapán retira más de 2,100 m³ de azolve en vaso regulador La Cañada",
-    "resumen": "SAPASA intensificó labores de desazolve en el vaso regulador La Cañada, en Villas de la Cañada, para prevenir inundaciones en la temporada de lluvias. El gobierno de Pedro Rodríguez también mantiene limpieza en ríos y barrancas del municipio.",
+    "resumen": "El Organismo SAPASA intensificó las labores de desazolve en el vaso regulador La Cañada, ubicado en el fraccionamiento Villas de la Cañada, una de las obras clave para captar y controlar aguas pluviales en el municipio. Hasta el momento se han retirado aproximadamente 2 mil 100 metros cúbicos de azolve, lo que permite recuperar la capacidad operativa de la infraestructura y reducir el riesgo de desbordamientos en zonas bajas. De manera paralela, el gobierno de Pedro Rodríguez Villegas mantiene limpieza y deshierbe en ríos, barrancas y cauces naturales del municipio. Las autoridades exhortaron a la población a no tirar basura en calles, coladeras y barrancas, ya que los residuos sólidos son una de las principales causas de taponamientos durante la temporada de lluvias.",
     "imagen": "https://proyeccionedomex.com.mx/wp-content/uploads/2026/06/WhatsApp-Image-2026-06-11-at-11.37.00-PM.jpeg",
     "categoria": "infraestructura",
     "fecha": "2026-06-11",
@@ -13,7 +13,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-atizapan-003",
     "titulo": "Atizapán designa nuevo encargado de Seguridad Pública y Seguridad Vial",
-    "resumen": "El gobierno municipal nombró al Capitán de Corbeta Justino Bautista Osorio como encargado de despacho de la corporación, en sustitución del anterior comisario. El cambio se dio a conocer durante la Mesa de Paz con autoridades de los tres órdenes de gobierno.",
+    "resumen": "El Gobierno de Atizapán de Zaragoza realizó cambios en la Dirección de Seguridad Pública y Seguridad Vial al designar al Capitán de Corbeta de Infantería de Marina, Justino Bautista Osorio, como encargado de despacho de la corporación. El relevo fue dado a conocer durante la Mesa de Paz, espacio de coordinación entre los tres órdenes de gobierno para reforzar acciones de prevención del delito. Aunque el ayuntamiento no detalló públicamente las razones de la salida del titular anterior, confirmó que la seguridad de las familias atizapenses sigue siendo prioridad. La administración señaló que se mantendrán los operativos focalizados, recorridos preventivos y la coordinación con instancias estatales y federales en todo el territorio municipal.",
     "imagen": "https://i.postimg.cc/DzgczqyG/mexico-entrega-26-reos-criminales-eeuu-768x512.jpg",
     "categoria": "seguridad",
     "fecha": "2026-06-04",
@@ -23,7 +23,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-atizapan-004",
     "titulo": "Lluvias provocan anegaciones en San José El Jaral y la Central de Abastos",
-    "resumen": "Precipitaciones intensas dejaron encharcamientos en la carretera Atizapán-Nicolás Romero, la Central de Abastos y la Segunda Sección de San José El Jaral, donde el desborde del Río Chamacuero afectó patios y plantas bajas de decenas de viviendas.",
+    "resumen": "Precipitaciones intensas registradas en el noroeste del Valle de México dejaron encharcamientos y afectaciones en distintos puntos de Atizapán de Zaragoza. Se reportaron anegaciones en la carretera Atizapán-Nicolás Romero a la altura de Las Bodegas, en la Central de Abastos y en la Segunda Sección de San José El Jaral, donde el desborde del Río Chamacuero afectó patios y plantas bajas de alrededor de 50 viviendas. Elementos de Protección Civil y Bomberos atendieron a familias afectadas y reforzaron el monitoreo en zonas bajas. Las autoridades recomendaron a conductores y vecinos extremar precauciones ante nuevas lluvias, evitar cruzar encharcamientos profundos y reportar cualquier emergencia a los números oficiales de atención ciudadana.",
     "imagen": "https://cdn.milenio.com/uploads/media/2026/06/04/algunas-de-las-inundaciones-se.jpg",
     "categoria": "clima",
     "fecha": "2026-06-04",
@@ -33,7 +33,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-tlalnepantla-002",
     "titulo": "Tlalnepantla inicia demolición manual de 66 viviendas en zona cero del Chiquihuite",
-    "resumen": "Autoridades arrancaron la demolición de viviendas desalojadas en la primera franja de riesgo del Cerro del Chiquihuite, tras el deslave de 2021. Los trabajos se realizan sin maquinaria pesada; la primera etapa contempla 25 inmuebles y concluirá en agosto.",
+    "resumen": "Autoridades de Tlalnepantla de Baz iniciaron la demolición de viviendas ubicadas en la denominada zona cero del Cerro del Chiquihuite, en la Primera Sección de Lázaro Cárdenas, área donde ocurrió el deslave de septiembre de 2021 que dejó cuatro personas fallecidas. La primera franja de riesgo comprende 66 inmuebles desocupados; en esta etapa se intervenirán 25 viviendas distribuidas en tres polígonos de alta vulnerabilidad. Debido a la inestabilidad del terreno, las demoliciones se realizan de forma manual, sin maquinaria pesada, para evitar vibraciones que pudieran afectar construcciones en la parte baja del cerro. Una vez concluidos los trabajos, el ayuntamiento prevé convertir el área en un espacio verde protegido con reforestación, impidiendo nuevos asentamientos humanos en zona de riesgo permanente.",
     "imagen": "https://www.eluniversaledomex.com.mx/resizer/v2/7XZWSDE7UVEZHKHTZG2ZN6JSPU.jpg?auth=ae544595dd53939fecca2b6ce9d73c0d70bb1fbe8593154a0d913a16f265e4a8",
     "categoria": "sociedad",
     "fecha": "2026-06-02",
@@ -43,7 +43,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-tlalnepantla-003",
     "titulo": "Tlalnepantla pone en operación el pozo de agua Los Rosarios en la zona poniente",
-    "resumen": "Con una inversión de más de 18 millones de pesos, el nuevo pozo entubado beneficiará a cerca de 17 mil habitantes de 11 secciones de la Unidad Habitacional El Rosario, zona donde históricamente se han reportado problemas de suministro de agua.",
+    "resumen": "El Gobierno de Tlalnepantla puso en marcha el pozo profundo de agua entubada Los Rosarios, obra de infraestructura hidráulica con una inversión de 18 millones 263 mil pesos. La nueva fuente de abastecimiento beneficiará de manera directa a aproximadamente 17 mil 280 habitantes de 11 secciones de la Unidad Habitacional El Rosario, colonia donde históricamente se han reportado cortes y baja presión en el suministro. El pozo tendrá capacidad de extracción estimada de 30 litros por segundo e incluye tubería especializada, sistemas de bombeo y pruebas de aforo para garantizar su operación segura. La administración encabezada por Raciel Pérez Cruz destacó que el proyecto forma parte de una estrategia integral para fortalecer la resiliencia hídrica del municipio mediante nuevas perforaciones y modernización de la red existente.",
     "imagen": "https://i.postimg.cc/xdr6Ct7j/FB-IMG-1755466516879.jpg",
     "categoria": "infraestructura",
     "fecha": "2026-06-09",
@@ -53,7 +53,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-tlalnepantla-004",
     "titulo": "Tlalnepantla activa protocolo de atención por lluvias y despliega brigadas en vialidades",
-    "resumen": "Ante fuertes precipitaciones, el municipio activó el protocolo de emergencia y desplegó personal del organismo de agua para destapar coladeras en avenidas principales. También se monitorearon encharcamientos desde cámaras de videovigilancia.",
+    "resumen": "Ante fuertes precipitaciones registradas en el Valle de México, Tlalnepantla activó su protocolo de atención por lluvias y desplegó brigadas del organismo de agua municipal en avenidas y vialidades principales. Personal técnico trabajó en el destape de coladeras y en la revisión de puntos críticos como Lago de Guadalupe, la lateral del Periférico Norte y Prolongación Hidalgo, donde en jornadas anteriores se reportaron anegaciones. Desde el centro de videovigilancia se monitorearon encharcamientos para enviar cuadrillas de respuesta de manera inmediata. El gobierno municipal reiteró el llamado a no arrojar basura en la vía pública, ya que obstruye el drenaje pluvial y agrava las inundaciones en temporada de lluvias.",
     "imagen": "https://cdn.milenio.com/uploads/media/2026/06/04/algunas-de-las-inundaciones-se.jpg",
     "categoria": "clima",
     "fecha": "2026-06-13",
@@ -63,7 +63,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-naucalpan-002",
     "titulo": "Transportistas cancelan bloqueos en Naucalpan tras acuerdos con el ayuntamiento",
-    "resumen": "La agrupación Ducks México A.C. suspendió las movilizaciones previstas para el 16 de junio tras una mesa de trabajo con el alcalde Isaac Montoya. Los transportistas señalaron que el diálogo permitió establecer acuerdos que dan certeza al sector.",
+    "resumen": "Transportistas y comerciantes agremiados a Ducks México A.C. suspendieron las movilizaciones y afectaciones vehiculares que tenían programadas para el martes 16 de junio en distintos puntos de Naucalpan. La decisión se tomó tras una mesa de trabajo con el presidente municipal Isaac Montoya, la titular de Desarrollo y Fomento Económico Rubí Guarneros y la directora de Gobierno Rosalba Gualitos, quienes escucharon planteamientos sobre presuntos abusos de autoridad y problemáticas del sector. La agrupación señaló que el diálogo permitió establecer acuerdos y compromisos que brindan certeza a las familias que dependen del transporte y el comercio ambulante. Con ello, vialidades como Gustavo Baz, Lomas Verdes y laterales del Periférico Norte permanecieron sin bloqueos derivados de esta protesta.",
     "imagen": "https://www.eluniversal.com.mx/resizer/v2/PAPKOGV27RCAJJNC2SFNYFFDZ4.jpeg?auth=ab7bad3b2a1a127f94dac6f579d4464f9bc5ba658730d6e12c2189544e3b8c49",
     "categoria": "sociedad",
     "fecha": "2026-06-16",
@@ -73,7 +73,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-naucalpan-003",
     "titulo": "Naucalpan reactivará el sistema de parquímetros con la empresa NauPark",
-    "resumen": "El gobierno de Isaac Montoya confirmó el regreso del estacionamiento regulado tras siete años de suspensiones. La prueba piloto iniciará en la Zona Azul y contempla cerca de 5 mil cajones en El Mirador, Satélite, Lomas de Tecamachalco y más zonas.",
+    "resumen": "El gobierno de Naucalpan confirmó el regreso del sistema de estacionamiento regulado, luego de permanecer suspendido alrededor de siete años. El programa será operado por la empresa NauPark y contempla cerca de 5 mil cajones en zonas como El Mirador, Naucalpan Centro, Industrial Alce Blanco, Ciudad Satélite, Lomas de Tecamachalco, Zona Azul y Boulevares. La prueba piloto iniciará en la Zona Azul, donde vecinos habían expresado inconformidad; por ello el ayuntamiento anunció un periodo de socialización antes del cobro formal. El horario previsto es de lunes a miércoles de 08:00 a 20:00 horas y de jueves a domingo de 08:00 a 02:00. El alcalde Isaac Montoya señaló que el objetivo es ordenar el estacionamiento en vialidades saturadas sin afectar la movilidad de residentes.",
     "imagen": "https://i.postimg.cc/VkVwzprt/FB-IMG-1755219895317.jpg",
     "categoria": "movilidad",
     "fecha": "2026-06-12",
@@ -83,7 +83,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-naucalpan-004",
     "titulo": "Confirmada la Línea 3 del Mexicable en Naucalpan: recorrido de 27 minutos",
-    "resumen": "La Secretaría de Movilidad del Edomex confirmó que la nueva línea de teleférico urbano transportará a más de 40 mil usuarios al día y beneficiará a más de 700 mil personas en la entidad, como alternativa moderna para la zona alta del municipio.",
+    "resumen": "La Secretaría de Movilidad del Estado de México confirmó los datos de la Línea 3 del Mexicable, nueva alternativa de transporte público para la zona alta de Naucalpan. El recorrido completo tendrá una duración de 27 minutos y el sistema tendrá capacidad para transportar a más de 40 mil usuarios al día, con un beneficio indirecto para más de 700 mil personas en la entidad. La obra busca reducir los tiempos de traslado en uno de los municipios con mayor densidad poblacional del Edomex y menor oferta de transporte masivo en zonas elevadas. La línea se suma a las rutas existentes del Mexicable estatal y representa una apuesta por movilidad sustentable que evita la saturación de vialidades principales como Periférico y Lomas Verdes.",
     "imagen": "https://tvazteca-adnnoticias-prod.web.arc-cdn.net/resizer/v2/5R3XFJFYR5BN3N4CMDIAIP3U64.jpg?smart=true&auth=fe7d3b4505d3d6c792dbb4e00f8923755a3df0037c98f324e5c1c95a84d58713&width=1200&height=630",
     "categoria": "movilidad",
     "fecha": "2026-06-08",
@@ -93,7 +93,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-nromero-002",
     "titulo": "Nicolás Romero presenta la Feria San Pedro Azcapotzaltongo 2026 con más de mil artistas",
-    "resumen": "Del 22 al 29 de junio se celebrará la feria patronal con actividades culturales, deportivas y musicales de acceso gratuito. La cartelera incluye a La Adictiva, Paty Cantú y Grupo Bryndis; habrá pantallas gigantes para el Mundial 2026.",
+    "resumen": "El gobierno municipal presentó oficialmente la edición 2026 de la Feria Patronal San Pedro Azcapotzaltongo, que se celebrará del 22 al 29 de junio con acceso gratuito a todas las actividades culturales, artísticas y deportivas. La presidenta municipal Yoselin Mendoza confirmó la participación de más de mil artistas y cerca de mil 500 deportistas, de los cuales el 70 por ciento es talento local. La cartelera musical incluye a Grupo Bryndis, Paty Cantú, Liran Roll y un cierre a cargo de La Adictiva. Debido a la coincidencia con la Copa Mundial FIFA 2026, se instalarán pantallas gigantes en la explanada del Palacio Municipal para que las familias sigan los partidos del torneo, con especial atención a la Selección Mexicana.",
     "imagen": "https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg",
     "categoria": "cultura",
     "fecha": "2026-06-14",
@@ -103,7 +103,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-nromero-003",
     "titulo": "Nicolás Romero firma convenio con Cinépolis para funciones gratuitas a niños",
-    "resumen": "La presidenta municipal Yoselin Mendoza anunció una alianza con Cinépolis México que permitirá a niñas y niños del municipio acceder a funciones de cine sin costo, como parte de las acciones en favor de la recreación y el bienestar infantil.",
+    "resumen": "En el marco de las actividades previas a la feria patronal, la presidenta municipal Yoselin Mendoza firmó un convenio de colaboración con Cinépolis México para ofrecer funciones de cine gratuitas a niñas y niños del municipio. La iniciativa busca acercar actividades recreativas a familias con menos recursos y fomentar espacios seguros de convivencia comunitaria. Autoridades locales señalaron que los detalles de fechas y sedes se darán a conocer a través de redes sociales oficiales y módulos de atención ciudadana. El programa se suma a otras acciones de bienestar impulsadas por el ayuntamiento, como eventos deportivos gratuitos y presentaciones culturales en colonias periféricas.",
     "imagen": "https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg",
     "categoria": "sociedad",
     "fecha": "2026-06-14",
@@ -113,7 +113,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-nromero-004",
     "titulo": "Detienen en Atizapán a presunto responsable de homicidio en Nicolás Romero",
-    "resumen": "La FGJEM detuvo a Juan Álvaro 'N' por su probable participación en el homicidio de un joven ocurrido en abril de 2025 en la colonia Granjas de Guadalupe. El detenido fue localizado en Atizapán y puesto a disposición de la autoridad judicial.",
+    "resumen": "Personal de investigación de la Fiscalía General de Justicia del Estado de México detuvo a Juan Álvaro N. por su probable participación en el homicidio de un joven ocurrido en abril de 2025 en la colonia Granjas de Guadalupe, pueblo de La Colmena, en Nicolás Romero. De acuerdo con la indagatoria, la víctima fue agredida en la calle Primavera cuando llegaron cuatro personas en un vehículo; una mujer habría disparado contra el joven. El detenido fue localizado en Atizapán de Zaragoza, donde intentaba evadir la acción de la justicia, y fue trasladado al penal de Barrientos en Tlalnepantla. La FGJEM continúa con las investigaciones para localizar a los otros probables involucrados identificados en el caso.",
     "imagen": "https://i.postimg.cc/DzgczqyG/mexico-entrega-26-reos-criminales-eeuu-768x512.jpg",
     "categoria": "seguridad",
     "fecha": "2026-06-10",
@@ -123,7 +123,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-izcalli-002",
     "titulo": "Inundaciones en Izcalli: desborda cárcamo del Circuito Exterior y afecta Valle de las Flores",
-    "resumen": "Intensas lluvias con granizo provocaron anegaciones en Cuautitlán Izcalli, especialmente en Valle de las Flores y el Circuito Exterior Mexiquense. El alcalde Daniel Serrano exigió a Aleática atender el cárcamo y desplegó brigadas de limpieza.",
+    "resumen": "Intensas lluvias acompañadas de granizo provocaron severas anegaciones en Cuautitlán Izcalli, con especial afectación en la colonia Valle de las Flores y tramos del Circuito Exterior Mexiquense. Vecinos reportaron que, por tercera ocasión en menos de 15 días, un cárcamo operado por la concesionaria Aleática se desbordó e inundó viviendas y calles aledañas. El presidente Daniel Serrano recorrió la zona para supervisar daños y exigió a la empresa responsable de la vialidad atender de inmediato las fallas en la infraestructura de bombeo. Brigadas de Operagua, Protección Civil, Bomberos y Servicios Públicos desplegaron un operativo de limpieza, desazolve de cisternas, retiro de lodo y apoyo directo a familias afectadas.",
     "imagen": "https://imagenes.excelsior.com.mx/files/og_thumbnail/uploads/2026/06/15/6a30cad50ba5a.jpeg",
     "categoria": "clima",
     "fecha": "2026-06-13",
@@ -133,7 +133,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-izcalli-003",
     "titulo": "Canal San José de Izcalli operó al 98% sin desbordes durante las lluvias",
-    "resumen": "El presidente Daniel Serrano informó que los trabajos preventivos de desazolve y limpieza permitieron que el canal enfrentara las precipitaciones del fin de semana sin incidentes, desfogando agua de más de 20 comunidades de la región.",
+    "resumen": "El Gobierno de Cuautitlán Izcalli informó que los trabajos preventivos realizados en el Canal San José permitieron que la infraestructura operara de forma eficiente durante las intensas lluvias del fin de semana. Antes del episodio de precipitaciones, cuadrillas retiraron basura acumulada, troncos, ramas y sedimentos para optimizar el flujo del agua proveniente de más de 20 comunidades. Durante el momento de mayor intensidad, el canal alcanzó cerca del 98 por ciento de su capacidad sin registrar desbordamientos ni incidentes. Daniel Serrano destacó que casi 24 horas después las condiciones seguían estables, con un caudal de aproximadamente 2.2 metros cúbicos por segundo, lo que confirma la efectividad de las acciones de mantenimiento anticipado.",
     "imagen": "https://imagenes.excelsior.com.mx/files/og_thumbnail/uploads/2026/06/15/6a30cad50ba5a.jpeg",
     "categoria": "infraestructura",
     "fecha": "2026-06-15",
@@ -143,7 +143,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-izcalli-004",
     "titulo": "Izcalli activa protocolos de emergencia por lluvias con granizo en el Valle de México",
-    "resumen": "Ante precipitaciones intensas, el municipio desplegó personal de Protección Civil, Operagua y Servicios Públicos para atender encharcamientos, limpiar bocas de tormenta y apoyar a familias en colonias con mayor afectación.",
+    "resumen": "Ante un nuevo episodio de lluvias intensas en la zona metropolitana, Cuautitlán Izcalli activó protocolos de emergencia y reforzó la presencia de personal en colonias con historial de encharcamientos. Cuadrillas de Protección Civil y Operagua atendieron reportes en Primero de Mayo, Centro Urbano, Francisco Villa, Santa María La Quebrada y zonas aledañas al CEM. Las autoridades mantuvieron comunicación con la concesionaria de la autopista para coordinar cierres temporales en tramos inundados y evitar accidentes. El municipio pidió a la población mantenerse informada por canales oficiales, preparar kits de emergencia en hogares y no intentar cruzar corrientes de agua o bajo puentes inundados.",
     "imagen": "https://cdn.milenio.com/uploads/media/2026/06/04/algunas-de-las-inundaciones-se.jpg",
     "categoria": "clima",
     "fecha": "2026-06-13",
@@ -153,7 +153,7 @@ window.__NOTICIAS_CACHE__ = [
   {
     "id": "noticia-nacional-002",
     "titulo": "Lluvias intensas dejan inundaciones y caos vial en el noroeste del Valle de México",
-    "resumen": "Precipitaciones fuertes afectaron municipios del Edomex como Cuautitlán Izcalli, Naucalpan, Tlalnepantla, Coacalco y Tultitlán. Se reportaron vehículos varados en el Circuito Exterior Mexiquense y suspensión temporal del Mexibús Línea 2.",
+    "resumen": "Precipitaciones fuertes registradas en la primera quincena de junio afectaron a múltiples municipios del Estado de México, entre ellos Cuautitlán Izcalli, Naucalpan, Tlalnepantla, Atizapán, Coacalco y Tultitlán. Usuarios en redes sociales documentaron vehículos varados en el Circuito Exterior Mexiquense, encharcamientos de más de un metro en bajo puentes y la suspensión temporal del servicio del Mexibús Línea 2. La vía José López Portillo también reportó colapsos vehiculares en varios tramos al superarse en algunas zonas los 60 milímetros de lluvia acumulada. Protección Civil estatal y municipios activaron operativos de rescate, bombeo de agua y limpieza de coladeras, mientras el Servicio Meteorológico Nacional mantuvo alerta por posibles tormentas eléctricas y granizo en el Valle de México.",
     "imagen": "https://cdn.milenio.com/uploads/media/2026/06/04/algunas-de-las-inundaciones-se.jpg",
     "categoria": "clima",
     "fecha": "2026-06-13",
