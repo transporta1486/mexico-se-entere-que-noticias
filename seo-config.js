@@ -1,6 +1,7 @@
 /** Configuración SEO — México Se Enteré Qué */
 window.SEO_SITE = {
     name: 'México Se Enteré Qué',
+    url: 'https://mexicoseentereque.com',
     tagline: 'Noticias locales del noroeste del Estado de México',
     locale: 'es_MX',
     region: 'MX-MEX',

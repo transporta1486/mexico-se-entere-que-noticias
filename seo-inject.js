@@ -3,6 +3,7 @@
 
     function getSiteBase() {
         if (window.SEO_SITE_BASE) return String(window.SEO_SITE_BASE).replace(/\/$/, '');
+        if (window.SEO_SITE && window.SEO_SITE.url) return String(window.SEO_SITE.url).replace(/\/$/, '');
         var parts = location.pathname.split('/').filter(Boolean);
         var last = parts[parts.length - 1] || '';
         if (/\.html?$/i.test(last)) parts.pop();

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin.html
 
-Sitemap: https://transporta1486.github.io/mexico-se-entere-que-noticias/sitemap.xml
+Sitemap: https://mexicoseentereque.com/sitemap.xml
