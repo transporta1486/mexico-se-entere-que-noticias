@@ -1265,6 +1265,199 @@ footer a:hover { color: var(--aurora-1); }
     padding: 0 var(--padding-mobile) 32px;
 }
 
+.city-more-news {
+    margin: 0 var(--padding-mobile) 28px;
+    padding: 32px 28px 36px !important;
+}
+
+.city-more-news .section-head {
+    margin-bottom: 24px;
+}
+
+.city-more-news .news-grid {
+    display: grid;
+    gap: 20px;
+}
+
+/* Sección redes sociales — muy visible */
+.social-hub {
+    margin: 8px var(--padding-mobile) 40px;
+    position: relative;
+}
+
+.social-hub-inner {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(125, 211, 252, 0.35);
+    background: linear-gradient(135deg, rgba(12, 14, 26, 0.95) 0%, rgba(30, 27, 75, 0.9) 50%, rgba(12, 14, 26, 0.95) 100%);
+    box-shadow:
+        0 0 0 1px rgba(196, 181, 253, 0.12),
+        0 24px 80px rgba(0, 0, 0, 0.45),
+        0 0 60px rgba(125, 211, 252, 0.08);
+}
+
+.social-hub-glow {
+    position: absolute;
+    inset: -40%;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(196, 181, 253, 0.16), transparent 42%);
+    pointer-events: none;
+    animation: socialGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes socialGlow {
+    from { transform: translate(0, 0) scale(1); opacity: 0.8; }
+    to { transform: translate(2%, -2%) scale(1.05); opacity: 1; }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+.social-hub-content {
+    position: relative;
+    z-index: 1;
+    padding: 36px 28px 32px;
+    text-align: center;
+}
+
+.social-hub-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    margin-bottom: 16px;
+    border-radius: 100px;
+    background: rgba(248, 113, 113, 0.12);
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    color: #fca5a5;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.social-hub-title {
+    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+    line-height: 1.15;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #7dd3fc, #c4b5fd, #7dd3fc);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradientShift 6s linear infinite;
+}
+
+.social-hub-subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto 10px;
+    line-height: 1.6;
+}
+
+.social-hub-city {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+.social-hub-city strong {
+    color: var(--aurora-1);
+}
+
+.social-hub-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 440px;
+    margin: 0 auto 18px;
+}
+
+.social-hub-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+    text-align: left;
+}
+
+.social-hub-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    border-color: rgba(125, 211, 252, 0.45);
+    box-shadow: 0 12px 40px rgba(125, 211, 252, 0.12);
+}
+
+.social-hub-btn--facebook {
+    background: linear-gradient(135deg, rgba(24, 119, 242, 0.18), rgba(24, 119, 242, 0.06));
+    border-color: rgba(24, 119, 242, 0.35);
+}
+
+.social-hub-btn--tiktok {
+    background: linear-gradient(135deg, rgba(255, 0, 80, 0.14), rgba(0, 242, 234, 0.08));
+    border-color: rgba(255, 0, 80, 0.28);
+}
+
+.social-hub-btn--pending {
+    opacity: 0.55;
+    cursor: default;
+    pointer-events: none;
+}
+
+.social-hub-btn-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.social-hub-btn-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.social-hub-btn-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.social-hub-btn-text strong {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.social-hub-btn-text small {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.social-hub-btn-arrow {
+    font-size: 1.2rem;
+    color: var(--aurora-1);
+    opacity: 0.8;
+}
+
+.social-hub-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
 /* Responsive */
 @media (min-width: 768px) {
     section { padding: 40px var(--padding-desktop); }
@@ -1301,10 +1494,21 @@ footer a:hover { color: var(--aurora-1); }
     .search-toggle { display: none; }
     .search-input { display: flex; margin-left: 16px; }
 
-    .hero, .categories, .latest-news, .featured-news {
+    .hero, .categories, .latest-news, .featured-news, .city-more-news, .social-hub {
         margin-left: var(--padding-desktop);
         margin-right: var(--padding-desktop);
     }
+
+    .city-more-news .news-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .social-hub-buttons {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 720px;
+    }
+
+    .social-hub-btn { flex: 1 1 280px; }
 
     .news-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .carousel-item img { height: 440px; }

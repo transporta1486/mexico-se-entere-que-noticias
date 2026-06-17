@@ -53,8 +53,16 @@
 
     <main>
       <section class="featured-news glass-panel" id="featured-news">
-        <p class="empty-state">Cargando noticia...</p>
+        <p class="empty-state">Cargando noticias...</p>
       </section>
+      <section class="city-more-news glass-panel" id="city-more-news" hidden>
+        <div class="section-head">
+          <span class="pill">Más noticias</span>
+          <h2>Otras de <span class="gradient-text" id="city-name-more"></span></h2>
+        </div>
+        <div class="news-grid" id="city-news-grid"></div>
+      </section>
+      <section id="social-section" class="social-hub" aria-label="Redes sociales"></section>
     </main>
 
     <footer class="site-footer">
@@ -72,6 +80,8 @@
     </footer>
 
     <script src="shared-ui.js"></script>
+    <script src="social-config.js"></script>
+    <script src="social-section.js"></script>
     <script src="noticias-data.js"></script>
     <script src="news-data.js"></script>
     <script src="city-news.js"></script>

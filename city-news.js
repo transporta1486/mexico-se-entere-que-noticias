@@ -1,7 +1,8 @@
 /**
- * Una noticia por municipio — edita noticias.json
- * Cada página tiene data-ciudad="..." y muestra su única noticia.
+ * Hasta 3 noticias por municipio — edita noticias.json
  */
+const NEWS_PER_CITY = 3;
+
 function getCiudad() {
     return document.body.dataset.ciudad || '';
 }
@@ -40,7 +41,7 @@ function buildFeatured(news, ciudad) {
             </div>
             <div class="featured-body">
                 <div class="featured-meta-top">
-                    <span class="pill">Última noticia</span>
+                    <span class="pill">Noticia destacada</span>
                     <span class="featured-location">${escapeHtml(ciudad)}</span>
                 </div>
                 <h2 class="featured-title">${titulo}</h2>
@@ -54,35 +55,85 @@ function buildFeatured(news, ciudad) {
         </article>`;
 }
 
-async function loadFeaturedNews() {
-    const container = document.getElementById('featured-news');
-    if (!container) return;
+function buildNewsCard(news) {
+    const titulo = escapeHtml(news.titulo || 'Sin título');
+    const resumen = escapeHtml(news.resumen || '');
+    const autor = escapeHtml(news.autor || 'Redacción');
+    const categoria = escapeHtml((news.categoria || 'general').toUpperCase());
+    const fecha = formatDate(news.fecha);
+    const img = news.imagen || placeholderImg();
 
+    return `
+        <div class="news-card">
+            <article>
+                <div class="news-card-image">
+                    <img src="${img}" alt="${titulo}" loading="lazy">
+                    <span class="news-badge">${categoria}</span>
+                </div>
+                <div class="news-card-body">
+                    ${fecha ? `<time class="news-date">${fecha}</time>` : ''}
+                    <h4>${titulo}</h4>
+                    <p>${resumen}</p>
+                    <div class="news-meta">
+                        <span class="author-info">Por: ${autor}</span>
+                    </div>
+                    <button class="share-btn" data-title="${titulo}">Compartir ↗</button>
+                </div>
+            </article>
+        </div>`;
+}
+
+function bindShareButtons(root) {
+    if (!root) return;
+    root.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', () => shareArticle(btn.dataset.title));
+    });
+}
+
+async function loadCityNews() {
+    const featuredEl = document.getElementById('featured-news');
+    const moreSection = document.getElementById('city-more-news');
+    const gridEl = document.getElementById('city-news-grid');
     const ciudad = getCiudad();
+
+    if (!featuredEl || !ciudad) return;
+
     try {
         const todas = await fetchNoticias('noticias.json');
-        const noticia = todas.find(n => n.ciudad === ciudad);
+        const delMunicipio = todas
+            .filter(n => n.ciudad === ciudad)
+            .sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''))
+            .slice(0, NEWS_PER_CITY);
 
-        if (!noticia) {
-            container.innerHTML = `
+        if (!delMunicipio.length) {
+            featuredEl.innerHTML = `
                 <div class="empty-state">
-                    <p>No hay noticia para <strong>${escapeHtml(ciudad)}</strong> aún.</p>
-                    <p>Agrégala en <a href="admin.html">admin.html</a> o en noticias.json</p>
+                    <p>No hay noticias para <strong>${escapeHtml(ciudad)}</strong> aún.</p>
+                    <p>Agrégalas en <a href="admin.html">admin.html</a> o en noticias.json</p>
                 </div>`;
+            if (moreSection) moreSection.hidden = true;
             return;
         }
 
-        container.innerHTML = buildFeatured(noticia, ciudad);
+        const [destacada, ...resto] = delMunicipio;
+        featuredEl.innerHTML = buildFeatured(destacada, ciudad);
+        bindShareButtons(featuredEl);
 
-        const btn = container.querySelector('.featured-share');
-        if (btn) {
-            btn.addEventListener('click', () => shareArticle(btn.dataset.title));
+        if (moreSection && gridEl && resto.length) {
+            moreSection.hidden = false;
+            const nameEl = document.getElementById('city-name-more');
+            if (nameEl) nameEl.textContent = ciudad;
+            gridEl.innerHTML = resto.map(buildNewsCard).join('');
+            bindShareButtons(gridEl);
+        } else if (moreSection) {
+            moreSection.hidden = true;
         }
     } catch (e) {
-        container.innerHTML = '<p class="empty-state">Error al cargar la noticia. Abre el sitio con un servidor local.</p>';
+        featuredEl.innerHTML = '<p class="empty-state">Error al cargar las noticias.</p>';
+        if (moreSection) moreSection.hidden = true;
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (getCiudad()) loadFeaturedNews();
+    if (getCiudad()) loadCityNews();
 });
