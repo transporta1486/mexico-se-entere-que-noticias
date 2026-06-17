@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Búsqueda</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q3ZL4VNDPW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Q3ZL4VNDPW');
+</script>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="economia.html">Política Económica</a></li>
+                <li><a href="cultural.html">Política Cultural</a></li>
+                <li><a href="deportes.html">Deportes</a></li>
+
+            </ul>
+            <form id="search-form" action="search.html">
+                <input type="text" id="search-input" name="query" placeholder="Buscar...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </nav>
+    </header>
+    <main>
+        <h1>Resultados de Búsqueda</h1>
+        <p>Resultados para: <span id="search-query"></span></p>
+        <div id="search-results"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

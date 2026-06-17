@@ -1,0 +1,34 @@
+backend:
+  name: github
+  repo: transporta1486/mexico-se-entere-que-noticias
+  branch: main
+
+local_backend: true
+
+media_folder: "img"
+public_folder: "/img"
+
+collections:
+  - name: "noticias"
+    label: "Noticias"
+    files:
+      - file: "noticias.json"
+        label: "Todas las Noticias"
+        name: "noticias_file"
+        format: json
+        fields:
+          - label: "Noticias"
+            name: "noticias"
+            widget: "list"
+            label_singular: "Noticia"
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: "ID", name: "id", widget: "string", required: false, hint: "Dejar vacío para generar automáticamente" }
+              - { label: "Título", name: "titulo", widget: "string" }
+              - { label: "Resumen", name: "resumen", widget: "text" }
+              - { label: "Imagen (URL)", name: "imagen", widget: "string", required: false }
+              - { label: "Categoría", name: "categoria", widget: "select", options: ["política", "seguridad", "sociedad", "infraestructura", "sucesos", "clima", "salud", "policía", "naturaleza", "nacional", "local"] }
+              - { label: "Fecha", name: "fecha", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
+              - { label: "Ciudad", name: "ciudad", widget: "select", options: ["Nacional", "Atizapán", "Tlalnepantla", "Naucalpan", "Nicolás Romero", "Cuautitlán Izcalli"] }
+              - { label: "Autor", name: "autor", widget: "string", required: false, default: "Redacción" }
+              - { label: "Destacada (Carrusel)", name: "destacada", widget: "boolean", default: false }

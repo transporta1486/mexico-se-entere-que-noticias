@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#0c0e1a" />
+    <title>Editor de Noticias - México Se Enteré Qué</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-mesh" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+    <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+    <header class="site-header">
+        <a href="index.html" class="logo">
+            <span class="logo-mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="url(#lg)" stroke-width="1.5"/><path d="M10 16h12M16 10v12" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/><defs><linearGradient id="lg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#7dd3fc"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient></defs></svg>
+            </span>
+            <div class="logo-text">
+              <span class="logo-tag">Panel</span>
+              <h1>Editor de Noticias</h1>
+            </div>
+        </a>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="index.html" class="nav-link">← Volver al sitio</a></li>
+                <li><a href="admin/" class="nav-link">Panel GitHub (CMS)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="admin-form glass-panel">
+            <h2>Agregar Nueva Noticia</h2>
+            <form id="news-form">
+                <label for="titulo">Título</label>
+                <input type="text" id="titulo" placeholder="Ej: Volcadura en Atizapán" required>
+
+                <label for="resumen">Resumen</label>
+                <textarea id="resumen" placeholder="Escribe un resumen de la noticia..." required></textarea>
+
+                <label for="imagen">URL de la Imagen</label>
+                <input type="url" id="imagen" placeholder="https://i.postimg.cc/...">
+
+                <label for="categoria">Categoría</label>
+                <select id="categoria" required>
+                    <option value="política">Política</option>
+                    <option value="seguridad">Seguridad</option>
+                    <option value="sociedad">Sociedad</option>
+                    <option value="infraestructura">Infraestructura</option>
+                    <option value="sucesos">Sucesos</option>
+                    <option value="clima">Clima</option>
+                    <option value="policía">Policía</option>
+                    <option value="naturaleza">Naturaleza</option>
+                </select>
+
+                <label for="ciudad">Ciudad</label>
+                <select id="ciudad" required>
+                    <option value="Nacional">Nacional</option>
+                    <option value="Atizapán">Atizapán</option>
+                    <option value="Tlalnepantla">Tlalnepantla</option>
+                    <option value="Naucalpan">Naucalpan</option>
+                    <option value="Nicolás Romero">Nicolás Romero</option>
+                    <option value="Cuautitlán Izcalli">Cuautitlán Izcalli</option>
+                </select>
+
+                <label for="autor">Autor</label>
+                <input type="text" id="autor" value="Javier Huerta Martinez">
+
+                <label for="fecha">Fecha</label>
+                <input type="date" id="fecha" required>
+
+                <label>
+                    <input type="checkbox" id="destacada">
+                    Aparece en el carrusel principal
+                </label>
+
+                <button type="submit">Agregar noticia</button>
+            </form>
+
+            <div class="admin-actions">
+                <button type="button" id="btn-download">Descargar noticias.json</button>
+                <button type="button" id="btn-copy">Copiar JSON</button>
+            </div>
+
+            <div id="admin-status" class="admin-status"></div>
+            <pre id="admin-preview" class="admin-preview"></pre>
+
+            <div class="admin-help">
+                <strong>Una noticia por municipio:</strong><br>
+                1. Cada página muestra <strong>una sola noticia</strong> según el campo <code>"ciudad"</code><br>
+                2. Para cambiar la noticia de un municipio, edita o reemplaza su entrada en <code>noticias.json</code><br>
+                3. Nombres exactos: <code>Atizapán</code>, <code>Tlalnepantla</code>, <code>Naucalpan</code>, <code>Nicolás Romero</code>, <code>Cuautitlán Izcalli</code>
+            </div>
+        </section>
+    </main>
+    <script src="noticias-data.js"></script>
+    <script src="news-data.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

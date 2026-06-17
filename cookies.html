@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Política de Cookies | México Se Enteré Qué</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    function aceptar() { localStorage.setItem('cookies-consent','accepted'); alert('Has aceptado cookies.'); }
+    function rechazar() { localStorage.setItem('cookies-consent','rejected'); alert('Has rechazado cookies.'); }
+  </script>
+</head>
+<body>
+  <main class="legal-page" style="max-width:900px;margin:2rem auto;padding:0 1rem;">
+    <h1>Política de Cookies</h1>
+    <p>Última actualización: 14 de agosto de 2025</p>
+
+    <h2>¿Qué son las cookies?</h2>
+    <p>Son pequeños archivos que se almacenan en tu dispositivo para recordar preferencias y mejorar tu experiencia.</p>
+
+    <h2>Tipos de cookies que usamos</h2>
+    <ul>
+      <li><strong>Necesarias:</strong> permiten el funcionamiento básico del sitio.</li>
+      <li><strong>Analíticas/Publicidad:</strong> (p. ej. Google AdSense) solo se cargan si aceptas.</li>
+    </ul>
+
+    <h2>Gestión del consentimiento</h2>
+    <p>Puedes cambiar tu elección en cualquier momento con el botón “Configurar cookies” del pie de página.</p>
+    <p>
+      <button onclick="aceptar()">Aceptar</button>
+      <button onclick="rechazar()">Rechazar</button>
+    </p>
+
+    <h2>Más información</h2>
+    <p>Para dudas, escríbenos a <em>tu-correo@tu-dominio.com</em>.</p>
+
+    <p><a href="index.html">Volver al inicio</a></p>
+  </main>
+</body>
+</html>
