@@ -5,6 +5,32 @@ function escapeHtml(text) {
     }[m]));
 }
 
+function buildFigures(imagenes) {
+    if (!imagenes || !imagenes.length) return '';
+    return imagenes.map(fig => `
+        <figure class="diputada-figure">
+            <img src="${escapeHtml(fig.src || '')}" alt="${escapeHtml(fig.alt || '')}" class="diputada-figure-img" loading="lazy">
+            ${fig.caption ? `<figcaption>${escapeHtml(fig.caption)}</figcaption>` : ''}
+        </figure>`).join('');
+}
+
+function buildBlockquote(cita) {
+    if (!cita) return '';
+    return `<blockquote class="diputada-blockquote"><p>${escapeHtml(cita)}</p></blockquote>`;
+}
+
+function buildContacto(contacto) {
+    if (!contacto) return '';
+    const items = (contacto.items || []).map(item => `<li>${escapeHtml(item)}</li>`).join('');
+    return `
+        <div class="diputada-contacto">
+            <h4>${escapeHtml(contacto.titulo || 'Contacto')}</h4>
+            ${contacto.intro ? `<p>${escapeHtml(contacto.intro)}</p>` : ''}
+            ${items ? `<ul>${items}</ul>` : ''}
+            ${contacto.redes ? `<p>${escapeHtml(contacto.redes)}</p>` : ''}
+        </div>`;
+}
+
 function buildVideoBlock(cfg) {
     if (!cfg.video) return '';
 
@@ -212,8 +238,13 @@ function renderDiputadaSection(container, cfg) {
 
     const parrafos = (cfg.cuerpo || []).map(p => `<p>${escapeHtml(p)}</p>`).join('');
     const videoHtml = buildVideoBlock(cfg);
+    const figurasHtml = buildFigures(cfg.imagenes);
+    const citaHtml = buildBlockquote(cfg.cita);
+    const contactoHtml = buildContacto(cfg.contacto);
+    const cierreHtml = cfg.cierre ? `<p class="diputada-cierre">${escapeHtml(cfg.cierre)}</p>` : '';
     const foto = escapeHtml(cfg.foto || cfg.imagen || '');
     const altNombre = escapeHtml(cfg.nombre || 'Diputada Ana Balderas');
+    const mediaHtml = videoHtml || (!figurasHtml ? `<img src="${escapeHtml(cfg.imagen || '')}" alt="${escapeHtml(cfg.titulo || 'Noticia')}" class="diputada-image" loading="lazy">` : '');
 
     container.innerHTML = `
         <div class="diputada-inner glass-panel">
@@ -237,11 +268,15 @@ function renderDiputadaSection(container, cfg) {
                 </div>
                 <div class="diputada-body">
                     <div class="diputada-media">
-                        ${videoHtml || `<img src="${escapeHtml(cfg.imagen || '')}" alt="${escapeHtml(cfg.titulo || 'Noticia')}" class="diputada-image" loading="lazy">`}
+                        ${mediaHtml}
                     </div>
                     <div class="diputada-text">
                         <p class="diputada-lead">${escapeHtml(cfg.resumen || '')}</p>
                         ${parrafos}
+                        ${citaHtml}
+                        ${figurasHtml}
+                        ${contactoHtml}
+                        ${cierreHtml}
                         ${buildShareZone()}
                     </div>
                 </div>

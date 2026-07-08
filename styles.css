@@ -1935,6 +1935,67 @@ footer a:hover { color: var(--aurora-1); }
     font-weight: 500;
 }
 
+.diputada-blockquote {
+    margin: 20px 0;
+    padding: 16px 20px;
+    border-left: 3px solid #7dd3fc;
+    background: rgba(125, 211, 252, 0.08);
+    border-radius: 0 12px 12px 0;
+}
+
+.diputada-blockquote p {
+    margin: 0;
+    font-style: italic;
+    color: #e2e8f0;
+}
+
+.diputada-figure {
+    margin: 24px 0;
+}
+
+.diputada-figure-img {
+    width: 100%;
+    border-radius: 14px;
+    display: block;
+}
+
+.diputada-figure figcaption {
+    margin-top: 10px;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+.diputada-contacto {
+    margin: 24px 0;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(196, 181, 253, 0.2);
+    background: rgba(15, 17, 30, 0.6);
+}
+
+.diputada-contacto h4 {
+    margin: 0 0 10px;
+    color: #f1f5f9;
+    font-size: 1.05rem;
+}
+
+.diputada-contacto ul {
+    margin: 10px 0;
+    padding-left: 20px;
+    color: #cbd5e1;
+}
+
+.diputada-contacto li {
+    margin-bottom: 6px;
+    line-height: 1.6;
+}
+
+.diputada-cierre {
+    font-weight: 500;
+    color: #e2e8f0 !important;
+}
+
 /* Compartir — Diputada Ana Balderas */
 .diputada-share-zone {
     position: relative;

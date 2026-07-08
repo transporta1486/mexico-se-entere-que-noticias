@@ -1,6 +1,107 @@
 {
   "noticias": [
     {
+      "id": "noticia-nacional-003",
+      "titulo": "Reportan avance del 90% en megaobras hidráulicas para prevenir inundaciones en el oriente del Edomex",
+      "resumen": "La Comisión Nacional del Agua (Conagua) y el Gobierno de México informaron que las obras de infraestructura hidráulica destinadas a mitigar las inundaciones en la zona oriente de la entidad registran un avance global del 90 por ciento. Se detalló que cuatro de los proyectos clave ya entraron en operación durante las recientes tormentas de julio, acelerando drásticamente el desalojo de agua en municipios críticos como Nezahualcóyotl. Asimismo, avanzan las labores de microtunelado en los tres kilómetros del Colector Chalco, cuya conclusión definitiva está proyectada para el mes de octubre.",
+      "imagen": "https://cdn.milenio.com/uploads/media/2026/06/04/algunas-de-las-inundaciones-se.jpg",
+      "categoria": "infraestructura",
+      "fecha": "2026-07-08",
+      "ciudad": "Nacional",
+      "autor": "Redacción",
+      "destacada": true
+    },
+    {
+      "id": "noticia-nacional-004",
+      "titulo": "Caravanas por la Justicia Social alcanzan la cifra histórica de un millón de trámites gratuitos en el Edomex",
+      "resumen": "El programa de Caravanas Itinerantes por la Justicia Social consolidó un hito histórico al superar el millón de trámites jurídicos y administrativos realizados de manera gratuita en todo el territorio mexiquense. Esta iniciativa estatal ha permitido acercar actas de nacimiento oficializadas, asesorías legales corporativas, testamentos y correcciones de identidad directamente a los habitantes de comunidades con altos índices de marginación, eliminando traslados costosos y facilitando la regularización jurídica de miles de familias.",
+      "imagen": "https://i.postimg.cc/xdr6Ct7j/FB-IMG-1755466516879.jpg",
+      "categoria": "gobierno",
+      "fecha": "2026-07-07",
+      "ciudad": "Nacional",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-atizapan-007",
+      "titulo": "Entre baches y promesas: Vecinos de Atizapán denuncian abandono en servicios públicos e infraestructura vial",
+      "resumen": "Habitantes de diversas colonias de Atizapán de Zaragoza manifestaron su hartazgo ante el avanzado deterioro de las vialidades secundarias y calles locales. Los automovilistas denuncian que los programas de bacheo implementados por las autoridades son \"parches temporales\" que se deslavan por completo con las primeras precipitaciones de la temporada de lluvias. La falta de un mantenimiento integral ha dejado cráteres profundos que provocan constantes daños vehiculares y retrasos viales, evidenciando un descuido acumulado en la infraestructura urbana básica del municipio.",
+      "imagen": "https://proyeccionedomex.com.mx/wp-content/uploads/2026/06/WhatsApp-Image-2026-06-11-at-11.37.00-PM.jpeg",
+      "categoria": "vialidad",
+      "fecha": "2026-07-08",
+      "ciudad": "Atizapán",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-atizapan-008",
+      "titulo": "Crece el miedo en Atizapán: Reportan repunte en la percepción de inseguridad y asaltos",
+      "resumen": "A pesar de las narrativas oficiales que posicionan al municipio como un entorno seguro, la Encuesta Nacional de Seguridad Pública Urbana (ENSU) del INEGI reveló un incremento de 4.6 puntos en la percepción de inseguridad durante el último periodo. Los reportes comunitarios y carpetas de investigación exponen un alza preocupante en asaltos a transeúntes, robo de vehículos y delincuencia en el transporte público. Los atizapenses exigen mayor patrullaje vecinal en las colonias populares y zonas altas, señalando que la vigilancia actual se concentra únicamente en las vialidades principales de alta plusvalía.",
+      "imagen": "https://i.postimg.cc/DzgczqyG/mexico-entrega-26-reos-criminales-eeuu-768x512.jpg",
+      "categoria": "seguridad",
+      "fecha": "2026-07-07",
+      "ciudad": "Atizapán",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-tlalnepantla-005",
+      "titulo": "Entregan renovación integral de escalinatas y servicios básicos en Lomas de San Juan Ixhuatepec",
+      "resumen": "El Gobierno de Tlalnepantla concluyó y entregó los trabajos de renovación integral de las escalinatas y la rehabilitación de los servicios públicos básicos en la comunidad de Lomas de San Juan Ixhuatepec. Esta obra de infraestructura social busca dignificar el entorno urbano, facilitar el tránsito peatonal seguro en las zonas altas y mejorar las condiciones de conectividad y movilidad diaria para cientos de familias de la zona oriente del municipio.",
+      "imagen": "https://www.eluniversaledomex.com.mx/resizer/v2/7XZWSDE7UVEZHKHTZG2ZN6JSPU.jpg?auth=ae544595dd53939fecca2b6ce9d73c0d70bb1fbe8593154a0d913a16f265e4a8",
+      "categoria": "infraestructura",
+      "fecha": "2026-07-08",
+      "ciudad": "Tlalnepantla",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-tlalnepantla-006",
+      "titulo": "Mantienen activo el Plan de Contingencia Municipal tras intensas lluvias en Los Reyes Ixtacala",
+      "resumen": "Ante las constantes precipitaciones pluviales registradas en el Valle de México, las cuadrillas del Organismo de Agua (OPDM), Protección Civil y Bomberos mantienen un despliegue operativo permanente en Los Reyes Ixtacala. Las autoridades informaron que se concluyeron las labores urgentes de limpieza y desazolve para liberar vialidades colapsadas como Paseo del Ferrocarril, sin embargo, se mantendrá el monitoreo de los niveles de agua y la atención médica preventiva para evitar brotes e inundaciones recurrentes.",
+      "imagen": "https://cdn.milenio.com/uploads/media/2026/06/04/algunas-de-las-inundaciones-se.jpg",
+      "categoria": "clima",
+      "fecha": "2026-07-07",
+      "ciudad": "Tlalnepantla",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-naucalpan-006",
+      "titulo": "Ponen en marcha el programa \"Impulsando Tu Salud\" y suman más de 95 mil atenciones",
+      "resumen": "El Gobierno de Naucalpan de Juárez reportó un avance significativo en su programa social \"Impulsando Tu Salud\", el cual ha logrado afilizar a más de 10 mil ciudadanos. Mediante jornadas comunitarias e itinerantes, se han brindado más de 95 mil atenciones médicas, dentales y consultas generales totalmente gratuitas, enfocándose principalmente en acercar los servicios de prevención y bienestar a las familias vulnerables de las colonias altas del municipio.",
+      "imagen": "https://www.eluniversal.com.mx/resizer/v2/PAPKOGV27RCAJJNC2SFNYFFDZ4.jpeg?auth=ab7bad3b2a1a127f94dac6f579d4464f9bc5ba658730d6e12c2189544e3b8c49",
+      "categoria": "sociedad",
+      "fecha": "2026-07-08",
+      "ciudad": "Naucalpan",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-naucalpan-007",
+      "titulo": "Vecinos reportan inundaciones y severas complicaciones viales ante falta de desazolve",
+      "resumen": "Las fuertes precipitaciones registradas en los últimos días han dejado al descubierto deficiencias en la infraestructura de drenaje en las avenidas colindantes con el Periférico Manuel Ávila Camacho. Automovilistas y vecinos reportan severos encharcamientos, alcantarillas colapsadas por basura y tránsito pesado debido a la falta de trabajos preventivos de desazolve en barrancas y colectores principales, por lo que exhortan a las brigadas de servicios públicos a agilizar la limpieza urbana.",
+      "imagen": "https://cdn.milenio.com/uploads/media/2026/06/04/algunas-de-las-inundaciones-se.jpg",
+      "categoria": "clima",
+      "fecha": "2026-07-07",
+      "ciudad": "Naucalpan",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-nromero-006",
+      "titulo": "Promulgan el Bando Municipal 2026 con enfoque en derechos humanos y simplificación de trámites",
+      "resumen": "El Gobierno local de Nicolás Romero formalizó la entrada en vigor de su Bando Municipal 2026, encabezado por la alcaldía. El nuevo marco normativo de la demarcación tiene como ejes prioritarios el respeto irrestricto a los derechos humanos y la modernización administrativa mediante la simplificación de trámites gubernamentales, buscando consolidar una administración pública más cercana, ágil y transparente para los habitantes.",
+      "imagen": "https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg",
+      "categoria": "gobierno",
+      "fecha": "2026-07-08",
+      "ciudad": "Nicolás Romero",
+      "autor": "Redacción"
+    },
+    {
+      "id": "noticia-nromero-007",
+      "titulo": "Reactivan mesas de trabajo de ordenamiento vial para regular el transporte de carga",
+      "resumen": "Con la finalidad de disminuir el severo caos vial que afecta los accesos principales al municipio, las autoridades reactivaron las mesas de concertación y supervisión técnica con delegados de transporte. El plan busca establecer horarios fijos y restricciones para la circulación del transporte de carga pesada y camiones de pasajeros, ordenando el flujo sobre las vías principales de conexión metropolitana y reduciendo los tiempos de traslado de los usuarios.",
+      "imagen": "https://pendulonline.com.mx/wp-content/uploads/2026/06/FB_IMG_1780809294894.jpg",
+      "categoria": "vialidad",
+      "fecha": "2026-07-07",
+      "ciudad": "Nicolás Romero",
+      "autor": "Redacción"
+    },
+    {
       "id": "noticia-nromero-005",
       "titulo": "Cierres viales en Nicolás Romero por la Feria San Pedro Azcapotzaltongo 2026",
       "resumen": "El Gobierno Municipal de Nicolás Romero informó que, con motivo de la Feria Patronal San Pedro Azcapotzaltongo 2026, se cerrarán diversas calles a partir del 17 de junio. Las autoridades exhortan a conductores y familias a tomar precauciones, planear rutas alternas y atender los avisos oficiales sobre los tramos afectados durante los días de la feria, que se celebrará del 22 al 29 de junio en la explanada municipal y zonas aledañas del centro del municipio.",
@@ -198,8 +299,7 @@
       "categoria": "clima",
       "fecha": "2026-06-13",
       "ciudad": "Nacional",
-      "autor": "Redacción",
-      "destacada": true
+      "autor": "Redacción"
     }
   ]
 }
